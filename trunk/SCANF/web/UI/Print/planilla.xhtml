@@ -1,0 +1,120 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:head >
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+        <title>Planilla de Empleados</title>
+        <h:outputStylesheet name="css/home.css"/>
+    </h:head>
+    <h:body >
+        <h:form id="printForm">
+            <p:commandButton type="button" icon="imprimir" title="Imprimir">
+                <p:printer target="tabla"/>
+            </p:commandButton>
+            <p:commandButton actionListener="#{usuarioController.goHome}" value="Regresar" title="Regresar" />
+
+            <p:separator /> 
+            <p:dataTable id="tabla" var="item" value="#{planillaController.itemsLibro()}"
+                         emptyMessage="No se encontraron resultados">
+
+                <f:facet name="header">
+                    <h:outputText value="Planilla "/>
+                    <h:outputText value= "Actual" rendered="#{!planillaController.periodoNoNulo}"/>
+                    <h:outputText value = " Periodo: " rendered="#{planillaController.periodoNoNulo}"/>
+                    <h:outputText value = "#{planillaController.periodo.fechaInicioPeriodo}" rendered="#{planillaController.periodoNoNulo}">
+                        <f:convertDateTime pattern="dd/MM/yyyy" />
+                    </h:outputText>
+                    <h:outputText value=" al: " rendered="#{planillaController.periodoNoNulo}"/>
+                    <h:outputText value = "#{planillaController.periodo.fechaFinPeriodo}" rendered="#{planillaController.periodoNoNulo}">
+                        <f:convertDateTime pattern="dd/MM/yyyy" />
+                    </h:outputText>
+                </f:facet>
+
+                <p:column headerText="Empleado" style="font-size: 14px" >
+                    <h:outputText value="#{item.empleado.primerNombreEmpleado} #{item.empleado.primerApellidoEmpleado}"/>
+                </p:column>
+
+                <p:column headerText="Sueldo Base" style="text-align: right">
+                    <h:outputText value="#{item.salarioBase}">
+                        <f:convertNumber type="currency"  locale="#{usuarioController.locale}"/>
+                    </h:outputText>
+                    <f:facet name="footer">  
+                        <h:outputText value="#{planillaController.salarioBase}">
+                            <f:convertNumber type="currency"  locale="#{usuarioController.locale}"/>
+                        </h:outputText>
+                    </f:facet>
+                </p:column>
+                <p:column headerText="N° Hrs Extra" style="text-align: right">
+                    <h:outputText value="#{item.numeroHorasExtra}">
+                        <f:convertNumber maxFractionDigits="2"/>/>
+                    </h:outputText>
+                    <f:facet name="footer">  
+                        <h:outputText value="#{planillaController.numeroHorasExtra}">
+                            <f:convertNumber maxFractionDigits="2"/>
+                        </h:outputText>
+                    </f:facet>
+                </p:column>   
+
+                <p:column headerText="Pago Hrs Extra" style="text-align: right">
+                    <h:outputText value="#{item.horasExtra}">
+                        <f:convertNumber type="currency"  locale="#{usuarioController.locale}"/>
+                    </h:outputText>
+                    <f:facet name="footer">  
+                        <h:outputText value="#{planillaController.horasExtra}">
+                            <f:convertNumber type="currency"  locale="#{usuarioController.locale}"/>
+                        </h:outputText>
+                    </f:facet>
+                </p:column>
+
+                <p:column headerText="Bonificaciones" style="text-align: right">
+                    <h:outputText value="#{item.bonificaciones}">
+                        <f:convertNumber type="currency"  locale="#{usuarioController.locale}"/>
+                    </h:outputText>
+                    <f:facet name="footer">  
+                        <h:outputText value="#{planillaController.bonificaciones}">
+                            <f:convertNumber type="currency"  locale="#{usuarioController.locale}"/>
+                        </h:outputText>
+                    </f:facet>
+                </p:column>
+
+                <p:column headerText="AFP" style="text-align: right">
+                    <h:outputText value="#{item.afp}">
+                        <f:convertNumber type="currency"  locale="#{usuarioController.locale}"/>
+                    </h:outputText>
+                    <f:facet name="footer">  
+                        <h:outputText value="#{planillaController.afp}">
+                            <f:convertNumber type="currency"  locale="#{usuarioController.locale}"/>
+                        </h:outputText>
+                    </f:facet>
+                </p:column>
+
+                <p:column headerText="ISSS" style="text-align: right">
+                    <h:outputText value="#{item.isss}">
+                        <f:convertNumber type="currency"  locale="#{usuarioController.locale}"/>
+                    </h:outputText>
+                    <f:facet name="footer">  
+                        <h:outputText value="#{planillaController.isss}">
+                            <f:convertNumber type="currency"  locale="#{usuarioController.locale}"/>
+                        </h:outputText>
+                    </f:facet>
+                </p:column>
+
+                <p:column headerText="Sueldo Neto" style="text-align: right">
+                    <h:outputText value="#{item.salarioNeto}">
+                        <f:convertNumber type="currency"  locale="#{usuarioController.locale}"/>
+                    </h:outputText>
+                    <f:facet name="footer">  
+                        <h:outputText value="#{planillaController.salarioNeto}">
+                            <f:convertNumber type="currency"  locale="#{usuarioController.locale}"/>
+                        </h:outputText>
+                    </f:facet>
+                </p:column>
+            </p:dataTable>
+        </h:form>
+    </h:body>
+</html>
+

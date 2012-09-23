@@ -1,0 +1,31 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    <ui:component>
+
+        <p:dialog widgetVar="buscarServicio" header="Filtrar Servicios" showEffect="fade" hideEffect="fade" modal="true" resizable="false">  
+            <h:form id="bs">
+                <h:panelGrid columns="4"> 
+                    <h:outputLabel for="cl" value="Cliente:" />  
+                    <p:autoComplete id="cl" forceSelection="true" style="font-size: 13px"
+                                    value="#{servicioClienteController.filtro.cliente}" required="true"
+                                    completeMethod="#{clienteController.autocomplete}"
+                                    var ="cliente" itemLabel="#{cliente}" itemValue="#{cliente}"
+                                    converter="#{clienteControllerConverter}" maxResults="5"/>
+                    <h:outputLabel for="ase" value="Aseguradora:" />  
+                    <p:autoComplete id="ase" forceSelection="true" style="font-size: 13px"
+                                    value="#{servicioClienteController.filtro.aseguradora}" required="true"
+                                    completeMethod="#{aseguradoraController.autocomplete}"
+                                    var ="aseguradora" itemLabel="#{aseguradora}" itemValue="#{aseguradora}"
+                                    converter="#{aseguradoraControllerConverter}" maxResults="5"/>
+                </h:panelGrid>
+                <p:commandButton value="Buscar" icon="buscar" update="currentUI" oncomplete="buscarServicio.hide()" 
+                                 actionListener="#{servicioClienteController.find}"/>
+            </h:form>
+        </p:dialog>
+
+    </ui:component>
+</html>

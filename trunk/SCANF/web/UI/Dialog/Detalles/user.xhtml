@@ -1,0 +1,35 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    <ui:component>
+        <h:form>
+            <p:dialog widgetVar="datosUsuario" header="Datos de Usuario" showEffect="fade" hideEffect="fade" modal="true" resizable="false">  
+                <h:panelGrid columns="2">  
+                    <h:outputLabel for="ID" value="ID Usuario:" />  
+                    <p:inputText id="ID" value="#{usuarioController.user.idUsuario}" disabled="true"/>
+
+                    <h:outputLabel for="pn" value="Primer Nombre:" />  
+                    <p:inputText id="pn" value="#{usuarioController.user.primerNombreUsuario}" disabled="true"/>
+
+                    <h:outputLabel for="pn" value="Segundo Nombre:" />  
+                    <p:inputText id="sn" value="#{usuarioController.user.segundoNombreUsuario}" disabled="true"/>
+
+                    <h:outputLabel for="pa" value="Primer Apellido:" />  
+                    <p:inputText id="pa" value="#{usuarioController.user.primerApellidoUsuario}" disabled="true"/>
+
+                    <h:outputLabel for="sa" value="Segundo Apellido:" />  
+                    <p:inputText id="sa" value="#{usuarioController.user.segundoApellidoUsuario}" disabled="true"/>
+
+                    <h:outputLabel for="p" value="Perfil:" />  
+                    <p:inputText id="p" value="#{usuarioController.user.idPerfil.nombrePerfil}" disabled="true"/>
+
+                    <p:commandButton value="Cerrar" onclick="datosUsuario.hide()" 
+                                     image="cancelar" />
+                </h:panelGrid>  
+            </p:dialog>
+        </h:form>
+    </ui:component>
+</html>

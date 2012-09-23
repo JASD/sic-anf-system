@@ -1,0 +1,52 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <ui:component>
+
+        <p:dialog widgetVar="editarPerfil" header="Editar Perfil" showEffect="fade" hideEffect="fade" modal="true" resizable="false">  
+            <h:form id="eperf">
+                <h:panelGrid columns="2" columnClasses="column" cellpadding="5">
+
+
+                    <h:outputLabel value="Nombre: " style="font-weight: bold"/>  
+                    <p:inplace>
+                        <p:inputText value="#{perfilController.selected.nombrePerfil}" required="true">
+                            <f:validateLength maximum="15" />
+                        </p:inputText>
+                    </p:inplace>
+
+                    <h:outputLabel value="Permiso Administración" style="font-weight: bold"/>  
+                    <p:inplace>
+                        <p:selectBooleanCheckbox value="#{perfilController.selected.permisoAdministracion}" /> 
+                    </p:inplace>
+                    <h:outputLabel value="Permiso Registros Contables" style="font-weight: bold"/>  
+                    <p:inplace>
+                        <p:selectBooleanCheckbox value="#{perfilController.selected.permisoRegistroContable}" /> 
+                    </p:inplace>
+                    <h:outputLabel value="Permiso Registros Costo" style="font-weight: bold"/>  
+                    <p:inplace>
+                        <p:selectBooleanCheckbox value="#{perfilController.selected.permisoRegistroCosto}" />
+                    </p:inplace>
+                    <h:outputLabel value="Permiso Libros" style="font-weight: bold"/>  
+                    <p:inplace>
+                        <p:selectBooleanCheckbox value="#{perfilController.selected.permisoLibros}" />
+                    </p:inplace>
+                    <h:outputLabel value="Permiso Estados Financieros" style="font-weight: bold"/>  
+                    <p:inplace>
+                        <p:selectBooleanCheckbox value="#{perfilController.selected.permisoEstadosFinancieros}" />
+                    </p:inplace>
+                    <h:outputLabel value="Permiso Mantenimiento" style="font-weight: bold"/>  
+                    <p:inplace>
+                        <p:selectBooleanCheckbox value="#{perfilController.selected.permisoMantenimiento}" />
+                    </p:inplace>
+                    <p:commandButton value="Guardar" icon="guardar" update="currentUI" oncomplete="editarPerfil.hide()" actionListener="#{perfilController.update}"/>
+                    <p:commandButton value="Eliminar" icon="eliminar" onclick="editarPerfil.hide()" oncomplete="eliminarPerfil.show()"/>
+                </h:panelGrid>
+            </h:form>
+        </p:dialog>
+    </ui:component>
+</html>

@@ -1,0 +1,19 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <ui:component>
+        <p:dialog widgetVar="buscarPeriodoP" header="Seleccionar Periodo" showEffect="fade" hideEffect="fade" modal="true" resizable="false">  
+            <h:form id="bppl">
+                <p:selectOneListbox value="#{planillaController.periodo}" style="width: 250px; height: 300px">  
+                        <f:selectItem itemLabel="" itemValue=""/> 
+                        <f:selectItems value="#{periodoController.itemsSelect}"/> 
+                </p:selectOneListbox>
+                <p:commandButton value="Aceptar" icon="aceptar" onclick="buscarPeriodoP.hide()" update="currentUI"/>
+            </h:form>
+        </p:dialog>
+    </ui:component>
+</html>

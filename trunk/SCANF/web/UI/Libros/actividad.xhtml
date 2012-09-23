@@ -1,0 +1,87 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <ui:component>
+
+        <p:tabView effect="fade" style="min-height: 500px">
+            <p:tab title="Actividades Realizadas">
+                <h:panelGroup id="actividades">
+                    <p:commandButton value="Periodo" style="padding-left: 25px" onclick="buscarPeriodoA.show()" icon="calendario"/>
+                    <h:outputText value="Seleccionado" rendered="#{actividadServicioController.periodoNoNulo}" style="font-size: 10px; padding-left: 5px; color: #B70000" />
+                    <h:outputLabel value="Servicio:" style="font-size: 12px; padding-left: 10px; padding-right: 10px" rendered="#{!actividadServicioController.servicioNoNulo}"/>
+                    <p:autoComplete forceSelection="true" style="font-size: 13px; padding-right: 10px"
+                                    value="#{servicioController.servicio}" required="true"
+                                    completeMethod="#{servicioController.autocomplete}" rendered="#{!actividadServicioController.servicioNoNulo}"
+                                    var ="servicio" itemLabel="#{servicio}" itemValue="#{servicio}"
+                                    converter="#{servicioControllerConverter}" maxResults="5" disabled="#{actividadServicioController.actividadNoNula}"/>
+                    <p:commandButton value="Aceptar" update="actividades" actionListener="#{actividadServicioController.mostrarServicio}" rendered="#{!actividadServicioController.servicioNoNulo}" icon="aceptar">
+                        <f:attribute name="servicio" value="#{servicioController.servicio}" />
+                    </p:commandButton>
+
+                    <h:outputLabel value="Actividad:" style="font-size: 12px; padding-left: 10px" rendered="#{actividadServicioController.servicioNoNulo}"/>
+                    <p:autoComplete style="font-size: 13px; padding-left: 5px; font-size: 13px"
+                                    value="#{actividadController.actividad}"
+                                    completeMethod="#{actividadController.autocomplete}" dropdown="true" scrollHeight="200" 
+                                    var ="actividad" itemLabel="#{actividad}" itemValue="#{actividad}"
+                                    converter="#{actividadControllerConverter}" rendered="#{actividadServicioController.servicioNoNulo}"/>
+                    <p:commandButton value="Aceptar" update="actividades" actionListener="#{actividadServicioController.mostrarActividad}" rendered="#{actividadServicioController.servicioNoNulo}" icon="aceptar">
+                        <f:attribute name="actividad" value="#{actividadController.actividad}" />
+                    </p:commandButton>
+                    <p:menuButton value="Opciones" style="float: right; padding-right: 25px; font-size: 10px" rendered="#{actividadServicioController.servicioNoNulo}">
+                        <p:menuitem value="Buscar Servicio" style="font-size: 10px; color: #999" action="#{actividadServicioController.reset}" update="actividades" icon="buscar"/>
+                        <p:menuitem value="Imprimir" style="font-size: 10px; color: #999" icon="imprimir" actionListener="#{usuarioController.imprimir}">
+                            <f:attribute name="tabla" value="actividad"/>
+                        </p:menuitem>
+                    </p:menuButton>
+                    <p:separator />
+                    <p:dataTable var="item" value="#{actividadServicioController.itemsLibro}" paginator="true" rows="10"
+                                 emptyMessage="No se encontraron resultados" sortOrder="descending" 
+                                 sortBy="#{item.fechaActividadServicio}" style="padding-left: 25px; padding-right: 25px; min-width: 500px;" rendered="#{actividadServicioController.servicioNoNulo}">
+
+                        <f:facet name="header">
+                            <h:outputText  value = "#{actividadServicioController.servicio.nombreServicio}"/>
+                            <h:outputText  value = " #{actividadServicioController.actividad.nombreActividad}" rendered="#{actividadServicioController.actividadNoNula}" style="font-size: 12px"/>
+                        </f:facet>
+
+                        <p:column headerText="Fecha" sortBy="#{item.fechaActividadServicio}" filterBy="#{item.fechaActividadServicio}" filterMatchMode="contains" 
+                                  style="font-size: 12px; text-align: center">
+                            <h:outputText value="#{item.fechaActividadServicio}" >
+                                <f:convertDateTime pattern="dd/MM/yyyy" />
+                            </h:outputText>
+                        </p:column>
+
+                        <p:column headerText="Actividad" sortBy="#{item.actividad.nombreActividad}" filterBy="#{item.actividad.nombreActividad}" style="font-size: 14px" >
+                            <h:outputText value="#{item.actividad.nombreActividad}"/>
+                        </p:column>
+
+                        <p:column headerText="Inductor" sortBy="#{item.actividad.idInductorActividad.nombreInductorActividad}"  filterBy="#{item.actividad.idInductorActividad.nombreInductorActividad}" 
+                                  style="font-size: 14px" >
+                            <h:outputText value="#{item.actividad.idInductorActividad.nombreInductorActividad}"/>
+                        </p:column>
+
+                        <p:column headerText="Valor Inductor" sortBy="#{item.valorInductorActividad}"
+                                  style="font-size: 14px; text-align: right" >
+                            <h:outputText value="#{item.valorInductorActividad}"/>
+                        </p:column>
+
+                        <p:column headerText="Repeticiones de Actividad" sortBy="#{item.numeroRepeticionesActividad}"
+                                  style="font-size: 14px; text-align: right" >
+                            <h:outputText value="#{item.numeroRepeticionesActividad}"/>
+                        </p:column>
+
+                        <p:column headerText="Descripción" sortBy="#{item.descipcionActividadServicio}"
+                                  style="font-size: 14px" >
+                            <h:outputText value="#{item.descipcionActividadServicio}"/>
+                        </p:column>
+
+                    </p:dataTable>
+                </h:panelGroup>
+            </p:tab>
+        </p:tabView> 
+
+    </ui:component>
+</html>

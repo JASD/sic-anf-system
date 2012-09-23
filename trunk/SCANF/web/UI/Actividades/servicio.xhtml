@@ -1,0 +1,44 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <ui:component>
+
+        <p:tabView effect="fade" style="min-height: 500px" dynamic="true">
+            <p:tab title="Servicio">
+                <h:panelGroup id="servicio">
+                    <p:separator />
+                    <h:panelGrid columns="2" cellpadding="5" > 
+                        <h:outputLabel value="Fecha: "/>  
+                        <p:calendar value="#{servicioClienteController.servicioCliente.fechaServicioCliente}" required="true" locale="es" pattern="yyyy/MM/dd" readOnlyInputText="true" effect="fadeIn"/>
+
+                        <h:outputLabel value="Tipo Servicio: "/>  
+                        <p:selectOneMenu value="#{servicioClienteController.servicioCliente.tipoServicio}" effect="fade" style="width: 220px" required="true">
+                            <f:selectItem itemLabel="" itemValue=""/> 
+                            <f:selectItems value="#{tipoServicioController.itemsSelect}"/>
+                        </p:selectOneMenu>
+
+                        <h:outputLabel value="Cliente: " />  
+                        <p:autoComplete forceSelection="true" required="true"
+                                        value="#{servicioClienteController.servicioCliente.cliente}" maxResults="5"
+                                        completeMethod="#{clienteController.autocomplete}" scrollHeight="200" 
+                                        var ="cliente" itemLabel="#{cliente}" itemValue="#{cliente}"
+                                        converter="#{clienteControllerConverter}"/>
+
+                        <h:outputLabel value="Términos Servicio: "/>  
+                        <p:inputTextarea value="#{servicioClienteController.servicioCliente.terminosServicioCliente}" autoResize="true" 
+                                         maxlength="500"/>
+
+                        <p:commandButton value="Descartar" icon="eliminar" update="currentUI" action="#{servicioClienteController.reset}" />
+                        <p:commandButton value="Guardar" icon="guardar" title="Guardar" actionListener="#{servicioClienteController.guardarServicio}" update="currentUI" >
+                            <f:attribute name="periodo" value="#{periodoController.actual}" />
+                        </p:commandButton>
+                    </h:panelGrid>
+                </h:panelGroup>
+            </p:tab>
+        </p:tabView> 
+    </ui:component>
+</html>

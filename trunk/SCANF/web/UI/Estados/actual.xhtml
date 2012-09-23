@@ -1,0 +1,168 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <ui:component>
+        <p:wizard >
+
+            <p:tab title="Resultados del Período">
+
+                <h:panelGrid columns="7" cellspacing="10">
+                    <h:outputLabel value="Balance de Comprobación"/>
+                    <p:commandButton value="Preparar" actionListener="#{partidaController.fechar}" icon="seleccionar" update="currentUI">
+                        <f:attribute name="perfacade" value="#{periodoController.ejbFacade}" />
+                        <f:attribute name="periodo" value="#{periodoController.actual}" />
+                    </p:commandButton>
+                    <p:commandButton icon="pdf" ajax="false" actionListener="#{comprobacion.PDF}" title="PDF"/>
+                    <p:commandButton icon="docx" ajax="false" actionListener="#{comprobacion.DOCX}" title="WORD"/>
+                    <p:commandButton icon="excel" ajax="false" actionListener="#{comprobacion.XLSX}" title="EXCEL"/>
+                    <p:commandButton icon="odt" ajax="false" actionListener="#{comprobacion.ODT}" title="ODT"/>
+                    <p:commandButton icon="ppt" ajax="false" actionListener="#{comprobacion.PPT}" title="PPT"/>
+
+                    <h:outputLabel value="Estado de Resultados"/>
+                    <p:commandButton icon="pdf" ajax="false" actionListener="#{resultados.PDF}" title="PDF"/>
+                    <p:commandButton icon="docx" ajax="false" actionListener="#{resultados.DOCX}" title="WORD"/>
+                    <p:commandButton icon="excel" ajax="false" actionListener="#{resultados.XLSX}" title="EXCEL"/>
+                    <p:commandButton icon="odt" ajax="false" actionListener="#{resultados.ODT}" title="ODT"/>
+                    <p:commandButton icon="ppt" ajax="false" actionListener="#{resultados.PPT}" title="PPT"/>
+
+
+                </h:panelGrid>
+
+            </p:tab>
+            <p:tab title="Estados Financieros" >
+
+                <h:panelGrid columns="7" cellspacing="10">
+
+                    <h:outputLabel value="Estado de Capital"/>
+                    <p:commandButton value="Preparar" actionListener="#{partidaController.preCierre}" icon="seleccionar" update="currentUI">
+
+                        <f:attribute name="periodo" value="#{periodoController.actual}" />
+                        <f:attribute name="transafacade" value="#{transaccionController.ejbFacade}" />
+                        <f:attribute name="cuentafacade" value="#{cuentaController.ejbFacade}" />
+                        <f:attribute name="subfacade" value="#{subCuentaController.ejbFacade}" />
+                        <f:attribute name="perfacade" value="#{periodoController.ejbFacade}" />
+                        <f:attribute name="planilla" value="#{planillaController.ejbFacade}" />
+                        <f:attribute name="empleados" value="#{empleadoController.ejbFacade}" />
+                    </p:commandButton>
+                    <p:commandButton icon="pdf" ajax="false" actionListener="#{capital.PDF}" title="PDF"/>
+                    <p:commandButton icon="docx" ajax="false" actionListener="#{capital.DOCX}" title="WORD"/>
+                    <p:commandButton icon="excel" ajax="false" actionListener="#{capital.XLSX}" title="EXCEL"/>
+                    <p:commandButton icon="odt" ajax="false" actionListener="#{capital.ODT}" title="ODT"/>
+                    <p:commandButton icon="ppt" ajax="false" actionListener="#{capital.PPT}" title="PPT"/>
+
+
+                    <h:outputLabel value="Balance General"/>
+                    <p:commandButton icon="pdf" ajax="false" actionListener="#{general.PDF}" title="PDF"/>
+                    <p:commandButton icon="docx" ajax="false" actionListener="#{general.DOCX}" title="WORD"/>
+                    <p:commandButton icon="excel" ajax="false" actionListener="#{general.XLSX}" title="EXCEL"/>
+                    <p:commandButton icon="odt" ajax="false" actionListener="#{general.ODT}" title="ODT"/>
+                    <p:commandButton icon="ppt" ajax="false" actionListener="#{general.PPT}" title="PPT"/>
+
+                </h:panelGrid>
+
+
+            </p:tab>
+            <p:tab title="Asignar CIS a Actividades">
+
+                <h:panelGroup id="asignar">
+
+
+                    <h:outputLabel value="Total CIS Período: #{periodoController.actual.totalCisPeriodo}"/>
+                    <p:separator />
+
+                    <h:panelGrid columns="2" cellpadding="5" > 
+
+                        <h:outputLabel value="Actividad:"/>
+                        <p:autoComplete style="font-size: 13px; padding-left: 5px; font-size: 13px"
+                                        value="#{actividadServicioController.costos.actividad}"
+                                        completeMethod="#{actividadController.autocomplete}" dropdown="true" scrollHeight="200" 
+                                        var ="actividad" itemLabel="#{actividad}" itemValue="#{actividad}"
+                                        converter="#{actividadControllerConverter}"/>
+
+                        <h:outputLabel value="% de Asignación: "/>  
+                        <p:inputMask value="#{actividadServicioController.costos.valorInductorRecurso}" mask="0.99">
+                        </p:inputMask>
+
+
+                        <p:commandButton value="Agregar" icon="nuevo" update="asignar" action="#{actividadServicioController.agregarInductorRecurso}" />
+                        <p:commandButton value="Reiniciar" icon="reset" update="asignar" action="#{actividadServicioController.reset2}" />
+
+                    </h:panelGrid>
+                    <p:separator />
+
+                    <p:commandButton value="Guardar" icon="guardar" title="Guardar" actionListener="#{actividadServicioController.calcularCostoActividad}" update="currentUI" >
+                        <f:attribute name="periodo" value="#{periodoController.actual}" />
+                        <f:attribute name="costos" value="#{costoActividadController.ejbFacade}" />
+                    </p:commandButton>
+
+                    <p:separator />
+                    <p:dataTable value="#{actividadServicioController.costos_con}" var="costo" emptyMessage="Asignar CIF">  
+                        <p:column>  
+                            <f:facet name="header">  
+                                <h:outputText value="Actividad" />  
+                            </f:facet>  
+                            <h:outputText value="#{costo.actividad.nombreActividad}" />  
+                        </p:column>
+                        <p:column>  
+                            <f:facet name="header">  
+                                <h:outputText value="% Asignado" />  
+                            </f:facet>  
+                            <h:outputText value="#{costo.valorInductorRecurso}" style="text-align: right" />
+
+                        </p:column> 
+                    </p:dataTable>
+                </h:panelGroup>
+            </p:tab>
+
+            <p:tab title="Informe de Costos" >
+
+                <h:panelGrid columns="3" cellspacing="10">
+
+                    <h:outputLabel value="Costo de Servicios"/>
+                    <p:commandButton value="Preparar" actionListener="#{servicioController.calcularCostoServicio}" icon="seleccionar" update="currentUI">
+                        <f:attribute name="periodo" value="#{periodoController.actual}" />
+                        <f:attribute name="costo" value="#{costoServicioController.ejbFacade}" />
+                        <f:attribute name="act_serv" value="#{actividadServicioController.ejbFacade}" />
+                        <f:attribute name="costo_act" value="#{costoActividadController.ejbFacade}" />
+                    </p:commandButton>
+
+                    <p:commandButton value="Generar" icon="imprimir" actionListener="#{usuarioController.imprimir}">
+                        <f:attribute name="tabla" value="costo_servicios"/>
+
+                    </p:commandButton>
+
+                    <h:outputLabel value="Costo de Actividades" />
+
+                    <p:commandButton value="Generar" icon="imprimir" actionListener="#{usuarioController.imprimir}">
+                        <f:attribute name="tabla" value="costo_actividades"/>
+                    </p:commandButton>
+
+
+
+                </h:panelGrid>
+            </p:tab>
+
+            <p:tab title="Cierre">
+
+                <h:panelGrid columns="2" cellspacing="10">
+                    <h:outputLabel value="Cerrar Período"/>
+                    <p:commandButton icon="salir" actionListener="#{partidaController.cierrePeriodo}" update="currentUI">
+                        <f:attribute name="periodo" value="#{periodoController.actual}" />
+                        <f:attribute name="transafacade" value="#{transaccionController.ejbFacade}" />
+                        <f:attribute name="cuentafacade" value="#{cuentaController.ejbFacade}" />
+                        <f:attribute name="subfacade" value="#{subCuentaController.ejbFacade}" />
+                        <f:attribute name="perfacade" value="#{periodoController.ejbFacade}" />
+                        <f:attribute name="planilla" value="#{planillaController.ejbFacade}" />
+                        <f:attribute name="empleados" value="#{empleadoController.ejbFacade}" />
+                    </p:commandButton>
+
+                </h:panelGrid>
+            </p:tab>
+
+        </p:wizard> 
+    </ui:component>
+</html>

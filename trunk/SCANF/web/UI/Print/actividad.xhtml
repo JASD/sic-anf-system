@@ -1,0 +1,65 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:head >
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+        <title>Actividades</title>
+        <h:outputStylesheet name="css/home.css"/>
+    </h:head>
+    <h:body >
+        <h:form id="printForm">
+            <p:commandButton type="button" icon="imprimir" title="Imprimir">
+                <p:printer target="tabla"/>
+            </p:commandButton>
+            <p:commandButton actionListener="#{usuarioController.goHome}" value="Regresar" title="Regresar" />
+
+            <p:separator /> 
+            <p:dataTable id="tabla" var="item" value="#{actividadServicioController.itemsLibro}" 
+                         emptyMessage="No se encontraron resultados" sortOrder="descending" 
+                         sortBy="#{item.fechaActividadServicio}" style="padding-left: 25px; padding-right: 25px; min-width: 500px;" rendered="#{actividadServicioController.servicioNoNulo}">
+
+                <f:facet name="header">
+                    <h:outputText  value = "#{actividadServicioController.servicio.nombreServicio}"/>
+                    <h:outputText  value = " #{actividadServicioController.actividad.nombreActividad}" rendered="#{actividadServicioController.actividadNoNula}" style="font-size: 12px"/>
+                </f:facet>
+
+                <p:column headerText="Fecha"  
+                          style="font-size: 12px; text-align: center">
+                    <h:outputText value="#{item.fechaActividadServicio}" >
+                        <f:convertDateTime pattern="dd/MM/yyyy" />
+                    </h:outputText>
+                </p:column>
+
+                <p:column headerText="Actividad"  style="font-size: 14px" >
+                    <h:outputText value="#{item.actividad.nombreActividad}"/>
+                </p:column>
+
+                <p:column headerText="Inductor" 
+                          style="font-size: 14px" >
+                    <h:outputText value="#{item.actividad.idInductorActividad.nombreInductorActividad}"/>
+                </p:column>
+
+                <p:column headerText="Valor Inductor" 
+                          style="font-size: 14px; text-align: right" >
+                    <h:outputText value="#{item.valorInductorActividad}"/>
+                </p:column>
+
+                <p:column headerText="Repeticiones de Actividad" 
+                          style="font-size: 14px; text-align: right" >
+                    <h:outputText value="#{item.numeroRepeticionesActividad}"/>
+                </p:column>
+
+                <p:column headerText="Descripción" 
+                          style="font-size: 14px" >
+                    <h:outputText value="#{item.descipcionActividadServicio}"/>
+                </p:column>
+
+            </p:dataTable>
+        </h:form>
+    </h:body>
+</html>
+

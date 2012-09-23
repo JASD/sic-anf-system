@@ -1,0 +1,108 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <ui:component>
+
+        <p:tabView effect="fade" style="min-height: 500px" dynamic="true">
+            <p:tab title="Clientes">
+
+                <p:menuButton value="Opciones" style=" padding-right: 25px; font-size: 10px">
+                    <p:menuitem value="Imprimir" style="font-size: 10px; color: #999" icon="imprimir" actionListener="#{usuarioController.imprimir}">
+                        <f:attribute name="tabla" value="cliente"/>
+                    </p:menuitem>
+                </p:menuButton>
+
+                <h:panelGroup id="clientes" >
+
+                    <h:outputText value="Registros #{clienteController.pagination.pageFirstItem + 1} - #{clienteController.pagination.pageLastItem + 1} de #{clienteController.pagination.itemsCount}" style="font-size: 10px; padding-left: 25px; padding-right: 5px" rendered="#{clienteController.items.rowCount > 0}"/>
+
+                    <p:commandButton action="#{clienteController.previous}" icon="izquierda" rendered="#{clienteController.pagination.hasPreviousPage}" update="clientes" />
+                    <p:commandButton action="#{clienteController.next}" icon="derecha" rendered="#{clienteController.pagination.hasNextPage}" update="clientes" />
+
+                    <p:separator />
+                    <p:dataTable var="item" value="#{clienteController.items}" paginator="true" rows="10"
+                                 emptyMessage="No se encontraron resultados" sortBy="#{item.numeroCliente}" 
+                                 style="padding-left: 25px; padding-right: 25px; min-width: 500px;">
+
+                        <f:facet name="header">  
+                            Clientes  
+                        </f:facet>
+                        <p:column>
+                            <p:commandButton icon="ver"  action="#{clienteController.prepareView}" update="mc" oncomplete="serviciosCliente.show()" title=" Ver Servicios Brindados"/>
+                        </p:column>
+                        <p:column headerText="Nombres" sortBy="#{item.primerNombreCliente}"  style="font-size: 14px" >
+                            <h:outputText value="#{item.primerNombreCliente} #{item.segundoNombreCliente}"/>
+                        </p:column>
+                        <p:column headerText="Apellidos" sortBy="#{item.primerApellidoCliente}" style="font-size: 12px">
+                            <h:outputText value="#{item.primerApellidoCliente} #{item.segundoApellidoCliente}"/>
+                        </p:column>
+                        <p:column headerText="Télefono" sortBy="#{item.telefonoCliente}" style="font-size: 12px; text-align: center">
+                            <h:outputText value="#{item.telefonoCliente}"/>
+                        </p:column>
+                        <p:column headerText="Email" sortBy="#{item.emailCliente}" style="font-size: 12px">
+                            <h:outputText value="#{item.emailCliente}"/>
+                        </p:column>
+                         <p:column headerText="Aseguradora" sortBy="#{item.idAseguradora.nombreAseguradora}" style="font-size: 12px">
+                            <h:outputText value="#{item.idAseguradora.nombreAseguradora}"/>
+                        </p:column>
+                        <p:column headerText="Activo / Inactivo" sortBy="#{item.estadoCliente}" style="font-size: 12px; text-align: center">
+                            <p:selectBooleanCheckbox value="#{item.estadoCliente}" disabled="true"/> 
+                        </p:column>
+                    </p:dataTable>
+                </h:panelGroup>
+            </p:tab>
+            <p:tab title="Aseguradoras">
+                <p:menuButton value="Opciones" style="padding-right: 25px; font-size: 10px">
+                    <p:menuitem value="Imprimir" style="font-size: 10px; color: #999" icon="imprimir" actionListener="#{usuarioController.imprimir}">
+                        <f:attribute name="tabla" value="aseguradora"/>
+                    </p:menuitem>
+                </p:menuButton>
+
+
+
+                <h:panelGroup id="aseguradoras" >
+
+
+                    <h:outputText value="Registros #{aseguradoraController.pagination.pageFirstItem + 1} - #{aseguradoraController.pagination.pageLastItem + 1} de #{aseguradoraController.pagination.itemsCount}" style="font-size: 10px; padding-left: 25px; padding-right: 5px" rendered="#{aseguradoraController.items.rowCount > 0}"/>
+
+                    <p:commandButton action="#{aseguradoraController.previous}" icon="izquierda" rendered="#{aseguradoraController.pagination.hasPreviousPage}" update="aseguradoras" />
+                    <p:commandButton action="#{aseguradoraController.next}" icon="derecha" rendered="#{aseguradoraController.pagination.hasNextPage}" update="aseguradoras" />
+
+                    <p:separator />
+
+
+                    <p:dataTable id="ase" var="item" value="#{aseguradoraController.items}" paginator="true" rows="10"
+                                 emptyMessage="No se encontraron resultados" sortBy="#{item.idAseguradora}" 
+                                 style="padding-left: 25px; padding-right: 25px; min-width: 500px;">
+
+                        <f:facet name="header">  
+                            Aseguradoras  
+                        </f:facet>
+                        <p:column>
+                            <p:commandButton icon="ver"  action="#{aseguradoraController.prepareView}" update="ma" oncomplete="clientesAseguradora.show()" title="Ver Clientes"/>
+                        </p:column>
+                        <p:column headerText="Nombre" sortBy="#{item.nombreAseguradora}"  style="font-size: 14px" >
+                            <h:outputText value="#{item.nombreAseguradora}"/>
+                        </p:column>
+
+                        <p:column headerText="Télefono" sortBy="#{item.telefonoAseguradora}" style="font-size: 12px; text-align: center">
+                            <h:outputText value="#{item.telefonoAseguradora}"/>
+                        </p:column>
+                        <p:column headerText="Email" sortBy="#{item.emailAseguradora}" style="font-size: 12px">
+                            <h:outputText value="#{item.emailAseguradora}"/>
+                        </p:column>
+                        <p:column headerText="Activa / Inactiva" sortBy="#{item.estadoAseguradora}" style="font-size: 12px; text-align: center">
+                            <p:selectBooleanCheckbox value="#{item.estadoAseguradora}" disabled="true"/> 
+                        </p:column>
+
+                    </p:dataTable>
+
+                </h:panelGroup>
+            </p:tab>
+        </p:tabView> 
+    </ui:component>
+</html>

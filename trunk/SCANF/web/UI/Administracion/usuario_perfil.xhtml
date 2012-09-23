@@ -1,0 +1,105 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <ui:component>
+
+        <p:tabView effect="fade" style="min-height: 500px" dynamic="true">
+            <p:tab title="Usuarios">
+
+                <p:menuButton value="Acciones" style="padding-right: 25px; font-size: 10px" >
+                    <p:menuitem value="Nuevo" style="font-size: 10px; color: #999" icon="nuevo" actionListener="#{usuarioController.prepareCreate}"  oncomplete="nuevoUser.show()" update="nuser"/>
+                </p:menuButton>
+
+                <h:panelGroup id="usuarios" >
+
+                    <h:outputText value="Registros #{usuarioController.pagination.pageFirstItem + 1} - #{usuarioController.pagination.pageLastItem + 1} de #{usuarioController.pagination.itemsCount}" style="font-size: 10px; padding-left: 25px; padding-right: 5px" rendered="#{usuarioController.items.rowCount > 0}"/>
+
+                    <p:commandButton action="#{usuarioController.previous}" icon="izquierda" rendered="#{usuarioController.pagination.hasPreviousPage}" update="usuarios" />
+                    <p:commandButton action="#{usuarioController.next}" icon="derecha" rendered="#{usuarioController.pagination.hasNextPage}" update="usuarios" />
+
+                    <p:separator />
+                    <p:dataTable var="item" value="#{usuarioController.items}"
+                                 emptyMessage="No se encontraron resultados" sortBy="#{item.idUsuario}" 
+                                 style="padding-left: 25px; padding-right: 25px; min-width: 500px;">
+
+                        <f:facet name="header">  
+                            Usuarios
+                        </f:facet>
+                        <p:column>
+                            <p:commandButton icon="seleccionar"  action="#{usuarioController.prepareView}" update="euser" oncomplete="editarUser.show()" title="Editar"/> 
+                        </p:column>
+                        <p:column headerText="Nombres" sortBy="#{item.primerNombreUsuario}"  style="font-size: 14px" >
+                            <h:outputText value="#{item.primerNombreUsuario} #{item.segundoNombreUsuario}"/>
+                        </p:column>
+                        <p:column headerText="Apellidos" sortBy="#{item.primerApellidoUsuario}" style="font-size: 12px">
+                            <h:outputText value="#{item.primerApellidoUsuario} #{item.segundoApellidoUsuario}"/>
+                        </p:column>
+                        <p:column headerText="Perfil" sortBy="#{item.idPerfil.nombrePerfil}" style="font-size: 12px; text-align: center">
+                            <h:outputText value="#{item.idPerfil.nombrePerfil}"/>
+                        </p:column>
+                    </p:dataTable>
+
+                </h:panelGroup>
+            </p:tab>
+            <p:tab title="Perfiles" >
+
+                <p:menuButton value="Acciones" style="padding-right: 25px; font-size: 10px" >
+                    <p:menuitem value="Nuevo" style="font-size: 10px; color: #999" icon="nuevo" actionListener="#{perfilController.prepareCreate}"  oncomplete="nuevoPerfil.show()" update="nperf"/>
+                </p:menuButton>
+
+                <h:panelGroup id="perfiles" >
+
+                    <h:outputText value="Registros #{perfilController.pagination.pageFirstItem + 1} - #{perfilController.pagination.pageLastItem + 1} de #{perfilController.pagination.itemsCount}" style="font-size: 10px; padding-left: 25px; padding-right: 5px" rendered="#{perfilController.items.rowCount > 0}"/>
+
+                    <p:commandButton action="#{perfilController.previous}" icon="izquierda" rendered="#{perfilController.pagination.hasPreviousPage}" update="perfiles" />
+                    <p:commandButton action="#{perfilController.next}" icon="derecha" rendered="#{perfilController.pagination.hasNextPage}" update="perfiles" />
+
+                    <p:separator />
+                    <p:dataTable var="item" value="#{perfilController.items}" 
+                                 emptyMessage="No se encontraron resultados" sortBy="#{item.idPerfil}" 
+                                 style="padding-left: 25px; padding-right: 25px; min-width: 500px">
+
+                        <f:facet name="header">  
+                            Perfiles 
+                        </f:facet>
+                        <p:column>
+                            <p:commandButton icon="seleccionar"  action="#{perfilController.prepareView}" update="eperf" oncomplete="editarPerfil.show()" title="Editar"/> 
+                        </p:column>
+    
+                        <p:column headerText="Nombre" sortBy="#{item.nombrePerfil}" style="font-size: 12px; text-align: center">
+                            <h:outputText value="#{item.nombrePerfil}"/>
+                        </p:column>
+
+                        <p:column headerText="Administración" sortBy="#{item.permisoAdministracion}" style="font-size: 12px; text-align: center">
+                            <p:selectBooleanCheckbox value="#{item.permisoAdministracion}" disabled="true"/> 
+                        </p:column>
+
+                        <p:column headerText="Registro Contable" sortBy="#{item.permisoRegistroContable}" style="font-size: 12px; text-align: center">
+                            <p:selectBooleanCheckbox value="#{item.permisoRegistroContable}" disabled="true"/> 
+                        </p:column>
+
+                        <p:column headerText="Registro Costo" sortBy="#{item.permisoRegistroCosto}" style="font-size: 12px; text-align: center">
+                            <p:selectBooleanCheckbox value="#{item.permisoRegistroCosto}" disabled="true"/> 
+                        </p:column>
+
+                        <p:column headerText="Estados Financieros" sortBy="#{item.permisoEstadosFinancieros}" style="font-size: 12px; text-align: center">
+                            <p:selectBooleanCheckbox value="#{item.permisoEstadosFinancieros}" disabled="true"/> 
+                        </p:column>
+
+                        <p:column headerText="Libros" sortBy="#{item.permisoLibros}" style="font-size: 12px; text-align: center">
+                            <p:selectBooleanCheckbox value="#{item.permisoLibros}" disabled="true"/> 
+                        </p:column>
+
+                        <p:column headerText="Mantenimiento" sortBy="#{item.permisoMantenimiento}" style="font-size: 12px; text-align: center">
+                            <p:selectBooleanCheckbox value="#{item.permisoMantenimiento}" disabled="true"/> 
+                        </p:column>
+                    </p:dataTable>
+                </h:panelGroup>
+            </p:tab>
+        </p:tabView> 
+    </ui:component>
+</html>

@@ -1,0 +1,63 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <ui:component>
+        <h:form id="vp">
+            <p:dialog widgetVar="vistaPrevia" header="Vista Previa Partida" showEffect="fade" hideEffect="fade" modal="true" resizable="false"> 
+
+                <h:panelGrid columns="2">  
+                    <h:outputLabel  value="Fecha:" />  
+                    <p:inputMask value="#{partidaController.partida.fechaPartida}" mask="99/99/9999" disabled="true">  
+                        <f:convertDateTime pattern="dd/MM/yyyy" />  
+                    </p:inputMask>
+
+                    <h:outputLabel  value="#{partidaController.partida.idDocumento.nombreDocumento} N°:" />  
+                    <p:inputText  value="#{partidaController.partida.numeroDocumento}" disabled="true"/>
+
+                    <h:outputLabel  value="Descripción:" />  
+                    <p:inputTextarea  value="#{partidaController.partida.descripcionPartida}" disabled="true"/>
+                </h:panelGrid>
+                <p:dataTable var="transaccion" value="#{partidaController.transacciones}" emptyMessage="No se encontraron resultados">
+                    <p:column  headerText="Código">
+                        #{transaccion.subCuenta.codigoSubcuenta}
+                    </p:column>
+                    <p:column headerText="Cuenta"> 
+                        #{transaccion.subCuenta.nombreSubcuenta}
+                    </p:column>
+                    <p:column headerText="Debe" style="text-align: right">
+                        <h:outputText value="#{transaccion.debe}">
+                            <f:convertNumber type="currency"  locale="#{usuarioController.locale}"/>
+                        </h:outputText>
+                        <f:facet name="footer">
+                            <h:outputText value="#{partidaController.partida.totalDebe}">
+                                <f:convertNumber type="currency"  locale="#{usuarioController.locale}"/>
+                            </h:outputText>
+                        </f:facet>  
+                    </p:column>
+                    <p:column headerText="Haber" style="text-align: right">
+                        <h:outputText value="#{transaccion.haber}">
+                            <f:convertNumber type="currency"  locale="#{usuarioController.locale}"/>
+                        </h:outputText>
+                        <f:facet name="footer">
+                            <h:outputText value="#{partidaController.partida.totalHaber}">
+                                <f:convertNumber type="currency"  locale="#{usuarioController.locale}"/>
+                            </h:outputText>
+                        </f:facet>  
+                    </p:column>
+                </p:dataTable>
+                <p:separator />
+                <p:commandButton value="Guardar" icon="guardar" title="Guardar" actionListener="#{partidaController.guardarPartida}" update="currentUI" onsuccess="vistaPrevia.hide()" >
+                    <f:attribute name="periodo" value="#{periodoController.actual}" />
+                    <f:attribute name="transafacade" value="#{transaccionController.ejbFacade}" />
+                    <f:attribute name="cuentafacade" value="#{cuentaController.ejbFacade}" />
+                    <f:attribute name="subfacade" value="#{subCuentaController.ejbFacade}" />
+                </p:commandButton>
+                <p:commandButton value="Descartar" title="Descartar" icon="eliminar" action="#{partidaController.reset}" update="currentUI" oncomplete="vistaPrevia.hide()"/>
+            </p:dialog>
+        </h:form>
+    </ui:component>
+</html>

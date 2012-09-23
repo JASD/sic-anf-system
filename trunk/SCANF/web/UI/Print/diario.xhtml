@@ -1,0 +1,68 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:head >
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+        <title>Registros</title>
+        <h:outputStylesheet name="css/home.css"/>
+    </h:head>
+    <h:body >
+        <h:form id="printForm">
+            <p:commandButton type="button" icon="imprimir" title="Imprimir">
+                <p:printer target="tabla"/>
+            </p:commandButton>
+            <p:commandButton actionListener="#{usuarioController.goHome}" value="Regresar" title="Regresar" />
+
+            <p:separator /> 
+            <p:dataTable id="tabla" var="item" value="#{partidaController.items}"
+                         emptyMessage="No se encontraron resultados" sortBy="#{item.correlativoPartida}" 
+                         style="padding-left: 25px; padding-right: 25px; min-width: 500px;">
+
+                <f:facet name="header">  
+                    Libro Diario  
+                </f:facet>
+                <p:subTable var="transaccion" value="#{item.transaccionList}">  
+                    <f:facet name="header">  
+                        Partida N° #{item.correlativoPartida}
+
+                    </f:facet>  
+
+                    <p:column  headerText="Código">
+                        #{transaccion.subCuenta.codigoSubcuenta}
+                    </p:column>
+                    <p:column headerText="Cuenta"> 
+                        #{transaccion.subCuenta.nombreSubcuenta}
+                    </p:column>
+                    <p:column headerText="Debe" style="text-align: right">
+                        <h:outputText value="#{transaccion.debe}">
+                            <f:convertNumber type="currency"  locale="#{usuarioController.locale}"/>
+                        </h:outputText>
+                        <f:facet name="footer">
+                            <h:outputText value="#{item.totalDebe}">
+                                <f:convertNumber type="currency"  locale="#{usuarioController.locale}"/>
+                            </h:outputText>
+                        </f:facet> 
+                    </p:column>
+                    <p:column headerText="Haber" style="text-align: right">
+                        <h:outputText value="#{transaccion.haber}">
+                            <f:convertNumber type="currency"  locale="#{usuarioController.locale}"/>
+                        </h:outputText>
+                    </p:column>
+                    <p:columnGroup type="footer">  
+                        <p:row>
+                            <p:column footerText=""/> 
+                            <p:column footerText="#{item.descripcionPartida}" style="text-align:right"/>  
+                            <p:column footerText="$ #{item.totalDebe}" style="text-align:right"/>  
+                            <p:column footerText="$ #{item.totalHaber}" style="text-align:right"/>  
+                        </p:row>
+                    </p:columnGroup>
+                </p:subTable>
+            </p:dataTable>
+        </h:form>
+    </h:body>
+</html>
+

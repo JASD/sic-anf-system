@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="estado_de_comprobacion_subreport_cuenta" pageWidth="552" pageHeight="752" whenNoDataType="NoDataSection" columnWidth="552" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["C:\\Users\\rokEr\\Desktop\\ireports\\Reportes\\"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="rubro" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["resultados ventas y productos"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[Select distinct Cuenta.subrubro_cuenta FROM Cuenta,Periodo,sub_cuenta,transaccion WHERE
+ rubro_cuenta="resultados ventas y productos" AND
+Cuenta.saldo_cuenta>0]]>
+	</queryString>
+	<field name="subrubro_cuenta" class="java.lang.String"/>
+	<variable name="suma_subrubro" class="java.lang.Float" resetType="None"/>
+	<variable name="suma_rubro1" class="java.lang.Float" calculation="Sum">
+		<variableExpression><![CDATA[]]></variableExpression>
+	</variable>
+	<group name="grupo">
+		<groupExpression><![CDATA[$F{subrubro_cuenta}]]></groupExpression>
+	</group>
+	<title>
+		<band height="14">
+			<staticText>
+				<reportElement x="101" y="0" width="197" height="14"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" isBold="true"/>
+				</textElement>
+				<text><![CDATA[RESULTADOS VENTAS Y PRODUCTOS]]></text>
+			</staticText>
+		</band>
+	</title>
+	<detail>
+		<band height="54">
+			<subreport>
+				<reportElement x="0" y="14" width="552" height="40"/>
+				<subreportParameter name="SUBREPORT_DIR">
+					<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="subrubro">
+					<subreportParameterExpression><![CDATA[$F{subrubro_cuenta}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="rubro_cuenta">
+					<subreportParameterExpression><![CDATA[$P{rubro}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<returnValue subreportVariable="SUMA" toVariable="suma_subrubro"/>
+				<returnValue subreportVariable="SUMA" toVariable="suma_rubro1" calculation="Sum"/>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "estado_de_resultado_subreport_cuentas.jasper"]]></subreportExpression>
+			</subreport>
+			<textField>
+				<reportElement x="101" y="0" width="187" height="14"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{subrubro_cuenta}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Band">
+				<reportElement x="471" y="0" width="61" height="14"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$V{suma_subrubro}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<summary>
+		<band height="15">
+			<textField evaluationTime="Auto" pattern="###0.00;(###0.00)">
+				<reportElement x="471" y="0" width="61" height="15"/>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{suma_rubro1}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="380" y="0" width="80" height="15"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[TOTAL:]]></text>
+			</staticText>
+		</band>
+	</summary>
+</jasperReport>

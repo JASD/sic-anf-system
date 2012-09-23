@@ -1,0 +1,92 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <ui:component>
+
+        <p:tabView effect="fade" style="min-height: 500px" dynamic="true">
+            <p:tab title="Partida">
+                <h:panelGroup id="partida">
+                    <p:separator />
+                    <h:panelGrid columns="4" cellpadding="5" > 
+                        <h:outputLabel value="Fecha: "/>  
+                        <p:calendar value="#{partidaController.partida.fechaPartida}" required="true" locale="es" pattern="yyyy/MM/dd" readOnlyInputText="true" effect="fadeIn"/>
+                        <h:outputLabel value="Documento: "/>  
+                        <p:selectOneMenu value="#{partidaController.partida.idDocumento}" effect="fade" style="width: 200px">
+                            <f:selectItem itemLabel="" itemValue=""/> 
+                            <f:selectItems value="#{documentoController.itemsSelect}"/>
+                        </p:selectOneMenu> 
+
+                        <h:outputLabel value="N° Documento: "/>  
+                        <p:inputText value="#{partidaController.partida.numeroDocumento}">
+                        </p:inputText>
+                        <h:outputLabel value="Descripción: "/>  
+                        <p:inputTextarea value="#{partidaController.partida.descripcionPartida}" autoResize="true" 
+                                         maxlength="150"/>
+
+                    </h:panelGrid>
+                    <p:separator />
+                    <h:panelGrid columns="2">
+                        <h:outputLabel value="SubCuenta: " />  
+                        <p:autoComplete forceSelection="true"
+                                        value="#{partidaController.transaccion.subCuenta}" maxResults="5"
+                                        completeMethod="#{subCuentaController.autocomplete}" scrollHeight="200" 
+                                        var ="subCuenta" itemLabel="#{subCuenta}" itemValue="#{subCuenta}"
+                                        converter="#{subCuentaControllerConverter}"/>
+
+                        <h:outputLabel value="Debe:"/>  
+                        <p:inputText  value="#{partidaController.transaccion.debe}" >
+
+                        </p:inputText>
+
+                        <h:outputLabel value="Haber:" />  
+                        <p:inputText  value="#{partidaController.transaccion.haber}" >
+
+                        </p:inputText>
+
+                    </h:panelGrid>
+                    <p:commandButton value="Agregar" icon="nuevo" update="partida" action="#{partidaController.agregarTransaccion}" />
+                    <p:commandButton value="Descartar" icon="eliminar" update="partida" action="#{partidaController.reset}" />
+
+                    <p:commandButton value="Verificar" icon="aceptar" title="Guardar" action="#{partidaController.vistaPrevia}" update="currentUI" rendered="#{!partidaController.agrego}"/>
+                    <p:commandButton value="Guardar" icon="guardar" title="Guardar" actionListener="#{partidaController.guardarPartida}" update="currentUI" rendered="#{partidaController.agrego}" >
+                        <f:attribute name="periodo" value="#{periodoController.actual}" />
+                        <f:attribute name="transafacade" value="#{transaccionController.ejbFacade}" />
+                        <f:attribute name="cuentafacade" value="#{cuentaController.ejbFacade}" />
+                        <f:attribute name="subfacade" value="#{subCuentaController.ejbFacade}" />
+                    </p:commandButton>
+
+                    <p:separator />
+                    <p:dataTable value="#{partidaController.transacciones}" var="transaccion" emptyMessage="Agregar Transacción">  
+                        <p:column>  
+                            <f:facet name="header">  
+                                <h:outputText value="Código" />  
+                            </f:facet>  
+                            <h:outputText value="#{transaccion.subCuenta.codigoSubcuenta} #{transaccion.subCuenta.nombreSubcuenta}" />  
+                        </p:column>
+                        <p:column>  
+                            <f:facet name="header">  
+                                <h:outputText value="Debe" />  
+                            </f:facet>  
+                            <h:outputText value="#{transaccion.debe}" style="text-align: right">
+                                <f:convertNumber type="currency"  locale="#{usuarioController.locale}"/>
+                            </h:outputText>  
+                        </p:column> 
+
+                        <p:column>  
+                            <f:facet name="header">  
+                                <h:outputText value="Haber" style="text-align: right" />
+                            </f:facet>  
+                            <h:outputText value="#{transaccion.haber}" style="text-align: right">
+                                <f:convertNumber type="currency"  locale="#{usuarioController.locale}"/>
+                            </h:outputText>  
+                        </p:column> 
+                    </p:dataTable>
+                </h:panelGroup>
+            </p:tab>
+        </p:tabView> 
+    </ui:component>
+</html>

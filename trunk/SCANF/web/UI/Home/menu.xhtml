@@ -1,0 +1,126 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    <ui:component>
+        <p:accordionPanel >
+            <p:tab title="Registros Contables" rendered="#{usuarioController.user.idPerfil.permisoRegistroContable}">
+                <h:form>
+                    <p:commandLink update="currentUI" actionListener="#{usuarioController.updateUI}" action="#{partidaController.reset}">
+                        <f:attribute name="uiName" value="Registros/transaccion" />
+                        <h:outputText value="Transacción" styleClass="menuLink"/>  
+                    </p:commandLink>
+                    <br /><br />
+                    <p:commandLink update="currentUI" actionListener="#{usuarioController.updateUI}">
+                        <f:attribute name="uiName" value="Registros/planilla" />
+                        <h:outputText value="Planilla" styleClass="menuLink"/>  
+                    </p:commandLink>
+                    <br />
+                </h:form>
+            </p:tab>
+            <p:tab title="Actividades" rendered="#{usuarioController.user.idPerfil.permisoRegistroCosto}">
+                <h:form>
+                    <p:commandLink update="currentUI" actionListener="#{usuarioController.updateUI}">
+                        <f:attribute name="uiName" value="Actividades/servicio" />
+                        <h:outputText value="Registrar Servicio" styleClass="menuLink"/>  
+                    </p:commandLink>
+                    <br /><br />
+                    <p:commandLink update="currentUI" actionListener="#{usuarioController.updateUI}">
+                        <f:attribute name="uiName" value="Actividades/actividad" />
+                        <h:outputText value="Registrar Actividad" styleClass="menuLink"/>  
+                    </p:commandLink>
+                    <br />
+                </h:form>
+            </p:tab>
+            <p:tab title="Libros" rendered="#{usuarioController.user.idPerfil.permisoLibros}">
+                <h:form>
+                    <p:commandLink update="currentUI" actionListener="#{usuarioController.updateUI}" action="#{partidaController.unfind}" >
+                        <f:attribute name="uiName" value="Libros/diario" />
+                        <h:outputText value="Diario" styleClass="menuLink"/>  
+                    </p:commandLink>
+                    <br /><br />
+                    <p:commandLink update="currentUI" actionListener="#{usuarioController.updateUI}" action="#{transaccionController.reset}">
+                        <f:attribute name="uiName" value="Libros/mayor" />
+                        <h:outputText value="Mayor" styleClass="menuLink"/>  
+                    </p:commandLink>
+                    <br /><br />
+                    <p:commandLink update="currentUI" actionListener="#{usuarioController.updateUI}" action="#{servicioClienteController.reset}">
+                        <f:attribute name="uiName" value="Libros/servicio" />
+                        <h:outputText value="Servicios" styleClass="menuLink"/>  
+                    </p:commandLink>
+                    <br /><br />
+                    <p:commandLink update="currentUI" actionListener="#{usuarioController.updateUI}" action="${actividadServicioController.reset}">
+                        <f:attribute name="uiName" value="Libros/actividad" />
+                        <h:outputText value="Actividades" styleClass="menuLink"/>  
+                    </p:commandLink>
+                    <br /><br />
+                    <p:commandLink update="currentUI" actionListener="#{usuarioController.updateUI}" action="#{planillaController.reset}">
+                        <f:attribute name="uiName" value="Libros/planilla" />
+                        <h:outputText value="Planillas" styleClass="menuLink"/>  
+                    </p:commandLink>
+                    <br /><br />
+                    <p:commandLink update="currentUI" actionListener="#{usuarioController.updateUI}">
+                        <f:attribute name="uiName" value="Libros/cliente_aseguradora" />
+                        <h:outputText value="Clientes y Aseguradoras" styleClass="menuLink"/>  
+                    </p:commandLink>
+                    <br />
+                </h:form>
+            </p:tab>
+            <p:tab title="Estados Financieros" rendered="#{usuarioController.user.idPerfil.permisoEstadosFinancieros}">
+                <h:form>
+                    <p:commandLink update="currentUI" actionListener="#{usuarioController.updateUI}">
+                        <f:attribute name="uiName" value="Estados/actual" />
+                        <h:outputText value="Período Actual" styleClass="menuLink"/>  
+                    </p:commandLink>
+                    <br /><br />
+                </h:form>
+            </p:tab>
+            <p:tab title="Mantenimiento" rendered="#{usuarioController.user.idPerfil.permisoMantenimiento}">
+                <h:form>
+                    <p:commandLink update="currentUI" actionListener="#{usuarioController.updateUI}">
+                        <f:attribute name="uiName" value="Mantenimientos/cliente_aseguradora" />
+                        <h:outputText value="Clientes y Aseguradoras" styleClass="menuLink"/>  
+                    </p:commandLink>
+                    <br /><br />
+                    <p:commandLink update="currentUI" actionListener="#{usuarioController.updateUI}">
+                        <f:attribute name="uiName" value="Mantenimientos/servicio" />
+                        <h:outputText value="Servicios" styleClass="menuLink"/>  
+                    </p:commandLink>
+                    <br /><br />
+                    <p:commandLink update="currentUI" actionListener="#{usuarioController.updateUI}">
+                        <f:attribute name="uiName" value="Mantenimientos/actividad" />
+                        <h:outputText value="Actividades" styleClass="menuLink"/>  
+                    </p:commandLink>
+                    <br /><br />
+                    <p:commandLink update="currentUI" actionListener="#{usuarioController.updateUI}">
+                        <f:attribute name="uiName" value="Mantenimientos/empleado_documento" />
+                        <h:outputText value="Empleados y Documentos" styleClass="menuLink"/>  
+                    </p:commandLink>
+                    <br />
+                </h:form>
+            </p:tab>
+            <p:tab title="Administración" rendered="#{usuarioController.user.idPerfil.permisoAdministracion}">
+                <h:form>
+                    <p:commandLink update="currentUI" actionListener="#{usuarioController.updateUI}">
+                        <f:attribute name="uiName" value="Administracion/usuario_perfil" />
+                        <h:outputText value="Usuarios y Perfiles" styleClass="menuLink"/>  
+                    </p:commandLink>
+                    <br /><br />
+                    <p:commandLink update="currentUI" actionListener="#{usuarioController.updateUI}">
+                        <f:attribute name="uiName" value="Administracion/catalogo" />
+                        <h:outputText value="Catálogo de Cuentas" styleClass="menuLink"/>  
+                    </p:commandLink>
+                    <br /><br />
+                    <p:commandLink update="currentUI" actionListener="#{usuarioController.updateUI}">
+                        <f:attribute name="uiName" value="Administracion/recordatorios" />
+                        <h:outputText value="Recordatorios" styleClass="menuLink"/>  
+                    </p:commandLink>
+                    <br /><br />
+                </h:form>
+            </p:tab>
+        </p:accordionPanel>
+    </ui:component>
+</html>

@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="balance_general_master" pageWidth="612" pageHeight="792" whenNoDataType="NoDataSection" columnWidth="552" leftMargin="30" rightMargin="30" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="1"/>
+	<style name="Title" forecolor="#FFFFFF" fontName="Times New Roman" fontSize="50" isBold="false" pdfFontName="Times-Bold"/>
+	<style name="SubTitle" forecolor="#666666" fontName="Times New Roman" fontSize="18" isBold="false" pdfFontName="Times-Roman"/>
+	<style name="Column header" forecolor="#666666" fontName="Times New Roman" fontSize="14" isBold="true" pdfFontName="Times-Roman"/>
+	<style name="Detail" mode="Transparent" fontName="Times New Roman" pdfFontName="Times-Roman"/>
+	<style name="Row" mode="Transparent" fontName="Times New Roman" pdfFontName="Times-Roman">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$V{REPORT_COUNT}%2 == 0]]></conditionExpression>
+			<style mode="Opaque" backcolor="#F0EFEF"/>
+		</conditionalStyle>
+	</style>
+	<subDataset name="PieChartDataset"/>
+	<subDataset name="New Dataset 1">
+		<queryString language="SQL">
+			<![CDATA[Select distinct Cuenta.Codigo_cuenta, cuenta.nombre_cuenta, cuenta.saldo_cuenta,estado_periodo FROM Cuenta,Periodo,sub_cuenta,transaccion WHERE Periodo.Estado_periodo='1' AND Periodo.Numero_Periodo=Transaccion.Numero_Periodo  AND
+sub_cuenta.codigo_subcuenta=Transaccion.codigo_subcuenta AND
+cuenta.codigo_cuenta=sub_cuenta.codigo_cuenta AND tipo_cuenta="deudor"]]>
+		</queryString>
+		<field name="Codigo_cuenta" class="java.lang.String"/>
+		<field name="nombre_cuenta" class="java.lang.String"/>
+		<field name="saldo_cuenta" class="java.lang.Float"/>
+		<field name="estado_periodo" class="java.lang.Boolean"/>
+	</subDataset>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[Select fecha_inicio_periodo, fecha_fin_periodo FROM Periodo WHERE Periodo.Estado_periodo='1']]>
+	</queryString>
+	<field name="fecha_inicio_periodo" class="java.sql.Date"/>
+	<field name="fecha_fin_periodo" class="java.sql.Date"/>
+	<variable name="FECHA" class="java.util.Date" calculation="System"/>
+	<variable name="TOTAL_DEBE" class="java.lang.Number"/>
+	<variable name="TOTAL_HABER" class="java.lang.Number"/>
+	<variable name="ingresos" class="java.lang.Float"/>
+	<variable name="gastos" class="java.lang.Float"/>
+	<title>
+		<band height="150" splitType="Stretch">
+			<staticText>
+				<reportElement style="SubTitle" x="73" y="79" width="412" height="40"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="24" isBold="false"/>
+				</textElement>
+				<text><![CDATA[BALANCE GENERAL]]></text>
+			</staticText>
+			<frame>
+				<reportElement mode="Opaque" x="0" y="0" width="552" height="65" forecolor="#006699" backcolor="#006699"/>
+				<image>
+					<reportElement x="3" y="3" width="100" height="60"/>
+					<imageExpression><![CDATA["logo.jpg"]]></imageExpression>
+				</image>
+			</frame>
+			<staticText>
+				<reportElement style="Title" x="0" y="0" width="552" height="65"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="36" isBold="false"/>
+				</textElement>
+				<text><![CDATA[ASECON S.A DE C.V ]]></text>
+			</staticText>
+			<textField evaluationTime="Report" pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="324" y="65" width="227" height="14" forecolor="#006699"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[new Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement stretchType="RelativeToBandHeight" x="200" y="119" width="20" height="30"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="10" isBold="true" isUnderline="false" isStrikeThrough="false"/>
+					<paragraph lineSpacing="1_1_2"/>
+				</textElement>
+				<text><![CDATA[al]]></text>
+			</staticText>
+			<textField pattern="MMMMMMMMMM" isBlankWhenNull="false">
+				<reportElement x="254" y="119" width="50" height="30"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new Date()]]></textFieldExpression>
+			</textField>
+			<textField pattern="yyyy" isBlankWhenNull="false">
+				<reportElement x="319" y="119" width="21" height="30"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new Date()]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd" isBlankWhenNull="false">
+				<reportElement x="220" y="119" width="19" height="30"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement stretchType="RelativeToBandHeight" x="239" y="119" width="15" height="30"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="10" isBold="true" isUnderline="false" isStrikeThrough="false"/>
+					<paragraph lineSpacing="1_1_2"/>
+				</textElement>
+				<text><![CDATA[de]]></text>
+			</staticText>
+			<staticText>
+				<reportElement stretchType="RelativeToBandHeight" x="304" y="119" width="15" height="30"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="10" isBold="true" isUnderline="false" isStrikeThrough="false"/>
+					<paragraph lineSpacing="1_1_2"/>
+				</textElement>
+				<text><![CDATA[de]]></text>
+			</staticText>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="26">
+			<staticText>
+				<reportElement stretchType="RelativeToBandHeight" x="287" y="4" width="17" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="10" isBold="true" isUnderline="false" isStrikeThrough="false"/>
+					<paragraph lineSpacing="1_1_2"/>
+				</textElement>
+				<text><![CDATA[$]]></text>
+			</staticText>
+			<staticText>
+				<reportElement stretchType="RelativeToBandHeight" x="369" y="4" width="17" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="10" isBold="true" isUnderline="false" isStrikeThrough="false"/>
+					<paragraph lineSpacing="1_1_2"/>
+				</textElement>
+				<text><![CDATA[$]]></text>
+			</staticText>
+			<staticText>
+				<reportElement stretchType="RelativeToBandHeight" x="447" y="4" width="17" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="10" isBold="true" isUnderline="false" isStrikeThrough="false"/>
+					<paragraph lineSpacing="1_1_2"/>
+				</textElement>
+				<text><![CDATA[$]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="103">
+			<subreport>
+				<reportElement x="0" y="0" width="552" height="83"/>
+				<subreportParameter name="SUBREPORT_DIR">
+					<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="rubro"/>
+				<connectionExpression><![CDATA[java.sql.DriverManager.getConnection("jdbc:mysql://localhost/aseconsa","root","")]]></connectionExpression>
+				<subreportExpression><![CDATA["balance_general_subreport_cuenta_activo.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+		<band height="103">
+			<subreport>
+				<reportElement x="0" y="0" width="552" height="83"/>
+				<subreportParameter name="SUBREPORT_DIR">
+					<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="rubro"/>
+				<connectionExpression><![CDATA[java.sql.DriverManager.getConnection("jdbc:mysql://localhost/aseconsa","root","")]]></connectionExpression>
+				<subreportExpression><![CDATA["balance_general_subreport_cuenta_pasivo.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+		<band height="103">
+			<subreport>
+				<reportElement x="0" y="0" width="552" height="83"/>
+				<subreportParameter name="SUBREPORT_DIR">
+					<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="rubro"/>
+				<connectionExpression><![CDATA[java.sql.DriverManager.getConnection("jdbc:mysql://localhost/aseconsa","root","")]]></connectionExpression>
+				<subreportExpression><![CDATA["balance_general_subreport_cuenta_capital.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+		<band height="20"/>
+	</detail>
+	<pageFooter>
+		<band height="16" splitType="Stretch">
+			<frame>
+				<reportElement mode="Opaque" x="1" y="0" width="552" height="16" forecolor="#D0B48E" backcolor="#006699"/>
+				<textField>
+					<reportElement x="429" y="0" width="80" height="14" forecolor="#FFFFFF" backcolor="#FFFFFF"/>
+					<textElement textAlignment="Right"/>
+					<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+				</textField>
+				<textField evaluationTime="Report">
+					<reportElement x="511" y="0" width="40" height="14" forecolor="#FFFFFF"/>
+					<textElement/>
+					<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</pageFooter>
+</jasperReport>

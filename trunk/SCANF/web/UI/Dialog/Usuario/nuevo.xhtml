@@ -1,0 +1,60 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <ui:component>
+
+        <p:dialog widgetVar="nuevoUser" header="Nuevo Usuario" showEffect="fade" hideEffect="fade" modal="true" resizable="false">  
+            <h:form id="nuser">
+                <h:panelGrid columns="2" columnClasses="column" cellpadding="5">
+
+                    <h:outputLabel value="ID: " style="font-weight: bold"/>  
+                    <p:inputText value="#{usuarioController.selected.idUsuario}" required="true">
+                        <f:validateLength maximum="5" />
+                    </p:inputText>
+
+                    <h:outputLabel value="Perfil:" style="font-weight: bold"/>       
+                    <p:selectOneMenu value="#{usuarioController.selected.idPerfil}" effect="fade" style="width: 150px">
+                        <f:selectItems value="#{perfilController.itemsSelect}"/>
+                    </p:selectOneMenu>
+
+
+                    <h:outputLabel value="Primer Nombre: " style="font-weight: bold"/>  
+                    <p:inputText value="#{usuarioController.selected.primerNombreUsuario}" required="true">
+                        <f:validateLength maximum="50" />
+                    </p:inputText>
+
+
+                    <h:outputLabel value="Segundo Nombre: " style="font-weight: bold"/>  
+                    <p:inputText value="#{usuarioController.selected.segundoNombreUsuario}" >
+                        <f:validateLength maximum="50" />
+                    </p:inputText>
+
+
+                    <h:outputLabel value="Primer Apellido: " style="font-weight: bold"/>  
+                    <p:inputText value="#{usuarioController.selected.primerApellidoUsuario}" required="true">
+                        <f:validateLength maximum="50" />
+                    </p:inputText>
+
+
+                    <h:outputLabel value="Segundo Apellido: " style="font-weight: bold"/>  
+                    <p:inputText value="#{usuarioController.selected.segundoApellidoUsuario}" >
+                        <f:validateLength maximum="50" />
+                    </p:inputText>
+
+                    <h:outputLabel value="Contraseña: " style="font-weight: bold"/>  
+                    <p:password value="#{usuarioController.selected.contrasenaUsuario}" >
+                        <f:validateLength maximum="50" />
+                    </p:password>
+
+
+                    <p:commandButton value="Guardar" icon="guardar" update="currentUI" oncomplete="nuevoUser.hide()" actionListener="#{usuarioController.create}"/>
+
+                </h:panelGrid>
+            </h:form>
+        </p:dialog>
+    </ui:component>
+</html>

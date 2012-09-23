@@ -1,0 +1,45 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:head >
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+        <title>Registros</title>
+        <h:outputStylesheet name="css/home.css"/>
+    </h:head>
+    <h:body >
+        <h:form id="printForm">
+            <p:commandButton type="button" icon="imprimir" title="Imprimir">
+                <p:printer target="tabla"/>
+            </p:commandButton>
+            <p:commandButton actionListener="#{usuarioController.goHome}" value="Regresar" title="Regresar" />
+
+            <p:separator /> 
+            <p:dataTable id="tabla" var="item" value="#{cuentaController.all}"
+                         emptyMessage="No se encontraron resultados" sortBy="#{item.codigoCuenta}" 
+                         style="padding-left: 25px; padding-right: 25px; min-width: 500px;">
+
+                <f:facet name="header">  
+                    Cátalogo de Cuentas  
+                </f:facet>
+
+                <p:subTable var="subcuenta" value="#{item.subCuentaList}" >  
+                    <f:facet name="header">  
+                        #{item.rubroCuenta} #{item.subrubroCuenta} #{item.codigoCuenta} #{item.nombreCuenta}
+                    </f:facet>
+                    <p:column  headerText="Código" >
+                        #{subcuenta.codigoSubcuenta}
+                    </p:column>
+                    <p:column headerText="Nombre"> 
+                        #{subcuenta.nombreSubcuenta}
+                    </p:column>
+
+                </p:subTable>
+            </p:dataTable>
+        </h:form>
+    </h:body>
+</html>
+

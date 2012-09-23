@@ -1,0 +1,51 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <ui:component>
+
+        <p:dialog widgetVar="buscarPartida" header="Filtrar Partidas" showEffect="fade" hideEffect="fade" modal="true" resizable="false">  
+            <h:form id="bp">
+                <h:panelGrid columns="4">
+                    <h:outputLabel for="partidaInicial" value="Desde Partida N°:" />  
+                    <p:inputText id="partidaInicial" value="#{partidaController.filtro.partidaInicial}"> 
+                        <f:convertNumber integerOnly="true" /> 
+                    </p:inputText>
+                    <h:outputLabel for="partidaFinal" value="Hasta:" />  
+                    <p:inputText id="partidaFinal" value="#{partidaController.filtro.partidaFinal}"> 
+                        <f:convertNumber integerOnly="true" /> 
+                    </p:inputText>
+
+                    <h:outputLabel for="fecha1" value="Desde Fecha:" />  
+                    <p:calendar id="fecha1" value="#{partidaController.filtro.fechaInicial}" showButtonPanel="true" 
+                                readOnlyInputText="true" pattern="yyyy/MM/dd" navigator="true" 
+                                popupIconOnly="true" effect="fadeIn" locale="es"/>
+                    <h:outputLabel for="fecha2" value="Hasta:" />  
+                    <p:calendar id="fecha2" value="#{partidaController.filtro.fechaFinal}" showButtonPanel="true" 
+                                readOnlyInputText="true" pattern="yyyy/MM/dd" navigator="true" 
+                                popupIconOnly="true" effect="fadeIn" locale="es"/> 
+                    <h:outputLabel for="document" value="Documento:" />  
+                    <p:selectOneMenu value="#{partidaController.filtro.idDocumento}" effect="fade" style="width: 150px">
+                        <f:selectItem itemLabel="" itemValue=""/> 
+                        <f:selectItems value="#{documentoController.itemsSelect}"/>
+                    </p:selectOneMenu>  
+                    <h:outputLabel for="ndoc" value="N° Documento:" />  
+                    <p:inputText id="ndoc" value="#{partidaController.filtro.numeroDocumento}">
+                        <f:convertNumber integerOnly="true" /> 
+                    </p:inputText>
+                    <h:outputLabel for="des" value="Descripción:" />  
+                    <p:inputText id="des" value="#{partidaController.filtro.descripcion}" />
+                    <h:outputLabel for="coincidir" value="Coincidir Todos" />
+                    <p:selectBooleanCheckbox id="coincidir" value="#{partidaController.filtro.coincidir}" />  
+                </h:panelGrid>
+
+                <p:commandButton value="Buscar" icon="buscar" update="currentUI" oncomplete="buscarPartida.hide()" actionListener="#{partidaController.find}"/>
+                <p:commandButton value="Limpiar" icon="reset" type="reset"/>
+            </h:form>
+        </p:dialog>
+
+    </ui:component>
+</html>

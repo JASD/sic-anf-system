@@ -1,0 +1,118 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <ui:component>
+
+        <p:tabView effect="fade" style="min-height: 500px" dynamic="true">
+            <p:tab title="Período Actual">
+
+                <p:menuButton value="Opciones" style="padding-right: 25px; font-size: 10px">
+                    <p:menuitem value="Filtrar" style="font-size: 10px; color: #999" icon="filtro" onclick="#{partidaController.prepareFind()}" oncomplete="buscarPartida.show()"/>
+                    <p:menuitem value="Deshacer Filtro" actionListener="#{partidaController.unfind}" update="diario" style="font-size: 10px; color: #999" icon="filtroOff"/>  
+                    <p:menuitem value="Imprimir" style="font-size: 10px; color: #999" icon="imprimir" actionListener="#{usuarioController.imprimir}">
+                        <f:attribute name="tabla" value="diario"/>
+                    </p:menuitem>
+                </p:menuButton>
+
+                <h:panelGroup id="diario" >
+
+                    <h:outputText value="Registros #{partidaController.pagination.pageFirstItem + 1} - #{partidaController.pagination.pageLastItem + 1} de #{partidaController.pagination.itemsCount}" style="font-size: 10px; padding-left: 25px; padding-right: 5px" rendered="#{partidaController.items.rowCount > 0}"/>
+                    <h:outputText value="Filtro Activado" rendered="#{partidaController.isFiltering}" style="font-size: 10px; padding-left: 25px; padding-right: 5px; color: #B70000"/>
+                    <p:commandButton action="#{partidaController.previous}" icon="izquierda" rendered="#{partidaController.pagination.hasPreviousPage}" update="diario" />
+                    <p:commandButton action="#{partidaController.next}" icon="derecha" rendered="#{partidaController.pagination.hasNextPage}" update="diario" />
+
+                    <p:separator />
+                    <p:dataTable var="item" value="#{partidaController.items}"
+                                 emptyMessage="No se encontraron resultados" sortBy="#{item.correlativoPartida}" 
+                                 style="padding-left: 25px; padding-right: 25px; min-width: 500px;">
+
+                        <f:facet name="header">  
+                            Libro Diario  
+                        </f:facet>
+                        <p:column>
+                            <p:commandButton icon="ver"  action="#{partidaController.prepareView}" update="dp" oncomplete="detallePartida.show()" />
+                        </p:column>
+                        <p:column headerText="N°" sortBy="#{item.correlativoPartida}" style="font-size: 12px; text-align: center">  
+                            <h:outputText value="#{item.correlativoPartida}" />
+                        </p:column>
+                        <p:column headerText="Fecha" sortBy="#{item.fechaPartida}" style="font-size: 12px; text-align: center">
+                            <h:outputText value="#{item.fechaPartida}" >
+                                <f:convertDateTime pattern="dd/MM/yyyy" />
+                            </h:outputText>
+                        </p:column>
+                        <p:column headerText="Documento" sortBy="#{item.idDocumento.nombreDocumento}"  style="font-size: 14px" >
+                            <h:outputText value="#{item.idDocumento.idDocumento}"/>
+                        </p:column>
+                        <p:column headerText="# Documento" sortBy="#{item.numeroPartida}" style="font-size: 12px">
+                            <h:outputText value="#{item.numeroDocumento}"/>
+                        </p:column>
+                        <p:column headerText="Descripción" sortBy="#{item.descripcionPartida}" style="font-size: 12px">
+                            <h:outputText value="#{item.descripcionPartida}"/>
+                        </p:column>
+                    </p:dataTable>
+
+                </h:panelGroup>
+
+            </p:tab>
+            <p:tab title="Periodos Anteriores">
+                <h:panelGroup id="diariop">
+
+                    <p:commandButton value="Período" style="padding-left: 25px; padding-right: 15px" onclick="buscarPeriodo.show()" icon="calendario"/> 
+                    <h:outputText value="Seleccionado" rendered="#{partidaControllerPast.periodoNoNulo}" style="font-size: 10px; padding-left: 5px; color: #B70000" />
+                    <p:menuButton value="Opciones" style="float: right; padding-right: 25px; font-size: 10px" rendered="#{partidaControllerPast.isFiltering}">
+                        <p:menuitem value="Filtrar" style="font-size: 10px; color: #999" icon="filtro" onclick="#{partidaControllerPast.prepareFind()}" oncomplete="buscarPartidaPast.show()"/>
+                        <p:menuitem value="Deshacer Filtro" actionListener="#{partidaControllerPast.unfind}" update="diariop" style="font-size: 10px; color: #999" icon="filtroOff"/>  
+                        <p:menuitem value="Imprimir" style="font-size: 10px; color: #999" icon="imprimir" actionListener="#{usuarioController.imprimir}">
+                            <f:attribute name="tabla" value="diariopast"/>
+                        </p:menuitem>
+                    </p:menuButton>
+
+                    <p:separator />
+                    <h:outputText value="Registros #{partidaControllerPast.filterPagination.pageFirstItem + 1} - #{partidaControllerPast.filterPagination.pageLastItem + 1} de #{partidaControllerPast.filterPagination.itemsCount}" style="font-size: 10px; padding-left: 25px; padding-right: 5px" rendered="#{partidaControllerPast.items.rowCount > 0}"/>
+                    <p:commandButton action="#{partidaControllerPast.previous}" icon="izquierda" rendered="#{partidaControllerPast.filterPagination.hasPreviousPage}" update="diariop" />
+                    <p:commandButton action="#{partidaControllerPast.next}" icon="derecha" rendered="#{partidaControllerPast.filterPagination.hasNextPage}" update="diariop" />
+
+                    <p:dataTable var="item" value="#{partidaControllerPast.items}" rendered="#{partidaControllerPast.isFiltering}"
+                                 emptyMessage="No se encontraron resultados" sortBy="#{item.correlativoPartida}" 
+                                 style="padding-left: 25px; padding-right: 25px; min-width: 500px;">
+
+                        <f:facet name="header">  
+                            <h:outputText value = "Libro Diario Periodo: "/>
+                            <h:outputText value = "#{partidaControllerPast.periodo.fechaInicioPeriodo}">
+                                <f:convertDateTime pattern="dd/MM/yyyy" />
+                            </h:outputText>
+                            <h:outputText value=" al: "/>
+                            <h:outputText value = "#{partidaControllerPast.periodo.fechaFinPeriodo}">
+                                <f:convertDateTime pattern="dd/MM/yyyy" />
+                            </h:outputText>
+                        </f:facet>
+                        <p:column>
+                            <p:commandButton icon="ver"  action="#{partidaControllerPast.prepareView}" update="dpp" oncomplete="detallePartidaPast.show()" />
+                        </p:column>
+                        <p:column headerText="N°" sortBy="#{item.correlativoPartida}" style="font-size: 12px; text-align: center">  
+                            <h:outputText value="#{item.correlativoPartida}" />
+                        </p:column>
+                        <p:column headerText="Fecha" sortBy="#{item.fechaPartida}" style="font-size: 12px; text-align: center">
+                            <h:outputText value="#{item.fechaPartida}" >
+                                <f:convertDateTime pattern="dd/MM/yyyy" />
+                            </h:outputText>
+                        </p:column>
+                        <p:column headerText="Documento" sortBy="#{item.idDocumento.nombreDocumento}"  style="font-size: 14px" >
+                            <h:outputText value="#{item.idDocumento.idDocumento}"/>
+                        </p:column>
+                        <p:column headerText="# Documento" sortBy="#{item.numeroPartida}" style="font-size: 12px">
+                            <h:outputText value="#{item.numeroDocumento}"/>
+                        </p:column>
+                        <p:column headerText="Descripción" sortBy="#{item.descripcionPartida}" style="font-size: 12px">
+                            <h:outputText value="#{item.descripcionPartida}"/>
+                        </p:column>
+                    </p:dataTable>
+                </h:panelGroup>
+            </p:tab>
+        </p:tabView> 
+    </ui:component>
+</html>

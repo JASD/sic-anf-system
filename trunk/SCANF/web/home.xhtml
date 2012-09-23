@@ -1,0 +1,100 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    <h:head >
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+        <title>ASECON S.A. de C.V.</title>
+        <h:outputStylesheet name="css/home.css"/>
+        <h:outputScript name="js/calendar.js" />
+    </h:head>
+    <h:body onload="#{usuarioController.checkLogout()}; #{partidaController.prepareFind()}; #{partidaControllerPast.prepareFind()}; #{notaController.llenarCalendario()}; #{periodoController.cargarPeriodo()}" >
+        <p:layout fullPage="true">
+            <p:layoutUnit position="north" size="85">
+                <ui:include src="UI/Home/header.xhtml" />
+            </p:layoutUnit>
+
+            <p:layoutUnit position="west" size="275" header="Menú" >
+                <ui:include src="UI/Home/menu.xhtml"/>
+            </p:layoutUnit>
+
+            <p:layoutUnit position="center">
+                <h:form id="currentUI">
+                    <ui:include src="#{usuarioController.currentUI}" />
+                    <p:growl id="messages"/>
+                </h:form> 
+
+            </p:layoutUnit>
+
+            <p:layoutUnit id="footer" position="south" size="35">
+                <ui:include src="UI/Home/footer.xhtml"/>
+            </p:layoutUnit>
+        </p:layout>
+
+        <ui:include src="UI/Dialog/logout.xhtml" />
+
+        <ui:include src="UI/Dialog/Detalles/partida.xhtml" />
+        <ui:include src="UI/Dialog/Detalles/user.xhtml" />
+        <ui:include src="UI/Dialog/Detalles/partidaPast.xhtml" />
+        <ui:include src="UI/Dialog/Detalles/servicios_cliente.xhtml" />
+        <ui:include src="UI/Dialog/Detalles/vistaPreviaPartida.xhtml" />
+
+        <ui:include src="UI/Dialog/Buscar/buscarPartida.xhtml" />
+        <ui:include src="UI/Dialog/Buscar/buscarPartidaPast.xhtml" />
+        <ui:include src="UI/Dialog/Buscar/buscarPeriodo.xhtml" />
+        <ui:include src="UI/Dialog/Buscar/buscarPeriodoM.xhtml" />
+        <ui:include src="UI/Dialog/Buscar/buscarPeriodoS.xhtml" />
+        <ui:include src="UI/Dialog/Buscar/buscarPeriodoP.xhtml" />
+        <ui:include src="UI/Dialog/Buscar/buscarPeriodoA.xhtml" />
+
+        <ui:include src="UI/Dialog/Cliente/editar.xhtml" />
+        <ui:include src="UI/Dialog/Cliente/eliminar.xhtml" />
+        <ui:include src="UI/Dialog/Cliente/nuevo.xhtml" />
+
+        <ui:include src="UI/Dialog/Servicio/editar.xhtml" />
+        <ui:include src="UI/Dialog/Servicio/eliminar.xhtml" />
+        <ui:include src="UI/Dialog/Servicio/nuevo.xhtml" />
+
+        <ui:include src="UI/Dialog/Tipo_Servicio/editar.xhtml" />
+        <ui:include src="UI/Dialog/Tipo_Servicio/eliminar.xhtml" />
+        <ui:include src="UI/Dialog/Tipo_Servicio/nuevo.xhtml" />
+
+        <ui:include src="UI/Dialog/Actividad/editar.xhtml" />
+        <ui:include src="UI/Dialog/Actividad/eliminar.xhtml" />
+        <ui:include src="UI/Dialog/Actividad/nuevo.xhtml" />
+
+        <ui:include src="UI/Dialog/Empleado/editar.xhtml" />
+        <ui:include src="UI/Dialog/Empleado/eliminar.xhtml" />
+        <ui:include src="UI/Dialog/Empleado/nuevo.xhtml" />
+
+        <ui:include src="UI/Dialog/Inductor/editar.xhtml" />
+        <ui:include src="UI/Dialog/Inductor/eliminar.xhtml" />
+        <ui:include src="UI/Dialog/Inductor/nuevo.xhtml" />
+
+        <ui:include src="UI/Dialog/Documento/editar.xhtml" />
+        <ui:include src="UI/Dialog/Documento/eliminar.xhtml" />
+        <ui:include src="UI/Dialog/Documento/nuevo.xhtml" />
+
+        <ui:include src="UI/Dialog/Usuario/editar.xhtml" />
+        <ui:include src="UI/Dialog/Usuario/eliminar.xhtml" />
+        <ui:include src="UI/Dialog/Usuario/nuevo.xhtml" />
+
+        <ui:include src="UI/Dialog/Perfil/editar.xhtml" />
+        <ui:include src="UI/Dialog/Perfil/eliminar.xhtml" />
+        <ui:include src="UI/Dialog/Perfil/nuevo.xhtml" />
+
+        <ui:include src="UI/Dialog/Cuenta/editar.xhtml" />
+        <ui:include src="UI/Dialog/Cuenta/eliminar.xhtml" />
+        <ui:include src="UI/Dialog/Cuenta/nuevo.xhtml" />
+
+        <ui:include src="UI/Dialog/SubCuenta/editar.xhtml" />
+        <ui:include src="UI/Dialog/SubCuenta/eliminar.xhtml" />
+        <ui:include src="UI/Dialog/SubCuenta/nuevo.xhtml" />
+
+        <ui:include src="UI/Dialog/Planilla/editar.xhtml" />
+
+    </h:body>
+</html>

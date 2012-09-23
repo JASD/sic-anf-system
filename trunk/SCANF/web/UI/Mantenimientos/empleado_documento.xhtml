@@ -1,0 +1,96 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <ui:component>
+
+        <p:tabView effect="fade" style="min-height: 500px" dynamic="true">
+            <p:tab title="Empleados">
+
+                <p:menuButton value="Acciones" style="padding-right: 25px; font-size: 10px" >
+                    <p:menuitem value="Nuevo" style="font-size: 10px; color: #999" icon="nuevo" actionListener="#{empleadoController.prepareCreate}"  oncomplete="nuevoEmple.show()" update="nemple"/>
+                </p:menuButton>
+
+                <h:panelGroup id="empleado" >
+
+                    <h:outputText value="Registros #{empleadoController.pagination.pageFirstItem + 1} - #{empleadoController.pagination.pageLastItem + 1} de #{empleadoController.pagination.itemsCount}" style="font-size: 10px; padding-left: 25px; padding-right: 5px" rendered="#{empleadoController.items.rowCount > 0}"/>
+
+                    <p:commandButton action="#{empleadoController.previous}" icon="izquierda" rendered="#{empleadoController.pagination.hasPreviousPage}" update="empleado" />
+                    <p:commandButton action="#{empleadoController.next}" icon="derecha" rendered="#{empleadoController.pagination.hasNextPage}" update="empleado" />
+
+                    <p:separator />
+                    <p:dataTable var="item" value="#{empleadoController.items}"
+                                 emptyMessage="No se encontraron resultados" sortBy="#{item.idEmpleado}" 
+                                 style="padding-left: 25px; padding-right: 25px; min-width: 500px;">
+
+                        <f:facet name="header">  
+                            Empleados 
+                        </f:facet>
+                        <p:column>
+                            <p:commandButton icon="seleccionar"  action="#{empleadoController.prepareView}" update="eemple" oncomplete="editarEmple.show()" title="Editar"/> 
+                        </p:column>
+                        <p:column headerText="ID" sortBy="#{item.idEmpleado}"  style="font-size: 14px" >
+                            <h:outputText value="#{item.idEmpleado}"/>
+                        </p:column>
+                        <p:column headerText="Nombres" sortBy="#{item.primerNombreEmpleado}"  style="font-size: 14px" >
+                            <h:outputText value="#{item.primerNombreEmpleado} #{item.segundoNombreEmpleado}"/>
+                        </p:column>
+                        <p:column headerText="Apellidos" sortBy="#{item.primerApellidoCliente}" style="font-size: 12px">
+                            <h:outputText value="#{item.primerApellidoEmpleado} #{item.segundoApellidoEmpleado}"/>
+                        </p:column>
+                        <p:column headerText="Fecha Contratación" sortBy="#{item.fechaContratacionEmpleado}" style="font-size: 12px; text-align: center">
+                            <h:outputText value="#{item.fechaContratacionEmpleado}" >
+                                <f:convertDateTime pattern="dd/MM/yyyy" />
+                            </h:outputText>
+                        </p:column>
+                        <p:column headerText="Télefono" sortBy="#{item.telefonoEmpleado}" style="font-size: 12px; text-align: center">
+                            <h:outputText value="#{item.telefonoEmpleado}"/>
+                        </p:column>
+                        <p:column headerText="Email" sortBy="#{item.emailEmpleado}" style="font-size: 12px">
+                            <h:outputText value="#{item.emailEmpleado}"/>
+                        </p:column>
+
+                    </p:dataTable>
+
+                </h:panelGroup>
+            </p:tab>
+            <p:tab title="Documentos">
+
+                <p:menuButton value="Acciones" style="padding-right: 25px; font-size: 10px" >
+                    <p:menuitem value="Nuevo" style="font-size: 10px; color: #999" icon="nuevo" actionListener="#{documentoController.prepareCreate}"  oncomplete="nuevoDoc.show()" update="ndoc"/>
+                </p:menuButton>
+
+                <h:panelGroup id="documento" >
+
+                    <h:outputText value="Registros #{documentoController.pagination.pageFirstItem + 1} - #{documentoController.pagination.pageLastItem + 1} de #{documentoController.pagination.itemsCount}" style="font-size: 10px; padding-left: 25px; padding-right: 5px" rendered="#{documentoController.items.rowCount > 0}"/>
+
+                    <p:commandButton action="#{documentoController.previous}" icon="izquierda" rendered="#{documentoController.pagination.hasPreviousPage}" update="documento" />
+                    <p:commandButton action="#{documentoController.next}" icon="derecha" rendered="#{documentoController.pagination.hasNextPage}" update="documento" />
+
+                    <p:separator />
+                    <p:dataTable var="item" value="#{documentoController.items}"
+                                 emptyMessage="No se encontraron resultados" sortBy="#{item.idDocumento}" 
+                                 style="padding-left: 25px; padding-right: 25px; min-width: 500px;">
+
+                        <f:facet name="header">  
+                            Documentos  
+                        </f:facet>
+                        <p:column>
+                            <p:commandButton icon="seleccionar"  action="#{documentoController.prepareView}" update="edoc" oncomplete="editarDoc.show()" title="Editar"/> 
+                        </p:column>
+
+                        <p:column headerText="ID" sortBy="#{item.idDocumento}"  style="font-size: 14px" >
+                            <h:outputText value="#{item.idDocumento}"/>
+                        </p:column>
+                        <p:column headerText="Nombre" sortBy="#{item.nombreDocumento}"  style="font-size: 14px" >
+                            <h:outputText value="#{item.nombreDocumento}"/>
+                        </p:column>
+                    </p:dataTable>
+                </h:panelGroup>
+            </p:tab>
+        </p:tabView> 
+    </ui:component>
+</html>

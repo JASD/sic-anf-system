@@ -1,0 +1,55 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:head >
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+        <title>Costo Actividades</title>
+        <h:outputStylesheet name="css/home.css"/>
+    </h:head>
+    <h:body >
+        <h:form id="printForm">
+            <p:commandButton type="button" icon="imprimir" title="Imprimir">
+                <p:printer target="tabla"/>
+            </p:commandButton>
+            <p:commandButton actionListener="#{usuarioController.goHome}" value="Regresar" title="Regresar" />
+
+            <p:separator /> 
+            <p:dataTable id="tabla" var="item" value="#{costoActividadController.allCurrent}" 
+                         emptyMessage="No se encontraron resultados" 
+                         style="padding-left: 25px; padding-right: 25px; min-width: 500px;">
+
+                <f:facet name="header">  
+                    <h:outputText value="Costo Actividades Periodo " />
+                    <h:outputText value = "#{periodoController.actual.fechaInicioPeriodo}">
+                        <f:convertDateTime pattern="dd/MM/yyyy" />
+                    </h:outputText>
+                    <h:outputText value=" al: "/>
+                    <h:outputText value = "#{periodoController.actual.fechaFinPeriodo}">
+                        <f:convertDateTime pattern="dd/MM/yyyy" />
+                    </h:outputText>
+                </f:facet>
+
+                <p:column headerText="Actividad"  style="font-size: 14px" >
+                    <h:outputText value="#{item.actividad.nombreActividad}"/>
+                </p:column>
+
+                <p:column headerText="CIS Asignados" style="font-size: 12px; text-align: center">
+                    <h:outputText value="#{item.cisActividad}"/>
+                </p:column>
+                <p:column headerText="Total Inductor Actividad" style="font-size: 12px">
+                    <h:outputText value="#{item.totalInductorActividad}"/>
+                </p:column>
+
+                <p:column headerText="Costo Actividad" style="font-size: 12px">
+                    <h:outputText value="#{item.costoActividad}"/>
+                </p:column>
+
+            </p:dataTable>
+        </h:form>
+    </h:body>
+</html>
+

@@ -1,0 +1,169 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <ui:component>
+
+        <p:tabView effect="fade" style="min-height: 500px">
+            <p:tab title="Planilla">
+                <h:panelGroup id="planilla">
+                    <p:commandButton value="Periodo" style="padding-left: 25px" onclick="buscarPeriodoP.show()" icon="calendario"/>
+                    <h:outputText value="Seleccionado" rendered="#{planillaController.periodoNoNulo}" style="font-size: 10px; padding-left: 5px; color: #B70000" />
+
+                    <p:menuButton value="Opciones" style="float: right; padding-right: 25px; font-size: 10px" >
+                        <p:menuitem value="Periodo Actual" style="font-size: 10px; color: #999" action="#{planillaController.reset}" update="planilla" icon="buscar"/>
+                        <p:menuitem value="Imprimir" style="font-size: 10px; color: #999" icon="imprimir" actionListener="#{usuarioController.imprimir}">
+                            <f:attribute name="tabla" value="planilla"/>
+                        </p:menuitem>
+                    </p:menuButton>
+                    <p:separator />
+                    <p:dataTable id="plan" var="item" value="#{planillaController.itemsLibro()}" paginator="true" rows="10"
+                                 emptyMessage="No se encontraron resultados" style="min-width: 500px;">
+
+                        <f:facet name="header">
+                            <h:outputText value="Planilla "/>
+                            <h:outputText value = " Periodo: " rendered="#{planillaController.periodoNoNulo}"/>
+                            <h:outputText value= "Actual" rendered="#{!planillaController.periodoNoNulo}"/>
+                            <h:outputText value = "#{planillaController.periodo.fechaInicioPeriodo}" rendered="#{planillaController.periodoNoNulo}">
+                                <f:convertDateTime pattern="dd/MM/yyyy" />
+                            </h:outputText>
+                            <h:outputText value=" al: " rendered="#{planillaController.periodoNoNulo}"/>
+                            <h:outputText value = "#{planillaController.periodo.fechaFinPeriodo}" rendered="#{planillaController.periodoNoNulo}">
+                                <f:convertDateTime pattern="dd/MM/yyyy" />
+                            </h:outputText>
+                        </f:facet>
+
+                        <p:column headerText="Empleado" sortBy="#{item.empleado.primerNombreEmpleado}" filterBy="#{item.empleado.primerNombreEmpleado}"
+                                  style="font-size: 14px" filterMatchMode="contains">
+                            <h:outputText value="#{item.empleado.primerNombreEmpleado} #{item.empleado.primerApellidoEmpleado}"/>
+                        </p:column>
+
+                        <p:column headerText="Sueldo Base" style="text-align: right">
+                            <h:outputText value="#{item.salarioBase}">
+                                <f:convertNumber type="currency"  locale="#{usuarioController.locale}"/>
+                            </h:outputText>
+                            <f:facet name="footer">  
+                                <h:outputText value="#{planillaController.salarioBase}">
+                                    <f:convertNumber type="currency"  locale="#{usuarioController.locale}"/>
+                                </h:outputText>
+                            </f:facet>
+                        </p:column>
+                        <p:column headerText="N° Hrs Extra" style="text-align: right">
+                            <h:outputText value="#{item.numeroHorasExtra}">
+                                <f:convertNumber maxFractionDigits="2"/>/>
+                            </h:outputText>
+                            <f:facet name="footer">  
+                                <h:outputText value="#{planillaController.numeroHorasExtra}">
+                                    <f:convertNumber maxFractionDigits="2"/>
+                                </h:outputText>
+                            </f:facet>
+                        </p:column>   
+
+                        <p:column headerText="Pago Hrs Extra" style="text-align: right">
+                            <h:outputText value="#{item.horasExtra}">
+                                <f:convertNumber type="currency"  locale="#{usuarioController.locale}"/>
+                            </h:outputText>
+                            <f:facet name="footer">  
+                                <h:outputText value="#{planillaController.horasExtra}">
+                                    <f:convertNumber type="currency"  locale="#{usuarioController.locale}"/>
+                                </h:outputText>
+                            </f:facet>
+                        </p:column>
+
+                        <p:column headerText="Bonificaciones" style="text-align: right">
+                            <h:outputText value="#{item.bonificaciones}">
+                                <f:convertNumber type="currency"  locale="#{usuarioController.locale}"/>
+                            </h:outputText>
+                            <f:facet name="footer">  
+                                <h:outputText value="#{planillaController.bonificaciones}">
+                                    <f:convertNumber type="currency"  locale="#{usuarioController.locale}"/>
+                                </h:outputText>
+                            </f:facet>
+                        </p:column>
+
+                        <p:column headerText="AFP" style="text-align: right">
+                            <h:outputText value="#{item.afp}">
+                                <f:convertNumber type="currency"  locale="#{usuarioController.locale}"/>
+                            </h:outputText>
+                            <f:facet name="footer">  
+                                <h:outputText value="#{planillaController.afp}">
+                                    <f:convertNumber type="currency"  locale="#{usuarioController.locale}"/>
+                                </h:outputText>
+                            </f:facet>
+                        </p:column>
+
+                        <p:column headerText="ISSS" style="text-align: right">
+                            <h:outputText value="#{item.isss}">
+                                <f:convertNumber type="currency"  locale="#{usuarioController.locale}"/>
+                            </h:outputText>
+                            <f:facet name="footer">  
+                                <h:outputText value="#{planillaController.isss}">
+                                    <f:convertNumber type="currency"  locale="#{usuarioController.locale}"/>
+                                </h:outputText>
+                            </f:facet>
+                        </p:column>
+
+                        <p:column headerText="Sueldo Neto" style="text-align: right">
+                            <h:outputText value="#{item.salarioNeto}">
+                                <f:convertNumber type="currency"  locale="#{usuarioController.locale}"/>
+                            </h:outputText>
+                            <f:facet name="footer">  
+                                <h:outputText value="#{planillaController.salarioNeto}">
+                                    <f:convertNumber type="currency"  locale="#{usuarioController.locale}"/>
+                                </h:outputText>
+                            </f:facet>
+                        </p:column>
+
+
+                    </p:dataTable>
+                </h:panelGroup>
+            </p:tab>
+            <p:tab title="Empleados">
+                <p:menuButton value="Opciones" style=" padding-right: 25px; font-size: 10px">
+                    <p:menuitem value="Imprimir" style="font-size: 10px; color: #999" icon="imprimir" actionListener="#{usuarioController.imprimir}">
+                        <f:attribute name="tabla" value="empleado"/>
+                    </p:menuitem>
+                </p:menuButton>
+                <p:separator />
+
+                <h:panelGroup id="empleado" >
+
+                    <p:dataTable var="item" value="#{empleadoController.all}" paginator="true" rows="10"
+                                 emptyMessage="No se encontraron resultados" 
+                                 style="padding-left: 25px; padding-right: 25px; min-width: 500px;">
+
+                        <f:facet name="header">  
+                            Empleados  
+                        </f:facet>
+
+                        <p:column headerText="Nombres" sortBy="#{item.primerNombreEmpleado}"  filterBy="#{item.primerNombreEmpleado}" filterMatchMode="contains" style="font-size: 14px" >
+                            <h:outputText value="#{item.primerNombreEmpleado} #{item.segundoNombreEmpleado}"/>
+                        </p:column>
+                        <p:column headerText="Apellidos" sortBy="#{item.primerApellidoEmpleado}" filterBy="#{item.primerApellidoEmpleado}" filterMatchMode="contains" style="font-size: 12px">
+                            <h:outputText value="#{item.primerApellidoEmpleado} #{item.segundoApellidoEmpleado}"/>
+                        </p:column>
+                        <p:column headerText="Fecha Contratación" sortBy="#{item.fechaContratacionEmpleado}" filterBy="#{item.fechaContratacionEmpleado}" filterMatchMode="contains" style="font-size: 12px; text-align: center">
+                            <h:outputText value="#{item.fechaContratacionEmpleado}" >
+                                <f:convertDateTime pattern="dd/MM/yyyy" />
+                            </h:outputText>
+                        </p:column>
+                        <p:column headerText="Télefono" sortBy="#{item.telefonoEmpleado}" style="font-size: 12px; text-align: center">
+                            <h:outputText value="#{item.telefonoEmpleado}"/>
+                        </p:column>
+                        <p:column headerText="Email" sortBy="#{item.emailEmpleado}" style="font-size: 12px">
+                            <h:outputText value="#{item.emailEmpleado}"/>
+                        </p:column>
+
+                        <p:column headerText="Activo / Inactivo" sortBy="#{item.estadoEmpleado}" style="font-size: 12px; text-align: center">
+                            <p:selectBooleanCheckbox value="#{item.estadoEmpleado}" disabled="true"/> 
+                        </p:column>
+                    </p:dataTable>
+                </h:panelGroup>
+            </p:tab>
+        </p:tabView> 
+
+    </ui:component>
+</html>

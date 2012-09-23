@@ -1,0 +1,234 @@
+/* 
+    Document   : home
+    Created on : 29-dic-2011, 9:39:16
+    Author     : Antonio
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+/* 
+   TODO customize this sample style
+   Syntax recommendation http://www.w3.org/TR/REC-CSS2/
+*/
+
+#header{
+    background-image:url(../img/header.png);
+    background-repeat:repeat-x;
+    background-position:top left
+}
+
+#footer{
+    padding-top:5px;
+    text-align:center;
+    font-size:10px
+}
+
+.headerLink{
+    display:inline;
+    float:right;
+    padding-right:10px;
+    padding-top: 20px;
+    font-size:10px;
+}
+
+.headerColor{
+    color:#B70000
+}
+
+.titulo{
+
+    margin-left:25%;
+    font-size:17px;
+    font-weight:bold;
+
+}
+
+.ui-panel-title{
+    font-size: 12px;
+    color: #B70000
+}
+
+.menuLink{
+    color: #999; 
+    font-size: 12px
+}
+
+.ui-button-text{
+    font-size: 12px;
+    width: 75px;
+    height: 20px
+
+}
+
+.ui-dialog-titlebar{
+    font-size: 14px;
+}
+
+.ui-dialog-content{
+    font-size: 12px;
+    text-align: justify
+}
+
+.margenes{
+
+    margin: 8px 10px 8px;
+    width: 300px   
+}
+
+.salir{
+    background-image: url(../img/icons/logout.png) !important
+}
+
+.cancelar{
+    background-image: url(../img/icons/cancel.png) !important
+}
+
+.wijmo-wijmenu-text{
+
+    font-size: 12px;
+    color: #999
+
+}
+.calendar{
+
+    width: 500px;
+}
+
+.izquierda{
+    background-image: url(../img/icons/arrow_left.png) !important
+}
+
+.derecha{
+    background-image: url(../img/icons/arrow_right.png) !important
+}
+
+.ver{
+    background-image: url(../img/icons/magnifier.png) !important
+}
+
+.ui-datatable-header{
+    font-size: 16px;
+}
+
+.ui-datepicker{
+    font-size: 12px
+
+}
+
+.ui-tabs-nav{
+    font-style: italic;
+}
+
+.imprimir{
+    background-image: url(../img/icons/printer.png) !important
+}
+
+.buscar{
+    background-image: url(../img/icons/drive_magnify.png) !important
+}
+
+.filtroOff{
+    background-image: url(../img/icons/filtro_off.gif) !important
+}
+
+.filtro{
+    background-image: url(../img/icons/filtro.png) !important
+}
+
+.reset{
+    background-image: url(../img/icons/reset.png) !important
+}
+
+.ui-selectonemenu-items{
+   font-size: 12px
+}
+
+.aceptar{
+    background-image: url(../img/icons/accept.png) !important
+}
+
+.calendario{
+    background-image: url(../img/icons/calendar.png) !important
+}
+
+.ui-selectlistbox-item{
+    
+    background-color: #ff9999;
+}
+
+.nuevo{
+    background-image: url(../img/icons/add.png) !important
+}
+
+.eliminar{
+    background-image: url(../img/icons/delete.png) !important
+}
+
+.editar{
+    background-image: url(../img/icons/pencil_add.png) !important
+}
+
+.acciones{
+    
+    background-image: url(../img/icons/wrench.png) !important
+}
+
+.guardar{
+    
+    background-image: url(../img/icons/disk.png) !important
+}
+
+.seleccionar{
+    
+    background-image: url(../img/icons/wand.png) !important
+}
+
+.home{
+    
+    background-image: url(../img/icons/home.png) !important
+}
+
+.regresar{
+    
+    background-image: url(../img/icons/arrow_undo.png) !important
+}
+
+.validar{
+    
+    background-image: url(../img/icons/check.png) !important
+}
+
+.preparar{
+    
+    background-image: url(../img/icons/database_lightning.png) !important
+}
+
+.cerrar{
+    
+    background-image: url(../img/icons/door.png) !important
+}
+
+.docx{
+    
+    background-image: url(../img/icons/docx_icon.png) !important
+}
+
+.odt{
+    
+    background-image: url(../img/icons/odt.png) !important
+}
+
+.pdf{
+    
+    background-image: url(../img/icons/pdf.gif) !important
+}
+
+.excel{
+    
+    background-image: url(../img/icons/xlsx.gif) !important
+}
+
+.ppt{
+    
+    background-image: url(../img/icons/ppt_icon.png) !important
+}

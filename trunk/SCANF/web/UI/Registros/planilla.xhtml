@@ -1,0 +1,93 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <ui:component>
+
+        <p:tabView effect="fade" style="min-height: 500px" dynamic="true">
+            <p:tab title="Actualización de Planilla">
+
+                <h:panelGroup id="plani" >
+
+                    <h:outputText value="Registros #{planillaController.pagination.pageFirstItem + 1} - #{planillaController.pagination.pageLastItem + 1} de #{planillaController.pagination.itemsCount}" style="font-size: 10px; padding-left: 25px; padding-right: 5px" rendered="#{planillaController.items.rowCount > 0}"/>
+
+                    <p:commandButton action="#{planillaController.previous}" icon="izquierda" rendered="#{planillaController.pagination.hasPreviousPage}" update="plani" />
+                    <p:commandButton action="#{planillaController.next}" icon="derecha" rendered="#{planillaController.pagination.hasNextPage}" update="plani" />
+
+                    <p:separator />
+                    <p:dataTable id="plan" var="item" value="#{planillaController.items}"
+                                 emptyMessage="No se encontraron resultados" style="min-width: 500px;">
+
+                        <f:facet name="header">
+                            <h:outputText value="Planilla Actual"/>
+
+                        </f:facet>
+                        
+                        <p:column>
+                            <p:commandButton icon="seleccionar"  action="#{planillaController.prepareView}" update="epla" oncomplete="editarPlanilla.show()" title="Editar"/> 
+                        </p:column>
+
+                        <p:column headerText="Empleado" sortBy="#{item.empleado.primerNombreEmpleado}"
+                                  style="font-size: 14px" >
+                            <h:outputText value="#{item.empleado.primerNombreEmpleado} #{item.empleado.primerApellidoEmpleado}"/>
+                        </p:column>
+
+                        <p:column headerText="Base" style="text-align: right">
+                            <h:outputText value="#{item.salarioBase}">
+                                <f:convertNumber type="currency"  locale="#{usuarioController.locale}"/>
+                            </h:outputText>
+
+                        </p:column>
+                        <p:column headerText="N°HrsExtra" style="text-align: right">
+                            <h:outputText value="#{item.numeroHorasExtra}">
+                                <f:convertNumber maxFractionDigits="2"/>/>
+                            </h:outputText>
+
+                        </p:column>   
+
+                        <p:column headerText="PagoHrsExtra" style="text-align: right">
+                            <h:outputText value="#{item.horasExtra}">
+                                <f:convertNumber type="currency"  locale="#{usuarioController.locale}"/>
+                            </h:outputText>
+
+                        </p:column>
+
+                        <p:column headerText="Bonificaciones" style="text-align: right">
+                            <h:outputText value="#{item.bonificaciones}">
+                                <f:convertNumber type="currency"  locale="#{usuarioController.locale}"/>
+                            </h:outputText>
+
+                        </p:column>
+
+                        <p:column headerText="AFP" style="text-align: right">
+                            <h:outputText value="#{item.afp}">
+                                <f:convertNumber type="currency"  locale="#{usuarioController.locale}"/>
+                            </h:outputText>
+
+                        </p:column>
+
+                        <p:column headerText="ISSS" style="text-align: right">
+                            <h:outputText value="#{item.isss}">
+                                <f:convertNumber type="currency"  locale="#{usuarioController.locale}"/>
+                            </h:outputText>
+
+                        </p:column>
+
+                        <p:column headerText="Neto" style="text-align: right">
+                            <h:outputText value="#{item.salarioNeto}">
+                                <f:convertNumber type="currency"  locale="#{usuarioController.locale}"/>
+                            </h:outputText>
+
+                        </p:column>
+
+
+                    </p:dataTable>
+
+                </h:panelGroup>
+            </p:tab>
+        </p:tabView>
+    </ui:component>
+</html>

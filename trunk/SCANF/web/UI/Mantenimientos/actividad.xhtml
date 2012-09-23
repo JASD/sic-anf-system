@@ -1,0 +1,90 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <ui:component>
+
+        <p:tabView effect="fade" style="min-height: 500px" dynamic="true">
+            <p:tab title="Actividades">
+
+                <p:menuButton value="Acciones" style="padding-right: 25px; font-size: 10px" >
+                    <p:menuitem value="Nuevo" style="font-size: 10px; color: #999" icon="nuevo" actionListener="#{actividadController.prepareCreate}"  oncomplete="nuevaActividad.show()" update="nact"/>
+                </p:menuButton>
+
+                <h:panelGroup id="actividades" >
+
+                    <h:outputText value="Registros #{actividadController.pagination.pageFirstItem + 1} - #{actividadController.pagination.pageLastItem + 1} de #{actividadController.pagination.itemsCount}" style="font-size: 10px; padding-left: 25px; padding-right: 5px" rendered="#{actividadController.items.rowCount > 0}"/>
+
+                    <p:commandButton action="#{actividadController.previous}" icon="izquierda" rendered="#{actividadController.pagination.hasPreviousPage}" update="actividades" />
+                    <p:commandButton action="#{actividadController.next}" icon="derecha" rendered="#{actividadController.pagination.hasNextPage}" update="actividades" />
+
+                    <p:separator />
+                    <p:dataTable var="item" value="#{actividadController.items}"
+                                 emptyMessage="No se encontraron resultados" sortBy="#{item.idActividad}" 
+                                 style="padding-left: 25px; padding-right: 25px; min-width: 500px;">
+
+                        <f:facet name="header">  
+                            Actividades  
+                        </f:facet>
+                        <p:column>
+                            <p:commandButton icon="seleccionar"  action="#{actividadController.prepareView}" update="eact" oncomplete="editarActividad.show()" title="Editar"/> 
+                        </p:column>
+                        <p:column headerText="ID" sortBy="#{item.idActividad}"  style="font-size: 14px" >
+                            <h:outputText value="#{item.idActividad}"/>
+                        </p:column>
+                        <p:column headerText="Nombre" sortBy="#{item.nombreActividad}"  style="font-size: 14px" >
+                            <h:outputText value="#{item.nombreActividad}"/>
+                        </p:column>
+                        <p:column headerText="Inductor" sortBy="#{item.idInductorActividad.nombreInductorActividad}"  style="font-size: 14px" >
+                            <h:outputText value="#{item.nombreActividad}"/>
+                        </p:column>
+                        <p:column headerText="Descripción" sortBy="#{item.descripcionActividad}" style="font-size: 12px">
+                            <h:outputText value="#{item.descripcionActividad}"/>
+                        </p:column>
+                    </p:dataTable>
+
+                </h:panelGroup>
+            </p:tab>
+            <p:tab title="Inductores">
+
+                <p:menuButton value="Acciones" style="padding-right: 25px; font-size: 10px" >
+                    <p:menuitem value="Nuevo" style="font-size: 10px; color: #999" icon="nuevo" actionListener="#{inductorActividadController.prepareCreate}"  oncomplete="nuevoInductor.show()" update="nind"/>
+                </p:menuButton>
+
+                <h:panelGroup id="inductor" >
+
+                    <h:outputText value="Registros #{inductorActividadController.pagination.pageFirstItem + 1} - #{inductorActividadController.pagination.pageLastItem + 1} de #{inductorActividadController.pagination.itemsCount}" style="font-size: 10px; padding-left: 25px; padding-right: 5px" rendered="#{inductorActividadController.items.rowCount > 0}"/>
+
+                    <p:commandButton action="#{inductorActividadController.previous}" icon="izquierda" rendered="#{inductorActividadController.pagination.hasPreviousPage}" update="inductor" />
+                    <p:commandButton action="#{inductorActividadController.next}" icon="derecha" rendered="#{inductorActividadController.pagination.hasNextPage}" update="inductor" />
+
+                    <p:separator />
+                    <p:dataTable  var="item" value="#{inductorActividadController.items}"
+                                  emptyMessage="No se encontraron resultados" sortBy="#{item.idInductorActividad}" 
+                                  style="padding-left: 25px; padding-right: 25px; min-width: 500px;">
+
+                        <f:facet name="header">  
+                            Inductores de Actividad 
+                        </f:facet>
+                        <p:column>
+                            <p:commandButton icon="seleccionar"  action="#{inductorActividadController.prepareView}" update="eind" oncomplete="editarInductor.show()" title="Editar"/> 
+                        </p:column>
+                        <p:column headerText="ID" sortBy="#{item.idInductorActividad}"  style="font-size: 14px" >
+                            <h:outputText value="#{item.idInductorActividad}"/>
+                        </p:column>
+
+                        <p:column headerText="Nombre" sortBy="#{item.nombreInductorActividad}"  style="font-size: 14px" >
+                            <h:outputText value="#{item.nombreInductorActividad}"/>
+                        </p:column>
+                        <p:column headerText="Descripción" sortBy="#{item.descripcionInductorActividad}" style="font-size: 12px">
+                            <h:outputText value="#{item.descripcionInductorActividad}"/>
+                        </p:column>
+                    </p:dataTable>
+                </h:panelGroup>
+            </p:tab>
+        </p:tabView> 
+    </ui:component>
+</html>
