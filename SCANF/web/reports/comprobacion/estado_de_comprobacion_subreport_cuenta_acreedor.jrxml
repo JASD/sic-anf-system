@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="estado_de_comprobacion_subreport_cuenta" pageWidth="552" pageHeight="752" columnWidth="552" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[".\\"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[Select distinct Cuenta.Codigo_cuenta, cuenta.nombre_cuenta, cuenta.saldo_cuenta FROM Cuenta WHERE saldo_cuenta>0 AND tipo_cuenta="acreedora"]]>
+	</queryString>
+	<field name="Codigo_cuenta" class="java.lang.String"/>
+	<field name="nombre_cuenta" class="java.lang.String"/>
+	<field name="saldo_cuenta" class="java.lang.Float"/>
+	<variable name="suma_acreedoras" class="java.lang.Number" calculation="Sum">
+		<variableExpression><![CDATA[$F{saldo_cuenta}]]></variableExpression>
+	</variable>
+	<group name="Codigo_cuenta">
+		<groupExpression><![CDATA[$F{Codigo_cuenta}]]></groupExpression>
+	</group>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="73" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{Codigo_cuenta}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="84" y="0" width="193" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{nombre_cuenta}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="490" y="0" width="61" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{saldo_cuenta}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="20">
+			<subreport>
+				<reportElement x="0" y="0" width="551" height="20"/>
+				<subreportParameter name="CODIGO_CUENTAP">
+					<subreportParameterExpression><![CDATA[$F{Codigo_cuenta}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[java.sql.DriverManager.getConnection( "jdbc:mysql://localhost/aseconsa","root","")]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "estado_comprobacion_subreport_subcuentas_haber.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</detail>
+</jasperReport>

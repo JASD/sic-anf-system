@@ -1,0 +1,55 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:head >
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+        <title>ASECON S.A. de C.V.</title>
+        <h:outputStylesheet name="css/index.css"/>
+    </h:head>
+    <h:body onload="#{usuarioController.checkLogin()}" >
+        <p:layout fullPage="true">
+            <p:layoutUnit position="north" size="85" style="background: #999999">
+                <h:panelGrid columns="2" >
+                    <p:graphicImage value="resources/img/logo.jpg"/>
+                    <h:outputText value="ASECON S.A. de C.V. Sistema de Contabilidad" styleClass="titulo"/>
+                </h:panelGrid>
+            </p:layoutUnit>
+            <p:layoutUnit position="center">
+                <h:form>
+                    <p:panel id="acceso" header="Acceso de Usuario" styleClass="login">
+                        <h:panelGrid columns="3">
+                            <h:outputLabel for="usuario" value="Usuario" />
+                            <p:inputText id="usuario" value="#{usuarioController.idUser}" required="true" label="Usuario"/>
+                            <p:message for="usuario" display="icon" showDetail="false"/>
+
+                            <h:outputLabel for="contrasena" value="Contraseña" />
+                            <p:password id="contrasena" value="#{usuarioController.passUser}" label="Contrasena" required="true" feedback="false" minLength="5"/>
+                            <p:message for="contrasena" display="icon" showDetail="false"/>
+
+                            <p:commandButton value="Ingresar" update="acceso" actionListener="#{usuarioController.login}"/>
+                            <p:ajaxStatus id="loading">
+                                <f:facet name="start">
+                                    <h:graphicImage value="resources/img/loading.gif" />  
+                                </f:facet>
+                            </p:ajaxStatus>
+                        </h:panelGrid>
+                        <div id="error">
+                            <p:messages showDetail="false"/>
+                        </div>
+                    </p:panel>
+
+                </h:form>
+            </p:layoutUnit>
+            <p:layoutUnit id="footer" position="south" size="35">
+                <h:form>
+                    <h:outputText value="Copyright © 2012 | ASECON S.A. de C.V. | Desarrolado por GordoSteam™" />
+                </h:form>
+            </p:layoutUnit>
+        </p:layout>
+    </h:body>
+</html>
+

@@ -1,0 +1,64 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <ui:component>
+
+        <p:dialog widgetVar="nuevoEmple" header="Nuevo Empleado" showEffect="fade" hideEffect="fade" modal="true" resizable="false">  
+            <h:form id="nemple">
+                <h:panelGrid columns="2" columnClasses="column" cellpadding="5">
+
+                    <h:outputLabel value="ID: " style="font-weight: bold"/>  
+                    <p:inputText  value="#{empleadoController.selected.idEmpleado}" required="true">
+                        <f:validateLength maximum="50" />
+                    </p:inputText>
+
+                    <h:outputLabel value="Primer Nombre: " style="font-weight: bold"/>  
+                    <p:inputText id="n1" value="#{empleadoController.selected.primerNombreEmpleado}" required="true">
+                        <f:validateLength maximum="50" />
+                    </p:inputText>
+
+
+                    <h:outputLabel value="Segundo Nombre: " style="font-weight: bold"/>  
+                    <p:inputText id="n2" value="#{empleadoController.selected.segundoNombreEmpleado}" >
+                        <f:validateLength maximum="50" />
+                    </p:inputText>
+
+
+                    <h:outputLabel value="Primer Apellido: " style="font-weight: bold"/>  
+                    <p:inputText value="#{empleadoController.selected.primerApellidoEmpleado}" required="true">
+                        <f:validateLength maximum="50" />
+                    </p:inputText>
+
+
+                    <h:outputLabel value="Segundo Apellido: " style="font-weight: bold"/>  
+                    <p:inputText value="#{empleadoController.selected.segundoApellidoEmpleado}" >
+                        <f:validateLength maximum="50" />
+                    </p:inputText>  
+
+                    <h:outputLabel value="Fecha Contratación:" style="font-weight: bold"/>  
+                    <p:calendar  value="#{empleadoController.selected.fechaContratacionEmpleado}" showButtonPanel="true" 
+                                 readOnlyInputText="true" pattern="yyyy/MM/dd" navigator="true" 
+                                 popupIconOnly="true" effect="fadeIn" locale="es"/>
+
+                    <h:outputLabel value="Télefono: " style="font-weight: bold"/>  
+                    <p:inputMask value="#{empleadoController.selected.telefonoEmpleado}" mask="9999-9999"/>  
+
+                    <h:outputLabel value="Email: " style="font-weight: bold"/>  
+                    <p:inputText value="#{empleadoController.selected.emailEmpleado}" validatorMessage="Email No Válido">
+                        <f:validateRegex pattern="[\w\.-]*[a-zA-Z0-9_]@[\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]"/>
+                    </p:inputText>  
+
+                    <h:outputLabel value="Estado: " style="font-weight: bold"/>  
+                    <p:selectBooleanCheckbox value="#{empleadoController.selected.estadoEmpleado}" /> 
+
+                    <p:commandButton value="Guardar" icon="guardar" update="currentUI" oncomplete="nuevoEmple.hide()" actionListener="#{empleadoController.create}"/>
+
+                </h:panelGrid>
+            </h:form>
+        </p:dialog>
+    </ui:component>
+</html>

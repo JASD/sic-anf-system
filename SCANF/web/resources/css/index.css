@@ -1,0 +1,47 @@
+/* 
+    Document   : index
+    Created on : 31-dic-2011, 0:42:12
+    Author     : Antonio
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+/* 
+   TODO customize this sample style
+   Syntax recommendation http://www.w3.org/TR/REC-CSS2/
+*/
+
+#header{
+    background-image:url(../img/header.png);
+    background-repeat:repeat-x;
+    background-position:top left
+}
+
+#footer{
+    padding-top:5px;
+    text-align:center;
+    font-size:10px
+}
+
+.login{
+    position:absolute;
+    margin-left:35%;
+    margin-top:10%
+}
+
+.titulo {
+    position:absolute;
+    margin-left:20%;
+    font-size:x-large;
+    font-weight:bold
+}
+
+#loading{
+    width: 35px;
+    height: 35px
+}
+
+#error{
+    font-size:10px;
+    max-width: 400px
+}

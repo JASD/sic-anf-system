@@ -1,0 +1,61 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <ui:component>
+
+        <p:dialog widgetVar="editarCliente" header="Editar Cliente" showEffect="fade" hideEffect="fade" modal="true" resizable="false">  
+            <h:form id="ec">
+                <h:panelGrid columns="2" columnClasses="column" cellpadding="5">
+
+                    <h:outputLabel value="Primer Nombre: " style="font-weight: bold"/>  
+                    <p:inplace>  
+                        <p:inputText value="#{clienteController.selected.primerNombreCliente}" required="true">
+                            <f:validateLength maximum="50" />
+                        </p:inputText>
+                    </p:inplace>
+                    <h:outputLabel value="Segundo Nombre: " style="font-weight: bold"/>  
+                    <p:inplace>  
+                        <p:inputText id="n2" value="#{clienteController.selected.segundoNombreCliente}" >
+                            <f:validateLength maximum="50" />
+                        </p:inputText>
+                    </p:inplace>
+                    <h:outputLabel value="Primer Apellido: " style="font-weight: bold"/>  
+                    <p:inplace>  
+                        <p:inputText value="#{clienteController.selected.primerApellidoCliente}" required="true">
+                            <f:validateLength maximum="50" />
+                        </p:inputText>
+                    </p:inplace>
+                    <h:outputLabel value="Segundo Apellido: " style="font-weight: bold"/>  
+                    <p:inplace>  
+                        <p:inputText value="#{clienteController.selected.segundoApellidoCliente}" >
+                            <f:validateLength maximum="50" />
+                        </p:inputText> 
+                    </p:inplace>
+                  
+                    <h:outputLabel value="Télefono: " style="font-weight: bold"/>  
+                    <p:inplace>  
+                        <p:inputMask value="#{clienteController.selected.telefonoCliente}" mask="9999-9999"/>  
+                    </p:inplace> 
+                    <h:outputLabel value="Email: " style="font-weight: bold"/>  
+                    <p:inplace>  
+                        <p:inputText value="#{clienteController.selected.emailCliente}" validatorMessage="Email No Válido">
+                            <f:validateRegex pattern="[\w\.-]*[a-zA-Z0-9_]@[\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]"/>
+                        </p:inputText>  
+                    </p:inplace>
+                    <h:outputLabel value="Estado: " style="font-weight: bold"/>  
+                    <p:inplace>  
+                        <p:selectBooleanCheckbox value="#{clienteController.selected.estadoCliente}" /> 
+                    </p:inplace> 
+
+                    <p:commandButton value="Guardar" icon="guardar" update="currentUI" oncomplete="editarCliente.hide()" actionListener="#{clienteController.update}"/>
+                    <p:commandButton value="Eliminar" icon="eliminar" onclick="editarCliente.hide()" oncomplete="eliminarCliente.show()"/>
+
+                </h:panelGrid>
+            </h:form>
+        </p:dialog>
+    </ui:component>
+</html>

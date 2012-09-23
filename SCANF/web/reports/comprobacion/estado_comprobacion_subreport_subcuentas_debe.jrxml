@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="estado_comprobacion2" language="groovy" pageWidth="552" pageHeight="900" columnWidth="552" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="CODIGO_CUENTAP" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT saldo_subcuenta as total,   Sub_Cuenta.Nombre_SubCuenta, Sub_Cuenta.Codigo_SubCuenta FROM PERIODO,Cuenta, TRANSACCION, SUB_CUENTA
+WHERE  cuenta.codigo_cuenta=sub_cuenta.codigo_cuenta
+AND Cuenta.tipo_cuenta='DEUDORA'
+AND Cuenta.codigo_cuenta= $P{CODIGO_CUENTAP} AND saldo_subcuenta>0 group by codigo_subcuenta]]>
+	</queryString>
+	<field name="total" class="java.lang.Float"/>
+	<field name="Nombre_SubCuenta" class="java.lang.String"/>
+	<field name="Codigo_SubCuenta" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<columnHeader>
+		<band/>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement x="335" y="0" width="67" height="16"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{total}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="174" y="0" width="48" height="16"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{Codigo_SubCuenta}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="223" y="0" width="125" height="16"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{Nombre_SubCuenta}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

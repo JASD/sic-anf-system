@@ -1,0 +1,42 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <ui:component>
+        <h:form id="me">
+            <p:dialog widgetVar="detalleEmpleado" header="Datos de Empleado" showEffect="fade" hideEffect="fade" modal="true" resizable="false">  
+                <h:panelGrid columns="2">  
+
+                    <h:outputLabel value="Primer Nombre:" />  
+                    <p:inputText value="#{planillaController.selected.empleado.primerNombreEmpleado}" disabled="true"/>
+
+                    <h:outputLabel value="Segundo Nombre:" />  
+                    <p:inputText  value="#{planillaController.selected.empleado.segundoNombreEmpleado}" disabled="true"/>
+
+                    <h:outputLabel value="Primer Apellido:" />  
+                    <p:inputText  value="#{planillaController.selected.empleado.primerApellidoEmpleado}" disabled="true"/>
+
+                    <h:outputLabel  value="Segundo Apellido:" />  
+                    <p:inputText  value="#{planillaController.selected.empleado.segundoApellidoEmpleado}" disabled="true"/>
+
+                    <h:outputLabel  value="Fecha Contratación:" />  
+                    <p:inputMask  value="#{planillaController.selected.empleado.fechaContratacionEmpleado}" mask="99/99/9999" disabled="true">  
+                        <f:convertDateTime pattern="dd/MM/yyyy" />  
+                    </p:inputMask>
+
+                    <h:outputLabel value="Télefono:" />  
+                    <p:inputText  value="#{planillaController.selected.empleado.telefonoEmpleado}" disabled="true"/>
+
+                    <h:outputLabel  value="Email:" />  
+                    <p:inputText  value="#{planillaController.selected.empleado.emailEmpleado}" disabled="true"/>
+
+                    <p:commandButton value="Cerrar" onclick="detalleEmpleado.hide()" 
+                                     image="cancelar" />
+                </h:panelGrid>  
+            </p:dialog>
+        </h:form>
+    </ui:component>
+</html>

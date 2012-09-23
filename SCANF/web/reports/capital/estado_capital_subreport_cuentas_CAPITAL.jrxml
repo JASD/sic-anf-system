@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="estado_de_resultado_subreport_cuentas" language="groovy" pageWidth="552" pageHeight="900" whenNoDataType="NoDataSection" columnWidth="552" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="subrubro" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["C:\\Users\\rokEr\\Desktop\\ireports\\Reportes\\"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="rubro_cuenta" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[Select distinct  cuenta.codigo_cuenta, cuenta.nombre_cuenta, cuenta.saldo_cuenta,tipo_cuenta FROM Cuenta WHERE
+cuenta.rubro_cuenta=$P{rubro_cuenta} AND
+cuenta.subrubro_cuenta=$P{subrubro} AND
+cuenta.saldo_cuenta>0]]>
+	</queryString>
+	<field name="codigo_cuenta" class="java.lang.String"/>
+	<field name="nombre_cuenta" class="java.lang.String"/>
+	<field name="saldo_cuenta" class="java.lang.Float"/>
+	<field name="tipo_cuenta" class="java.lang.String"/>
+	<variable name="SUMA" class="java.lang.Float" calculation="Sum">
+		<variableExpression><![CDATA[( $F{tipo_cuenta}.equalsIgnoreCase("ACREEDORA") ? $F{saldo_cuenta} :(-1)*$F{saldo_cuenta})]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement x="27" y="2" width="70" height="16"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="SansSerif"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{codigo_cuenta}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="101" y="2" width="187" height="16"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nombre_cuenta}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="386" y="2" width="61" height="16"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="SansSerif"/>
+				</textElement>
+				<textFieldExpression><![CDATA[( $F{tipo_cuenta}.equalsIgnoreCase("ACREEDORA") ? $F{saldo_cuenta} :"("+ $F{saldo_cuenta}+")")]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="20">
+			<subreport>
+				<reportElement x="0" y="0" width="552" height="20"/>
+				<subreportParameter name="CODIGO_CUENTAP">
+					<subreportParameterExpression><![CDATA[$F{codigo_cuenta}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "estado_capital_subreport_subcuentas.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</detail>
+</jasperReport>

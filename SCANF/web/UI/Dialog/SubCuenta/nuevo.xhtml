@@ -1,0 +1,40 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <ui:component>
+
+        <p:dialog widgetVar="nuevaSub" header="Nueva Sub Cuenta" showEffect="fade" hideEffect="fade" modal="true" resizable="false">  
+            <h:form id="nsub">
+                <h:panelGrid columns="2" columnClasses="column" cellpadding="5">
+
+                    <h:outputLabel value="Cuenta " style="font-weight: bold"/>       
+                    <p:selectOneMenu value="#{subCuentaController.selected.codigoCuenta}" effect="fade" style="width: 150px">
+                        <f:selectItems value="#{cuentaController.itemsSelect}"/>
+                    </p:selectOneMenu>
+
+                    <h:outputLabel value="Código: " style="font-weight: bold"/>  
+                    <p:inputText  value="#{subCuentaController.selected.codigoSubcuenta}" required="true">
+                        <f:validateLength maximum="5" />
+                    </p:inputText>
+
+                    <h:outputLabel value="Nombre: " style="font-weight: bold"/>  
+                    <p:inputText value="#{subCuentaController.selected.nombreSubcuenta}" required="true">
+                        <f:validateLength maximum="50" />
+                    </p:inputText>
+
+                    <h:outputLabel value="Descripción: " style="font-weight: bold"/>  
+                    <p:inputText value="#{subCuentaController.selected.descripcionSubcuenta}" required="true">
+                        <f:validateLength maximum="150" />
+                    </p:inputText>
+
+                    <p:commandButton value="Guardar" icon="guardar" update="currentUI" oncomplete="nuevaSub.hide()" actionListener="#{subCuentaController.create}"/>
+
+                </h:panelGrid>
+            </h:form>
+        </p:dialog>
+    </ui:component>
+</html>

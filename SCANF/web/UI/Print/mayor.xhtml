@@ -1,0 +1,75 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:head >
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+        <title>Mayor</title>
+        <h:outputStylesheet name="css/home.css"/>
+    </h:head>
+    <h:body >
+        <h:form id="printForm">
+            <p:commandButton type="button" icon="imprimir" title="Imprimir">
+                <p:printer target="tabla"/>
+            </p:commandButton>
+            <p:commandButton actionListener="#{usuarioController.goHome}" value="Regresar" title="Regresar" />
+
+            <p:separator /> 
+            <p:dataTable id="tabla" var="item" value="#{transaccionController.items}" widgetVar="mayor"
+                         emptyMessage="No se encontraron resultados" sortOrder="descending" 
+                         sortBy="#{item.transaccionPK.correlativoPartida}" style="padding-left: 25px; padding-right: 25px; min-width: 500px;">
+
+                <f:facet name="header">
+                    <h:outputText  value = "#{cuentaController.cuenta.nombreCuenta}"/>
+                    <h:outputText  value = " #{cuentaController.subcuenta.nombreSubcuenta}" rendered="#{transaccionController.subcuentaNoNula}" style="font-size: 12px"/>
+                </f:facet>
+                <p:column headerText="Fecha" 
+                          style="font-size: 12px; text-align: center">
+                    <h:outputText value="#{item.partida.fechaPartida}" >
+                        <f:convertDateTime pattern="dd/MM/yyyy" />
+                    </h:outputText>
+                </p:column>
+                <p:column headerText="Descripción" style="font-size: 12px">
+                    <h:outputText value="#{item.partida.descripcionPartida}"/>
+                </p:column>
+                <p:column headerText="N° Partida"  style="font-size: 12px; text-align: center">  
+                    <h:outputText value="#{item.transaccionPK.correlativoPartida}" />
+                    <f:facet name="footer">  
+                        <h:outputText value="Total" style="text-align: right"/>
+                    </f:facet>
+                </p:column>
+
+                <p:column headerText="Debe"   style="font-size: 14px; text-align: right" >
+                    <h:outputText value="#{item.debe}">
+                        <f:convertNumber type="currency"  locale="#{usuarioController.locale}"/>
+                    </h:outputText>
+                    <f:facet name="footer">  
+                        <h:outputText value="#{transaccionController.debe}" style="text-align: right">
+                            <f:convertNumber type="currency"  locale="#{usuarioController.locale}"/>
+                        </h:outputText>
+                    </f:facet>
+                </p:column>
+                <p:column headerText="Haber"  style="font-size: 12px; text-align: right">
+                    <h:outputText value="#{item.haber}">
+                        <f:convertNumber type="currency"  locale="#{usuarioController.locale}"/>
+                    </h:outputText>
+                    <f:facet name="footer">  
+                        <h:outputText value="#{transaccionController.haber}">
+                            <f:convertNumber type="currency"  locale="#{usuarioController.locale}"/>
+                        </h:outputText>
+                    </f:facet>
+                </p:column>
+                <f:facet name="footer"> 
+                    <h:outputText value="Saldo:" />
+                    <h:outputText value="#{transaccionController.saldo}">
+                        <f:convertNumber type="currency"  locale="#{usuarioController.locale}"/>
+                    </h:outputText>
+                </f:facet>  
+            </p:dataTable>
+        </h:form>
+    </h:body>
+</html>
+

@@ -1,0 +1,99 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <ui:component>
+
+        <p:tabView effect="fade" style="min-height: 500px">
+            <p:tab title="Mayorización de Cuentas">
+                <h:panelGroup id="mayor">
+                    <p:commandButton value="Periodo" style="padding-left: 25px" onclick="buscarPeriodoM.show()" icon="calendario"/>
+                    <h:outputText value="Seleccionado" rendered="#{transaccionController.periodoNoNulo}" style="font-size: 10px; padding-left: 5px; color: #B70000" />
+                    <h:outputLabel for="c" value="Cuenta:" style="font-size: 12px; padding-left: 10px; padding-right: 10px" rendered="#{!transaccionController.cuentaNoNula}"/>
+                    <p:autoComplete id="c" forceSelection="true" style="font-size: 13px; padding-right: 10px"
+                                    value="#{cuentaController.cuenta}" required="true"
+                                    completeMethod="#{cuentaController.autocomplete}" rendered="#{!transaccionController.cuentaNoNula}"
+                                    var ="cuenta" itemLabel="#{cuenta}" itemValue="#{cuenta}"
+                                    converter="#{cuentaControllerConverter}" maxResults="5" disabled="#{transaccionController.subcuentaNoNula}"/>
+                    <p:commandButton value="Aceptar" update="mayor" actionListener="#{transaccionController.mostrarCuenta}" rendered="#{!transaccionController.cuentaNoNula}" icon="aceptar">
+                        <f:attribute name="cuenta" value="#{cuentaController.cuenta}" />
+                    </p:commandButton>
+
+                    <h:outputLabel for="sc" value="SubCuenta:" style="font-size: 12px; padding-left: 10px" rendered="#{transaccionController.cuentaNoNula}"/>
+                    <p:autoComplete widgetVar="sc" forceSelection="true" style="font-size: 13px; padding-left: 5px; font-size: 13px"
+                                    value="#{cuentaController.subcuenta}"
+                                    completeMethod="#{cuentaController.subAutocomplete}" dropdown="true" scrollHeight="200" 
+                                    var ="subCuenta" itemLabel="#{subCuenta}" itemValue="#{subCuenta}"
+                                    converter="#{subCuentaControllerConverter}" rendered="#{transaccionController.cuentaNoNula}"/>
+                    <p:commandButton value="Aceptar" update="mayor" actionListener="#{transaccionController.mostrarSubCuenta}" rendered="#{transaccionController.cuentaNoNula}" icon="aceptar">
+                        <f:attribute name="subcuenta" value="#{cuentaController.subcuenta}" />
+                    </p:commandButton>
+                    <p:menuButton value="Opciones" style="float: right; padding-right: 25px; font-size: 10px" rendered="#{transaccionController.cuentaNoNula}">
+                        <p:menuitem value="Buscar Cuenta" style="font-size: 10px; color: #999" action="#{transaccionController.reset}" update="mayor" icon="buscar"/>
+                        <p:menuitem value="Imprimir" style="font-size: 10px; color: #999" icon="imprimir" actionListener="#{usuarioController.imprimir}">
+                            <f:attribute name="tabla" value="mayor"/>
+                        </p:menuitem>
+                    </p:menuButton>
+                    <p:separator />
+                    <p:dataTable var="item" value="#{transaccionController.items}" widgetVar="mayor" paginator="true" rows="10"
+                                 emptyMessage="No se encontraron resultados" sortOrder="descending" 
+                                 sortBy="#{item.transaccionPK.correlativoPartida}" style="padding-left: 25px; padding-right: 25px; min-width: 500px;" rendered="#{transaccionController.cuentaNoNula}">
+
+                        <f:facet name="header">
+                            <h:outputText  value = "#{cuentaController.cuenta.nombreCuenta}"/>
+                            <h:outputText  value = " #{cuentaController.subcuenta.nombreSubcuenta}" rendered="#{transaccionController.subcuentaNoNula}" style="font-size: 12px"/>
+                        </f:facet>
+                        <p:column headerText="Fecha" sortBy="#{item.partida.fechaPartida}" 
+                                  filterBy="#{item.partida.fechaPartida}" filterMatchMode="contains" style="font-size: 12px; text-align: center">
+                            <h:outputText value="#{item.partida.fechaPartida}" >
+                                <f:convertDateTime pattern="dd/MM/yyyy" />
+                            </h:outputText>
+                        </p:column>
+                        <p:column headerText="Descripción" sortBy="#{item.partida.descripcionPartida}" 
+                                  filterBy="#{item.partida.descripcionPartida}" filterMatchMode="contains" style="font-size: 12px">
+                            <h:outputText value="#{item.partida.descripcionPartida}"/>
+                        </p:column>
+                        <p:column headerText="N° Partida" sortBy="#{item.transaccionPK.correlativoPartida}" 
+                                  filterBy="#{item.transaccionPK.correlativoPartida}" style="font-size: 12px; text-align: center">  
+                            <h:outputText value="#{item.transaccionPK.correlativoPartida}" />
+                            <f:facet name="footer">  
+                                <h:outputText value="Total" style="text-align: right"/>
+                            </f:facet>
+                        </p:column>
+
+                        <p:column headerText="Debe" sortBy="#{item.debe}"  style="font-size: 14px; text-align: right" >
+                            <h:outputText value="#{item.debe}">
+                                <f:convertNumber type="currency"  locale="#{usuarioController.locale}"/>
+                            </h:outputText>
+                            <f:facet name="footer">  
+                                <h:outputText value="#{transaccionController.debe}" style="text-align: right">
+                                    <f:convertNumber type="currency"  locale="#{usuarioController.locale}"/>
+                                </h:outputText>
+                            </f:facet>
+                        </p:column>
+                        <p:column headerText="Haber" sortBy="#{item.haber}" style="font-size: 12px; text-align: right">
+                            <h:outputText value="#{item.haber}">
+                                <f:convertNumber type="currency"  locale="#{usuarioController.locale}"/>
+                            </h:outputText>
+                            <f:facet name="footer">  
+                                <h:outputText value="#{transaccionController.haber}">
+                                    <f:convertNumber type="currency"  locale="#{usuarioController.locale}"/>
+                                </h:outputText>
+                            </f:facet>
+                        </p:column>
+                        <f:facet name="footer"> 
+                            <h:outputText value="Saldo:" />
+                            <h:outputText value="#{transaccionController.saldo}">
+                                <f:convertNumber type="currency"  locale="#{usuarioController.locale}"/>
+                            </h:outputText>
+                        </f:facet>  
+                    </p:dataTable>
+                </h:panelGroup>
+            </p:tab>
+        </p:tabView> 
+
+    </ui:component>
+</html>

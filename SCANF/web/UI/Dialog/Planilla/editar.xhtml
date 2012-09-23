@@ -1,0 +1,65 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    <ui:component>
+
+        <p:dialog widgetVar="editarPlanilla" header="Editar Empleado" showEffect="fade" hideEffect="fade" modal="true" resizable="false">  
+            <h:form id="epla">
+                <h:panelGrid columns="2" columnClasses="column" cellpadding="5">
+
+                    <h:outputLabel value="N° de Horas Extra: " style="font-weight: bold"/>  
+                    <p:inplace>
+                        <p:inputText value="#{planillaController.selected.numeroHorasExtra}">
+
+                        </p:inputText>
+                    </p:inplace>
+
+
+                    <h:outputLabel value="Pago Hrs Extra: " style="font-weight: bold"/>  
+                    <p:inplace>
+                        <p:inputText  value="#{planillaController.selected.horasExtra}" >
+
+                        </p:inputText>
+                    </p:inplace>
+
+
+                    <h:outputLabel value="Bonificaciones: " style="font-weight: bold"/>  
+                    <p:inplace>
+                        <p:inputText value="#{planillaController.selected.bonificaciones}" required="true">
+
+                        </p:inputText>
+                    </p:inplace>
+
+
+                    <h:outputLabel value="AFP: " style="font-weight: bold"/>  
+                    <p:inplace>
+                        <p:inputText value="#{planillaController.selected.afp}" >
+
+                        </p:inputText>
+                    </p:inplace>
+
+                    <h:outputLabel value="ISSS:" style="font-weight: bold"/> 
+
+                    <p:inplace>
+                        <p:inputText value="#{planillaController.selected.isss}" >
+
+                        </p:inputText>
+                    </p:inplace>
+
+                    <h:outputLabel value="Sueldo Neto " style="font-weight: bold"/>
+                    <p:inplace>
+                        <p:inputText value="#{planillaController.selected.salarioNeto}" >
+
+                        </p:inputText>
+                    </p:inplace>
+
+                    <p:commandButton value="Guardar" icon="guardar" update="currentUI" oncomplete="editarPlanilla.hide()" actionListener="#{planillaController.update}"/>
+
+                </h:panelGrid>
+            </h:form>
+        </p:dialog>
+    </ui:component>
+</html>

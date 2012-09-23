@@ -1,0 +1,40 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <ui:component>
+
+        <p:dialog widgetVar="nuevaActividad" header="Nueva Actividad" showEffect="fade" hideEffect="fade" modal="true" resizable="false">  
+            <h:form id="nact">
+                <h:panelGrid columns="2" columnClasses="column" cellpadding="5">
+
+                    <h:outputLabel value="ID: " style="font-weight: bold"/>  
+                    <p:inputText value="#{actividadController.selected.idActividad}" required="true">
+                        <f:validateLength maximum="5" />
+                    </p:inputText>
+
+                    <h:outputLabel value="Nombre: " style="font-weight: bold"/>  
+                    <p:inputText  value="#{actividadController.selected.nombreActividad}" >
+                        <f:validateLength maximum="50" />
+                    </p:inputText>
+
+                    <h:outputLabel value="Inductor " style="font-weight: bold"/>       
+                    <p:selectOneMenu value="#{actividadController.selected.idInductorActividad}" effect="fade" style="width: 150px">
+                        <f:selectItems value="#{inductorActividadController.itemsSelect}"/>
+                    </p:selectOneMenu>
+
+                    <h:outputLabel value="Descripción: " style="font-weight: bold"/>  
+                    <p:inputText value="#{actividadController.selected.descripcionActividad}">
+                        <f:validateLength maximum="250" />
+                    </p:inputText>
+
+                    <p:commandButton value="Guardar" icon="guardar" update="currentUI" oncomplete="nuevaActividad.hide()" actionListener="#{actividadController.create}"/>
+
+                </h:panelGrid>
+            </h:form>
+        </p:dialog>
+    </ui:component>
+</html>

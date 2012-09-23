@@ -1,0 +1,92 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <ui:component>
+
+        <p:tabView effect="fade" style="min-height: 500px" dynamic="true">
+            <p:tab title="Servicios">
+
+                <p:menuButton value="Acciones" style="padding-right: 25px; font-size: 10px" >
+                    <p:menuitem value="Nuevo" style="font-size: 10px; color: #999" icon="nuevo" actionListener="#{servicioController.prepareCreate}"  oncomplete="nuevoServicio.show()" update="nserv"/>
+                </p:menuButton>
+
+                <h:panelGroup id="servicios" >
+
+                    <h:outputText value="Registros #{servicioController.pagination.pageFirstItem + 1} - #{servicioController.pagination.pageLastItem + 1} de #{servicioController.pagination.itemsCount}" style="font-size: 10px; padding-left: 25px; padding-right: 5px" rendered="#{servicioController.items.rowCount > 0}"/>
+
+                    <p:commandButton action="#{servicioController.previous}" icon="izquierda" rendered="#{servicioController.pagination.hasPreviousPage}" update="servicios" />
+                    <p:commandButton action="#{servicioController.next}" icon="derecha" rendered="#{servicioController.pagination.hasNextPage}" update="servicios" />
+
+                    <p:separator />
+                    <p:dataTable var="item" value="#{servicioController.items}"
+                                 emptyMessage="No se encontraron resultados" sortBy="#{item.idServicio}" 
+                                 style="padding-left: 25px; padding-right: 25px; min-width: 500px;">
+
+                        <f:facet name="header">  
+                            Servicios  
+                        </f:facet>
+                        <p:column>
+                            <p:commandButton icon="seleccionar"  action="#{servicioController.prepareView}" update="eserv" oncomplete="editarServicio.show()" title="Editar"/> 
+                        </p:column>
+                        <p:column headerText="ID" sortBy="#{item.idServicio}"  style="font-size: 14px" >
+                            <h:outputText value="#{item.idServicio}"/>
+                        </p:column>
+                        <p:column headerText="Nombre" sortBy="#{item.nombreServicio}"  style="font-size: 14px" >
+                            <h:outputText value="#{item.nombreServicio}"/>
+                        </p:column>
+                        <p:column headerText="Descripción" sortBy="#{item.descripcionServicio}" style="font-size: 12px">
+                            <h:outputText value="#{item.descripcionServicio}"/>
+                        </p:column>
+                    </p:dataTable>
+
+                </h:panelGroup>
+            </p:tab>
+            <p:tab title="Tipo Servicios">
+
+                <p:menuButton value="Acciones" style="padding-right: 25px; font-size: 10px" >
+                    <p:menuitem value="Nuevo" style="font-size: 10px; color: #999" icon="nuevo" actionListener="#{tipoServicioController.prepareCreate}"  oncomplete="nuevoTipo.show()" update="ntipo"/>
+                </p:menuButton>
+
+                <h:panelGroup id="tipo" >
+
+                    <h:outputText value="Registros #{tipoServicioController.pagination.pageFirstItem + 1} - #{tipoServicioController.pagination.pageLastItem + 1} de #{tipoServicioController.pagination.itemsCount}" style="font-size: 10px; padding-left: 25px; padding-right: 5px" rendered="#{tipoServicioController.items.rowCount > 0}"/>
+
+                    <p:commandButton action="#{tipoServicioController.previous}" icon="izquierda" rendered="#{tipoServicioController.pagination.hasPreviousPage}" update="tipo" />
+                    <p:commandButton action="#{tipoServicioController.next}" icon="derecha" rendered="#{tipoServicioController.pagination.hasNextPage}" update="tipo" />
+
+                    <p:separator />
+                    <p:dataTable  var="item" value="#{tipoServicioController.items}"
+                                  emptyMessage="No se encontraron resultados" sortBy="#{item.idTipoServicio}" 
+                                  style="padding-left: 25px; padding-right: 25px; min-width: 500px;">
+
+                        <f:facet name="header">  
+                            Tipos de Servicio  
+                        </f:facet>
+                        <p:column>
+                            <p:commandButton icon="seleccionar"  action="#{tipoServicioController.prepareView}" update="etipo" oncomplete="editarTipo.show()" title="Editar"/> 
+                        </p:column>
+                        <p:column headerText="ID" sortBy="#{item.idTipoServicio}"  style="font-size: 14px" >
+                            <h:outputText value="#{item.idTipoServicio}"/>
+                        </p:column>
+                        <p:column headerText="Servicio" sortBy="#{item.idServicio.nombreServicio}"  style="font-size: 14px" >
+                            <h:outputText value="#{item.idServicio.nombreServicio}"/>
+                        </p:column>
+
+                        <p:column headerText="Nombre" sortBy="#{item.nombreTipoServicio}"  style="font-size: 14px" >
+                            <h:outputText value="#{item.nombreTipoServicio}"/>
+                        </p:column>
+                        <p:column headerText="Descripción" sortBy="#{item.descripcionTipoServicio}" style="font-size: 12px">
+                            <h:outputText value="#{item.descripcionTipoServicio}"/>
+                        </p:column>
+                    </p:dataTable>
+
+                </h:panelGroup>
+
+            </p:tab>
+        </p:tabView> 
+    </ui:component>
+</html>

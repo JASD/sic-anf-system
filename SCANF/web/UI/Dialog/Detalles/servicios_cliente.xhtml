@@ -1,0 +1,43 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <ui:component>
+        <h:form id="mc">
+            <p:dialog widgetVar="serviciosCliente" header="Servicios del Cliente" showEffect="fade" hideEffect="fade" modal="true" resizable="false"> 
+
+                <p:dataTable var="item" value="#{clienteController.selected.servicioClienteList}" paginator="true" rows="3"
+                             emptyMessage="No se encontraron resultados" style="padding-left: 25px; padding-right: 25px; padding-top: 25px; padding-bottom: 25px; min-width: 400px; max-width: 700px">
+
+                    <f:facet name="header">
+                        <h:outputText  value = "Cliente: #{clienteController.selected.primerNombreCliente} #{clienteController.selected.primerApellidoCliente}"/>
+                    </f:facet>
+
+                    <p:column headerText="Fecha" sortBy="#{item.fechaServicioCliente}"
+                              style="font-size: 12px; text-align: center">
+                        <h:outputText value="#{item.fechaServicioCliente}" >
+                            <f:convertDateTime pattern="dd/MM/yyyy" />
+                        </h:outputText>
+                    </p:column>
+
+                    <p:column headerText="Tipo" style="font-size: 14px" sortBy="#{item.tipoServicio.nombreTipoServicio}">
+                        <h:outputText value="#{item.tipoServicio.nombreTipoServicio}"/>
+                    </p:column>
+
+                    <p:column headerText="Términos de Servicio" style="font-size: 14px" >
+                        <h:outputText value="#{item.terminosServicioCliente}"/>
+                    </p:column>
+
+                    <p:column headerText="Aseguradora" sortBy="#{item.cliente.idAseguradora.nombreAseguradora}" 
+                              style="font-size: 14px" >
+                        <h:outputText value="#{item.cliente.idAseguradora.nombreAseguradora}"/>
+                    </p:column>
+
+                </p:dataTable>
+            </p:dialog>
+        </h:form>
+    </ui:component>
+</html>

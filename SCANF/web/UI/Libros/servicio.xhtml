@@ -1,0 +1,77 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <ui:component>
+
+        <p:tabView effect="fade" style="min-height: 500px">
+            <p:tab title="Servicios Brindados">
+                <h:panelGroup id="servicio">
+                    <p:commandButton value="Periodo" style="padding-left: 25px" onclick="buscarPeriodoS.show()" icon="calendario"/>
+                    <h:outputText value="Seleccionado" rendered="#{servicioClienteController.periodoNoNulo}" style="font-size: 10px; padding-left: 5px; color: #B70000" />
+                    <h:outputLabel value="Servicio:" style="font-size: 12px; padding-left: 10px; padding-right: 10px" rendered="#{!servicioClienteController.servicioNoNulo}"/>
+                    <p:autoComplete forceSelection="true" style="font-size: 13px; padding-right: 10px"
+                                    value="#{servicioController.servicio}" required="true"
+                                    completeMethod="#{servicioController.autocomplete}" rendered="#{!servicioClienteController.servicioNoNulo}"
+                                    var ="servicio" itemLabel="#{servicio}" itemValue="#{servicio}"
+                                    converter="#{servicioControllerConverter}" maxResults="5" disabled="#{servicioClienteController.tipoNoNulo}"/>
+                    <p:commandButton value="Aceptar" update="servicio" actionListener="#{servicioClienteController.mostrarServicio}" rendered="#{!servicioClienteController.servicioNoNulo}" icon="aceptar">
+                        <f:attribute name="servicio" value="#{servicioController.servicio}" />
+                    </p:commandButton>
+
+                    <h:outputLabel value="Tipo:" style="font-size: 12px; padding-left: 10px" rendered="#{servicioClienteController.servicioNoNulo}"/>
+                    <p:autoComplete style="font-size: 13px; padding-left: 5px; font-size: 13px"
+                                    value="#{servicioController.tipo}"
+                                    completeMethod="#{servicioController.tipoAutocomplete}" dropdown="true" scrollHeight="200" 
+                                    var ="tipoServicio" itemLabel="#{tipoServicio}" itemValue="#{tipoServicio}"
+                                    converter="#{tipoServicioControllerConverter}" rendered="#{servicioClienteController.servicioNoNulo}"/>
+                    <p:commandButton value="Aceptar" update="servicio" actionListener="#{servicioClienteController.mostrarTipoServicio}" rendered="#{servicioClienteController.servicioNoNulo}" icon="aceptar">
+                        <f:attribute name="tiposervicio" value="#{servicioController.tipo}" />
+                    </p:commandButton>
+                    <p:menuButton value="Opciones" style="float: right; padding-right: 25px; font-size: 10px" rendered="#{servicioClienteController.servicioNoNulo}">
+                        <p:menuitem value="Buscar Servicio" style="font-size: 10px; color: #999" action="#{servicioClienteController.reset}" update="servicio" icon="buscar"/>
+                        <p:menuitem value="Imprimir" style="font-size: 10px; color: #999" icon="imprimir" actionListener="#{usuarioController.imprimir}">
+                            <f:attribute name="tabla" value="servicio"/>
+                        </p:menuitem>
+                    </p:menuButton>
+                    <p:separator />
+                    <p:dataTable var="item" value="#{servicioClienteController.itemsLibro}" paginator="true" rows="10"
+                                 emptyMessage="No se encontraron resultados" sortOrder="descending" 
+                                 sortBy="#{item.fechaServicioCliente}" style="padding-left: 25px; padding-right: 25px; min-width: 500px;" rendered="#{servicioClienteController.servicioNoNulo}">
+
+                        <f:facet name="header">
+                            <h:outputText  value = "#{servicioClienteController.servicio.nombreServicio}"/>
+                            <h:outputText  value = " #{servicioClienteController.tipo.nombreTipoServicio}" rendered="#{servicioClienteController.tipoNoNulo}" style="font-size: 12px"/>
+                        </f:facet>
+
+                        <p:column headerText="Fecha" sortBy="#{item.fechaServicioCliente}" filterBy="#{item.fechaServicioCliente}" filterMatchMode="contains" 
+                                  style="font-size: 12px; text-align: center">
+                            <h:outputText value="#{item.fechaServicioCliente}" >
+                                <f:convertDateTime pattern="dd/MM/yyyy" />
+                            </h:outputText>
+                        </p:column>
+
+                        <p:column headerText="Cliente" sortBy="#{item.cliente.primerNombreCliente}"  filterBy="#{item.cliente.primerNombreCliente}" filterMatchMode="contains" 
+                                  style="font-size: 14px" >
+                            <h:outputText value="#{item.cliente.primerNombreCliente} #{item.cliente.primerApellidoCliente}"/>
+                        </p:column>
+
+                        <p:column headerText="Términos de Servicio" filterBy="#{item.terminosServicioCliente}"  filterMatchMode="contains" style="font-size: 14px" >
+                            <h:outputText value="#{item.terminosServicioCliente}"/>
+                        </p:column>
+
+                        <p:column headerText="Aseguradora" sortBy="#{item.cliente.idAseguradora.nombreAseguradora}"  filterBy="#{item.cliente.idAseguradora.nombreAseguradora}" 
+                                  style="font-size: 14px" >
+                            <h:outputText value="#{item.cliente.idAseguradora.nombreAseguradora}"/>
+                        </p:column>
+
+                    </p:dataTable>
+                </h:panelGroup>
+            </p:tab>
+        </p:tabView> 
+
+    </ui:component>
+</html>

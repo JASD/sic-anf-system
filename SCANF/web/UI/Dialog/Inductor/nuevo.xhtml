@@ -1,0 +1,35 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <ui:component>
+
+        <p:dialog widgetVar="nuevoInductor" header="Nuevo Inductor Actividad" showEffect="fade" hideEffect="fade" modal="true" resizable="false">  
+            <h:form id="nind">
+                <h:panelGrid columns="2" columnClasses="column" cellpadding="5">
+
+                    <h:outputLabel value="ID: " style="font-weight: bold"/>  
+                    <p:inputText value="#{inductorActividadController.selected.idInductorActividad}" required="true">
+                        <f:validateLength maximum="5" />
+                    </p:inputText>
+
+                    <h:outputLabel value="Nombre: " style="font-weight: bold"/>  
+                    <p:inputText  value="#{inductorActividadController.selected.nombreInductorActividad}" >
+                        <f:validateLength maximum="50" />
+                    </p:inputText>
+
+                    <h:outputLabel value="Descripción: " style="font-weight: bold"/>  
+                    <p:inputText value="#{inductorActividadController.selected.descripcionInductorActividad}">
+                        <f:validateLength maximum="250" />
+                    </p:inputText>
+
+                    <p:commandButton value="Guardar" icon="guardar" update="currentUI" oncomplete="nuevoInductor.hide()" actionListener="#{inductorActividadController.create}"/>
+
+                </h:panelGrid>
+            </h:form>
+        </p:dialog>
+    </ui:component>
+</html>

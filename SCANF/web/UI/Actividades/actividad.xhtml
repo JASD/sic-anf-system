@@ -1,0 +1,52 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <ui:component>
+
+        <p:tabView effect="fade" style="min-height: 500px" dynamic="true">
+            <p:tab title="Actividad">
+                <h:panelGroup id="actividad">
+                    <p:separator />
+                    <h:panelGrid columns="2" cellpadding="5" > 
+                        <h:outputLabel value="Fecha: "/>  
+                        <p:calendar value="#{actividadServicioController.actividadServicio.fechaActividadServicio}" required="true" locale="es" pattern="yyyy/MM/dd" readOnlyInputText="true" effect="fadeIn"/>
+
+                        <h:outputLabel value="Servicio: "/>  
+                        <p:selectOneMenu value="#{actividadServicioController.actividadServicio.servicio}" effect="fade" style="width: 220px" required="true">
+                            <f:selectItem itemLabel="" itemValue=""/> 
+                            <f:selectItems value="#{servicioController.itemsSelect}"/>
+                        </p:selectOneMenu>
+
+                        <h:outputLabel value="Actividad " />  
+                        <p:autoComplete forceSelection="true" required="true"
+                                        value="#{actividadServicioController.actividadServicio.actividad}" maxResults="5"
+                                        completeMethod="#{actividadController.autocomplete}" scrollHeight="200" 
+                                        var ="actividad" itemLabel="#{actividad}" itemValue="#{actividad}"
+                                        converter="#{actividadControllerConverter}"/>
+
+                        <h:outputLabel value="Valor inductor Actividad: "/>  
+                        <p:inputMask value="#{actividadServicioController.actividadServicio.valorInductorActividad}" mask="99.99" required="true"/>
+
+
+                        <h:outputLabel value="Repeticiones Actividad: "/>  
+                        <p:inputMask value="#{actividadServicioController.actividadServicio.numeroRepeticionesActividad}" mask="99"  required="true"/>
+
+
+                        <h:outputLabel value="Descripción: "/>  
+                        <p:inputTextarea value="#{actividadServicioController.actividadServicio.descipcionActividadServicio}" autoResize="true" 
+                                         maxlength="500"/>
+
+                        <p:commandButton value="Descartar" icon="eliminar" update="currentUI" action="#{actividadServicioController.reset}" />
+                        <p:commandButton value="Guardar" icon="guardar" title="Guardar" actionListener="#{actividadServicioController.guardarActividad}" update="currentUI" >
+                            <f:attribute name="periodo" value="#{periodoController.actual}" />
+                        </p:commandButton>
+                    </h:panelGrid>
+                </h:panelGroup>
+            </p:tab>
+        </p:tabView> 
+    </ui:component>
+</html>

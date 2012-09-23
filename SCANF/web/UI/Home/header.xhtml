@@ -1,0 +1,26 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <ui:component>
+        <h:form>
+            <h:outputText value="ASECON S.A. de C.V Sistema de Contabilidad" style="display: block; text-align: center; font-size: 17px; font-weight: bold; padding-top: 5px; color: black" />
+            <p:graphicImage value="resources/img/logo.jpg" width="67" height="40" style="padding-bottom: 2px"/>           
+            <p:commandLink styleClass="headerLink" onclick="logout.show()" >
+                <h:outputText value="Salir" style="color: #B70000"/>
+            </p:commandLink>
+            <p:commandLink update="currentUI" actionListener="#{usuarioController.updateUI}" action="#{notaController.llenarCalendario}" styleClass="headerLink">
+                <f:attribute name="uiName" value="Home/calendar" />
+                <h:outputText value="Inicio" style="color: #B70000"/>
+            </p:commandLink>
+            <p:commandLink  styleClass="headerLink" onclick="datosUsuario.show()">
+                <h:outputText value="#{usuarioController.user.primerNombreUsuario} #{usuarioController.user.primerApellidoUsuario}" style="color: #B70000"/>
+            </p:commandLink>
+            <h:outputText value="Usuario: " styleClass="headerLink"/>
+        </h:form>
+    </ui:component>
+</html>
+
