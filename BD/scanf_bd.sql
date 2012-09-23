@@ -1,48 +1,14 @@
 /*==============================================================*/
 /* DBMS name:      MySQL 5.0                                    */
-/* Created on:     22/09/2012 10:31:09 p.m.                     */
+/* Created on:     23/09/2012 01:40:49 p.m.                     */
 /*==============================================================*/
 
 
-DROP TABLE IF EXISTS ACTIVIDAD;
+DROP DATABASE IF EXISTS SCANF;
 
-DROP TABLE IF EXISTS ACTIVIDAD_SERVICIO;
+CREATE DATABASE SCANF;
 
-DROP TABLE IF EXISTS CLIENTE;
-
-DROP TABLE IF EXISTS COSTO_ACTIVIDAD;
-
-DROP TABLE IF EXISTS COSTO_SERVICIO;
-
-DROP TABLE IF EXISTS CUENTA;
-
-DROP TABLE IF EXISTS DOCUMENTO;
-
-DROP TABLE IF EXISTS EMPLEADO;
-
-DROP TABLE IF EXISTS INDUCTOR_ACTIVIDAD;
-
-DROP TABLE IF EXISTS PARTIDA;
-
-DROP TABLE IF EXISTS PERFIL;
-
-DROP TABLE IF EXISTS PERIODO;
-
-DROP TABLE IF EXISTS PLANILLA;
-
-DROP TABLE IF EXISTS SALDO;
-
-DROP TABLE IF EXISTS SERVICIO;
-
-DROP TABLE IF EXISTS SERVICIO_CLIENTE;
-
-DROP TABLE IF EXISTS SUB_CUENTA;
-
-DROP TABLE IF EXISTS TIPO_SERVICIO;
-
-DROP TABLE IF EXISTS TRANSACCION;
-
-DROP TABLE IF EXISTS USUARIO;
+USE SCANF;
 
 /*==============================================================*/
 /* Table: ACTIVIDAD                                             */
@@ -54,8 +20,7 @@ CREATE TABLE ACTIVIDAD
    NOMBRE_ACTIVIDAD     VARCHAR(50),
    DESCRIPCION_ACTIVIDAD VARCHAR(250),
    PRIMARY KEY (ID_ACTIVIDAD)
-)
-TYPE = MYISAM;
+);
 
 /*==============================================================*/
 /* Table: ACTIVIDAD_SERVICIO                                    */
@@ -70,15 +35,14 @@ CREATE TABLE ACTIVIDAD_SERVICIO
    NUMERO_REPETICIONES_ACTIVIDAD NUMERIC(8,2),
    DESCIPCION_ACTIVIDAD_SERVICIO VARCHAR(250),
    PRIMARY KEY (NUMERO_PERIODO, ID_ACTIVIDAD, ID_SERVICIO)
-)
-TYPE = MYISAM;
+);
 
 /*==============================================================*/
 /* Table: CLIENTE                                               */
 /*==============================================================*/
 CREATE TABLE CLIENTE
 (
-   NUMERO_CLIENTE       BIGINT NOT NULL,
+   NUMERO_CLIENTE       BIGINT NOT NULL AUTO_INCREMENT,
    PRIMER_NOMBRE_CLIENTE VARCHAR(50),
    SEGUNDO_NOMBRE_CLIENTE VARCHAR(50),
    PRIMER_APELLIDO_CLIENTE VARCHAR(50),
@@ -87,8 +51,7 @@ CREATE TABLE CLIENTE
    EMAIL_CLIENTE        VARCHAR(50),
    ESTADO_CLIENTE       BOOL,
    PRIMARY KEY (NUMERO_CLIENTE)
-)
-TYPE = MYISAM;
+);
 
 /*==============================================================*/
 /* Table: COSTO_ACTIVIDAD                                       */
@@ -102,8 +65,7 @@ CREATE TABLE COSTO_ACTIVIDAD
    TOTAL_INDUCTOR_ACTIVIDAD NUMERIC(8,2),
    COSTO_ACTIVIDAD      FLOAT(8,2),
    PRIMARY KEY (NUMERO_PERIODO, ID_ACTIVIDAD)
-)
-TYPE = MYISAM;
+);
 
 /*==============================================================*/
 /* Table: COSTO_SERVICIO                                        */
@@ -116,8 +78,7 @@ CREATE TABLE COSTO_SERVICIO
    NUMERO_REPETICIONES_SERVICIO INT,
    COSTO_SERVICIO       FLOAT(8,2),
    PRIMARY KEY (ID_SERVICIO, NUMERO_PERIODO)
-)
-TYPE = MYISAM;
+);
 
 /*==============================================================*/
 /* Table: CUENTA                                                */
@@ -132,8 +93,7 @@ CREATE TABLE CUENTA
    DESCRIPCION_CUENTA   VARCHAR(150),
    SALDO_CUENTA         FLOAT(8,2),
    PRIMARY KEY (CODIGO_CUENTA)
-)
-TYPE = MYISAM;
+);
 
 /*==============================================================*/
 /* Table: DOCUMENTO                                             */
@@ -143,8 +103,7 @@ CREATE TABLE DOCUMENTO
    ID_DOCUMENTO         CHAR(5) NOT NULL,
    NOMBRE_DOCUMENTO     VARCHAR(100),
    PRIMARY KEY (ID_DOCUMENTO)
-)
-TYPE = MYISAM;
+);
 
 /*==============================================================*/
 /* Table: EMPLEADO                                              */
@@ -161,8 +120,7 @@ CREATE TABLE EMPLEADO
    EMAIL_EMPLEADO       VARCHAR(50),
    ESTADO_EMPLEADO      BOOL,
    PRIMARY KEY (ID_EMPLEADO)
-)
-TYPE = MYISAM;
+);
 
 /*==============================================================*/
 /* Table: INDUCTOR_ACTIVIDAD                                    */
@@ -173,15 +131,14 @@ CREATE TABLE INDUCTOR_ACTIVIDAD
    NOMBRE_INDUCTOR_ACTIVIDAD VARCHAR(50),
    DESCRIPCION_INDUCTOR_ACTIVIDAD VARCHAR(250),
    PRIMARY KEY (ID_INDUCTOR_ACTIVIDAD)
-)
-TYPE = MYISAM;
+);
 
 /*==============================================================*/
 /* Table: PARTIDA                                               */
 /*==============================================================*/
 CREATE TABLE PARTIDA
 (
-   CORRELATIVO_PARTIDA  BIGINT NOT NULL,
+   CORRELATIVO_PARTIDA  BIGINT NOT NULL AUTO_INCREMENT,
    ID_DOCUMENTO         CHAR(5),
    FECHA_PARTIDA        DATE,
    NUMERO_DOCUMENTO     BIGINT,
@@ -189,15 +146,14 @@ CREATE TABLE PARTIDA
    TOTAL_DEBE           FLOAT(8,2),
    TOTAL_HABER          FLOAT(8,2),
    PRIMARY KEY (CORRELATIVO_PARTIDA)
-)
-TYPE = MYISAM;
+);
 
 /*==============================================================*/
 /* Table: PERFIL                                                */
 /*==============================================================*/
 CREATE TABLE PERFIL
 (
-   ID_PERFIL            INT NOT NULL,
+   ID_PERFIL            INT NOT NULL AUTO_INCREMENT,
    NOMBRE_PERFIL        VARCHAR(15),
    PERMISO_REGISTRO_CONTABLE BOOL,
    PERMISO_REGISTRO_COSTO BOOL,
@@ -206,15 +162,14 @@ CREATE TABLE PERFIL
    PERMISO_MANTENIMIENTO BOOL,
    PERMISO_ADMINISTRACION BOOL,
    PRIMARY KEY (ID_PERFIL)
-)
-TYPE = MYISAM;
+);
 
 /*==============================================================*/
 /* Table: PERIODO                                               */
 /*==============================================================*/
 CREATE TABLE PERIODO
 (
-   NUMERO_PERIODO       BIGINT NOT NULL,
+   NUMERO_PERIODO       BIGINT NOT NULL AUTO_INCREMENT,
    FECHA_INICIO_PERIODO DATE,
    FECHA_FIN_PERIODO    DATE,
    ESTADO_PERIODO       BOOL,
@@ -226,8 +181,7 @@ CREATE TABLE PERIODO
    TOTAL_INGRESOS_PERIODO FLOAT(8,2),
    TOTAL_CIS_PERIODO    FLOAT(8,2),
    PRIMARY KEY (NUMERO_PERIODO)
-)
-TYPE = MYISAM;
+);
 
 /*==============================================================*/
 /* Table: PLANILLA                                              */
@@ -245,8 +199,7 @@ CREATE TABLE PLANILLA
    ISSS                 FLOAT(8,2),
    SALARIO_NETO         FLOAT(8,2),
    PRIMARY KEY (NUMERO_PERIODO, ID_EMPLEADO)
-)
-TYPE = MYISAM;
+);
 
 /*==============================================================*/
 /* Table: SALDO                                                 */
@@ -257,8 +210,7 @@ CREATE TABLE SALDO
    CODIGO_CUENTA        CHAR(5) NOT NULL,
    SALDO_FINAL_CUENTA   FLOAT(8,2),
    PRIMARY KEY (NUMERO_PERIODO, CODIGO_CUENTA)
-)
-TYPE = MYISAM;
+);
 
 /*==============================================================*/
 /* Table: SERVICIO                                              */
@@ -269,8 +221,7 @@ CREATE TABLE SERVICIO
    NOMBRE_SERVICIO      VARCHAR(50),
    DESCRIPCION_SERVICIO VARCHAR(250),
    PRIMARY KEY (ID_SERVICIO)
-)
-TYPE = MYISAM;
+);
 
 /*==============================================================*/
 /* Table: SERVICIO_CLIENTE                                      */
@@ -283,8 +234,7 @@ CREATE TABLE SERVICIO_CLIENTE
    FECHA_SERVICIO_CLIENTE DATE,
    TERMINOS_SERVICIO_CLIENTE VARCHAR(500),
    PRIMARY KEY (ID_TIPO_SERVICIO, NUMERO_CLIENTE, NUMERO_PERIODO)
-)
-TYPE = MYISAM;
+);
 
 /*==============================================================*/
 /* Table: SUB_CUENTA                                            */
@@ -297,8 +247,7 @@ CREATE TABLE SUB_CUENTA
    DESCRIPCION_SUBCUENTA VARCHAR(150),
    SALDO_SUBCUENTA      FLOAT(8,2),
    PRIMARY KEY (CODIGO_SUBCUENTA)
-)
-TYPE = MYISAM;
+);
 
 /*==============================================================*/
 /* Table: TIPO_SERVICIO                                         */
@@ -310,8 +259,7 @@ CREATE TABLE TIPO_SERVICIO
    NOMBRE_TIPO_SERVICIO VARCHAR(100),
    DESCRIPCION_TIPO_SERVICIO VARCHAR(250),
    PRIMARY KEY (ID_TIPO_SERVICIO)
-)
-TYPE = MYISAM;
+);
 
 /*==============================================================*/
 /* Table: TRANSACCION                                           */
@@ -324,8 +272,7 @@ CREATE TABLE TRANSACCION
    DEBE                 FLOAT(8,2),
    HABER                FLOAT(8,2),
    PRIMARY KEY (CORRELATIVO_PARTIDA, NUMERO_PERIODO, CODIGO_SUBCUENTA)
-)
-TYPE = MYISAM;
+);
 
 /*==============================================================*/
 /* Table: USUARIO                                               */
@@ -340,8 +287,7 @@ CREATE TABLE USUARIO
    SEGUNDO_APELLIDO_USUARIO VARCHAR(50),
    CONTRASENA_USUARIO   VARCHAR(10),
    PRIMARY KEY (ID_USUARIO)
-)
-TYPE = MYISAM;
+);
 
 ALTER TABLE ACTIVIDAD ADD CONSTRAINT FK_ACTIVIDAD_TIENE_INDUCTOR FOREIGN KEY (ID_INDUCTOR_ACTIVIDAD)
       REFERENCES INDUCTOR_ACTIVIDAD (ID_INDUCTOR_ACTIVIDAD) ON DELETE RESTRICT ON UPDATE RESTRICT;
