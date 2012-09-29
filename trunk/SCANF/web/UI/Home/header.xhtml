@@ -12,7 +12,7 @@
             <p:commandLink styleClass="headerLink" onclick="logout.show()" >
                 <h:outputText value="Salir" style="color: #B70000"/>
             </p:commandLink>
-            <p:commandLink update="currentUI" actionListener="#{usuarioController.updateUI}" action="#{notaController.llenarCalendario}" styleClass="headerLink">
+            <p:commandLink update="currentUI" actionListener="#{usuarioController.updateUI}" styleClass="headerLink">
                 <f:attribute name="uiName" value="Home/calendar" />
                 <h:outputText value="Inicio" style="color: #B70000"/>
             </p:commandLink>
