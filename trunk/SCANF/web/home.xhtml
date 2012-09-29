@@ -7,11 +7,11 @@
     <h:head >
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 
-        <title>ASECON S.A. de C.V.</title>
+        <title>SCANF</title>
         <h:outputStylesheet name="css/home.css"/>
         <h:outputScript name="js/calendar.js" />
     </h:head>
-    <h:body onload="#{usuarioController.checkLogout()}; #{partidaController.prepareFind()}; #{partidaControllerPast.prepareFind()}; #{notaController.llenarCalendario()}; #{periodoController.cargarPeriodo()}" >
+    <h:body onload="#{usuarioController.checkLogout()}; #{partidaController.prepareFind()}; #{partidaControllerPast.prepareFind()}; #{periodoController.cargarPeriodo()}" >
         <p:layout fullPage="true">
             <p:layoutUnit position="north" size="85">
                 <ui:include src="UI/Home/header.xhtml" />

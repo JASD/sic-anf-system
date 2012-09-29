@@ -63,8 +63,8 @@
                     </p:commandLink>
                     <br /><br />
                     <p:commandLink update="currentUI" actionListener="#{usuarioController.updateUI}">
-                        <f:attribute name="uiName" value="Libros/cliente_aseguradora" />
-                        <h:outputText value="Clientes y Aseguradoras" styleClass="menuLink"/>  
+                        <f:attribute name="uiName" value="Libros/cliente" />
+                        <h:outputText value="Clientes" styleClass="menuLink"/>  
                     </p:commandLink>
                     <br />
                 </h:form>
@@ -76,13 +76,32 @@
                         <h:outputText value="Período Actual" styleClass="menuLink"/>  
                     </p:commandLink>
                     <br /><br />
+                    <p:commandLink update="currentUI" actionListener="#{usuarioController.updateUI}">
+                        <f:attribute name="uiName" value="Estados/actual" />
+                        <h:outputText value="Períodos Anteriores" styleClass="menuLink"/>  
+                    </p:commandLink>
+                    <br /><br />
+                </h:form>
+            </p:tab>
+            <p:tab title="Análisis Financiero" rendered="#{usuarioController.user.idPerfil.permisoEstadosFinancieros}">
+                <h:form>
+                    <p:commandLink update="currentUI" actionListener="#{usuarioController.updateUI}">
+                        <f:attribute name="uiName" value="Estados/actual" />
+                        <h:outputText value="Período Actual" styleClass="menuLink"/>  
+                    </p:commandLink>
+                    <br /><br />
+                    <p:commandLink update="currentUI" actionListener="#{usuarioController.updateUI}">
+                        <f:attribute name="uiName" value="Estados/actual" />
+                        <h:outputText value="Períodos Anteriores" styleClass="menuLink"/>  
+                    </p:commandLink>
+                    <br /><br />
                 </h:form>
             </p:tab>
             <p:tab title="Mantenimiento" rendered="#{usuarioController.user.idPerfil.permisoMantenimiento}">
                 <h:form>
                     <p:commandLink update="currentUI" actionListener="#{usuarioController.updateUI}">
-                        <f:attribute name="uiName" value="Mantenimientos/cliente_aseguradora" />
-                        <h:outputText value="Clientes y Aseguradoras" styleClass="menuLink"/>  
+                        <f:attribute name="uiName" value="Mantenimientos/cliente" />
+                        <h:outputText value="Clientes" styleClass="menuLink"/>  
                     </p:commandLink>
                     <br /><br />
                     <p:commandLink update="currentUI" actionListener="#{usuarioController.updateUI}">
@@ -112,11 +131,6 @@
                     <p:commandLink update="currentUI" actionListener="#{usuarioController.updateUI}">
                         <f:attribute name="uiName" value="Administracion/catalogo" />
                         <h:outputText value="Catálogo de Cuentas" styleClass="menuLink"/>  
-                    </p:commandLink>
-                    <br /><br />
-                    <p:commandLink update="currentUI" actionListener="#{usuarioController.updateUI}">
-                        <f:attribute name="uiName" value="Administracion/recordatorios" />
-                        <h:outputText value="Recordatorios" styleClass="menuLink"/>  
                     </p:commandLink>
                     <br /><br />
                 </h:form>
