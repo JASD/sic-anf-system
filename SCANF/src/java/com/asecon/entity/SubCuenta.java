@@ -35,6 +35,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "SubCuenta.findByNombreSubcuenta", query = "SELECT s FROM SubCuenta s WHERE s.nombreSubcuenta = :nombreSubcuenta"),
     @NamedQuery(name = "SubCuenta.findByDescripcionSubcuenta", query = "SELECT s FROM SubCuenta s WHERE s.descripcionSubcuenta = :descripcionSubcuenta")})
 public class SubCuenta implements Serializable {
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "subCuenta")
+    private List<Saldo> saldoList;
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
@@ -147,6 +149,15 @@ public class SubCuenta implements Serializable {
     @Override
     public String toString() {
         return codigoSubcuenta + " " + nombreSubcuenta;
+    }
+
+    @XmlTransient
+    public List<Saldo> getSaldoList() {
+        return saldoList;
+    }
+
+    public void setSaldoList(List<Saldo> saldoList) {
+        this.saldoList = saldoList;
     }
     
 }

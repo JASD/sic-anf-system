@@ -19,14 +19,17 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Saldo.findAll", query = "SELECT s FROM Saldo s"),
     @NamedQuery(name = "Saldo.findByNumeroPeriodo", query = "SELECT s FROM Saldo s WHERE s.saldoPK.numeroPeriodo = :numeroPeriodo"),
     @NamedQuery(name = "Saldo.findByCodigoCuenta", query = "SELECT s FROM Saldo s WHERE s.saldoPK.codigoCuenta = :codigoCuenta"),
-    @NamedQuery(name = "Saldo.findBySaldoFinalCuenta", query = "SELECT s FROM Saldo s WHERE s.saldoFinalCuenta = :saldoFinalCuenta")})
+    @NamedQuery(name = "Saldo.findBySaldoFinalSubCuenta", query = "SELECT s FROM Saldo s WHERE s.saldoFinalSubcuenta = :saldoFinalSubcuenta")})
 public class Saldo implements Serializable {
+    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
+    @Column(name = "SALDO_FINAL_SUBCUENTA")
+    private Float saldoFinalSubcuenta;
+    @JoinColumn(name = "CODIGO_SUBCUENTA", referencedColumnName = "CODIGO_SUBCUENTA", insertable = false, updatable = false)
+    @ManyToOne(optional = false)
+    private SubCuenta subCuenta;
     private static final long serialVersionUID = 1L;
     @EmbeddedId
     protected SaldoPK saldoPK;
-    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
-    @Column(name = "SALDO_FINAL_CUENTA")
-    private Float saldoFinalCuenta;
     @JoinColumn(name = "NUMERO_PERIODO", referencedColumnName = "NUMERO_PERIODO", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private Periodo periodo;
@@ -51,14 +54,6 @@ public class Saldo implements Serializable {
 
     public void setSaldoPK(SaldoPK saldoPK) {
         this.saldoPK = saldoPK;
-    }
-
-    public Float getSaldoFinalCuenta() {
-        return saldoFinalCuenta;
-    }
-
-    public void setSaldoFinalCuenta(Float saldoFinalCuenta) {
-        this.saldoFinalCuenta = saldoFinalCuenta;
     }
 
     public Periodo getPeriodo() {
@@ -100,6 +95,22 @@ public class Saldo implements Serializable {
     @Override
     public String toString() {
         return "com.asecon.entity.Saldo[ saldoPK=" + saldoPK + " ]";
+    }
+
+    public Float getSaldoFinalSubcuenta() {
+        return saldoFinalSubcuenta;
+    }
+
+    public void setSaldoFinalSubcuenta(Float saldoFinalSubcuenta) {
+        this.saldoFinalSubcuenta = saldoFinalSubcuenta;
+    }
+
+    public SubCuenta getSubCuenta() {
+        return subCuenta;
+    }
+
+    public void setSubCuenta(SubCuenta subCuenta) {
+        this.subCuenta = subCuenta;
     }
     
 }
