@@ -35,10 +35,10 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Periodo.findByTotalIngresosPeriodo", query = "SELECT p FROM Periodo p WHERE p.totalIngresosPeriodo = :totalIngresosPeriodo"),
     @NamedQuery(name = "Periodo.findByTotalCisPeriodo", query = "SELECT p FROM Periodo p WHERE p.totalCisPeriodo = :totalCisPeriodo")})
 public class Periodo implements Serializable {
-    @Column(name = "FECHA_INICIO_PERIODO")
+    @Column(name =     "FECHA_INICIO_PERIODO")
     @Temporal(TemporalType.DATE)
     private Date fechaInicioPeriodo;
-    @Column(name = "FECHA_FIN_PERIODO")
+    @Column(name =     "FECHA_FIN_PERIODO")
     @Temporal(TemporalType.DATE)
     private Date fechaFinPeriodo;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "periodo")
@@ -53,7 +53,8 @@ public class Periodo implements Serializable {
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(name = "UTILIDADES_PERIODO")
     private Float utilidadesPeriodo;
-    @Column(name = "PERDIDAS_PERIODO")
+    //@Column(name = "PERDIDAS_PERIODO")
+    @Transient
     private Float perdidasPeriodo;
     @Column(name = "TOTAL_ACTIVO_PERIODO")
     private Float totalActivoPeriodo;
@@ -272,5 +273,4 @@ public class Periodo implements Serializable {
     public void setSaldoList(List<Saldo> saldoList) {
         this.saldoList = saldoList;
     }
-    
 }
