@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="balance_general" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="4648e872-c193-47ee-b2cc-09e014cbc9ee">
 	<property name="ireport.zoom" value="1.1000000000000005"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="65"/>
 	<parameter name="ID_PERIODO" class="java.lang.Long"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["C:\\Users\\Antonio\\Projects\\sic-anf-system\\reports\\"]]></defaultValueExpression>
@@ -18,10 +18,10 @@ FROM
 WHERE PERIODO.NUMERO_PERIODO = $P{ID_PERIODO}]]>
 	</queryString>
 	<field name="periodo_FECHA_FIN_PERIODO" class="java.sql.Date"/>
-	<field name="periodo_TOTAL_CAPITAL_PERIODO" class="java.lang.Float"/>
-	<field name="periodo_TOTAL_PASIVO_PERIODO" class="java.lang.Float"/>
-	<field name="periodo_TOTAL_ACTIVO_PERIODO" class="java.lang.Float"/>
-	<variable name="TOTAL_PC" class="java.lang.Float">
+	<field name="periodo_TOTAL_CAPITAL_PERIODO" class="java.lang.Double"/>
+	<field name="periodo_TOTAL_PASIVO_PERIODO" class="java.lang.Double"/>
+	<field name="periodo_TOTAL_ACTIVO_PERIODO" class="java.lang.Double"/>
+	<variable name="TOTAL_PC" class="java.lang.Double">
 		<variableExpression><![CDATA[$F{periodo_TOTAL_PASIVO_PERIODO}+$F{periodo_TOTAL_CAPITAL_PERIODO}]]></variableExpression>
 	</variable>
 	<background>
@@ -93,9 +93,11 @@ WHERE PERIODO.NUMERO_PERIODO = $P{ID_PERIODO}]]>
 				</textElement>
 				<text><![CDATA[TOTAL ACTIVO]]></text>
 			</staticText>
-			<textField>
+			<textField pattern="$ #,##0.00">
 				<reportElement uuid="f794e9ba-2bca-4b26-a688-bc09a1b3bf88" positionType="Float" x="480" y="57" width="75" height="20"/>
-				<textElement textAlignment="Right"/>
+				<textElement textAlignment="Right">
+					<font isUnderline="true"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{periodo_TOTAL_ACTIVO_PERIODO}]]></textFieldExpression>
 			</textField>
 			<subreport>
@@ -123,9 +125,11 @@ WHERE PERIODO.NUMERO_PERIODO = $P{ID_PERIODO}]]>
 				</textElement>
 				<text><![CDATA[TOTAL PASIVO]]></text>
 			</staticText>
-			<textField pattern="">
+			<textField pattern="$ #,##0.00">
 				<reportElement uuid="adac1556-0919-4ec4-8052-12c8a9f3ecdf" positionType="Float" x="480" y="135" width="75" height="20"/>
-				<textElement textAlignment="Right"/>
+				<textElement textAlignment="Right">
+					<font isUnderline="true"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{periodo_TOTAL_PASIVO_PERIODO}]]></textFieldExpression>
 			</textField>
 			<staticText>
@@ -153,9 +157,11 @@ WHERE PERIODO.NUMERO_PERIODO = $P{ID_PERIODO}]]>
 				</textElement>
 				<text><![CDATA[TOTAL PATRIMONIO]]></text>
 			</staticText>
-			<textField>
+			<textField pattern="$ #,##0.00">
 				<reportElement uuid="a9e30d4c-4934-44fe-8421-3d04ab409ef3" positionType="Float" x="480" y="212" width="75" height="20"/>
-				<textElement/>
+				<textElement textAlignment="Right">
+					<font isUnderline="true"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{periodo_TOTAL_CAPITAL_PERIODO}]]></textFieldExpression>
 			</textField>
 			<staticText>
@@ -165,9 +171,11 @@ WHERE PERIODO.NUMERO_PERIODO = $P{ID_PERIODO}]]>
 				</textElement>
 				<text><![CDATA[TOTAL PASIVO + PATRIMONIO]]></text>
 			</staticText>
-			<textField>
+			<textField pattern="$ #,##0.00">
 				<reportElement uuid="a2628e95-fe2c-42b2-ad63-e070ea6a4296" positionType="Float" x="480" y="232" width="75" height="20"/>
-				<textElement/>
+				<textElement textAlignment="Right">
+					<font isUnderline="true"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$V{TOTAL_PC}]]></textFieldExpression>
 			</textField>
 		</band>

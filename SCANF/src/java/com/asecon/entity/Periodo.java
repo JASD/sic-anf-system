@@ -31,7 +31,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Periodo.findByTotalActivoPeriodo", query = "SELECT p FROM Periodo p WHERE p.totalActivoPeriodo = :totalActivoPeriodo"),
     @NamedQuery(name = "Periodo.findByTotalPasivoPeriodo", query = "SELECT p FROM Periodo p WHERE p.totalPasivoPeriodo = :totalPasivoPeriodo"),
     @NamedQuery(name = "Periodo.findByTotalCapitalPeriodo", query = "SELECT p FROM Periodo p WHERE p.totalCapitalPeriodo = :totalCapitalPeriodo"),
-    @NamedQuery(name = "Periodo.findByTotalGastosPeriodo", query = "SELECT p FROM Periodo p WHERE p.totalGastosPeriodo = :totalGastosPeriodo"),
+    @NamedQuery(name = "Periodo.findByTotalCostoPeriodo", query = "SELECT p FROM Periodo p WHERE p.totalCostoPeriodo = :totalCostoPeriodo"),
     @NamedQuery(name = "Periodo.findByTotalIngresosPeriodo", query = "SELECT p FROM Periodo p WHERE p.totalIngresosPeriodo = :totalIngresosPeriodo"),
     @NamedQuery(name = "Periodo.findByTotalCisPeriodo", query = "SELECT p FROM Periodo p WHERE p.totalCisPeriodo = :totalCisPeriodo")})
 public class Periodo implements Serializable {
@@ -68,8 +68,8 @@ public class Periodo implements Serializable {
     private Float totalPasivoPeriodo;
     @Column(name = "TOTAL_CAPITAL_PERIODO")
     private Float totalCapitalPeriodo;
-    @Column(name = "TOTAL_GASTOS_PERIODO")
-    private Float totalGastosPeriodo;
+    @Column(name = "TOTAL_COSTO_PERIODO")
+    private Float totalCostoPeriodo;
     @Column(name = "TOTAL_INGRESOS_PERIODO")
     private Float totalIngresosPeriodo;
     @Column(name = "TOTAL_CIS_PERIODO")
@@ -182,12 +182,12 @@ public class Periodo implements Serializable {
         this.totalCapitalPeriodo = totalCapitalPeriodo;
     }
 
-    public Float getTotalGastosPeriodo() {
-        return totalGastosPeriodo;
+    public Float getTotalCostoPeriodo() {
+        return totalCostoPeriodo;
     }
 
-    public void setTotalGastosPeriodo(Float totalGastosPeriodo) {
-        this.totalGastosPeriodo = totalGastosPeriodo;
+    public void setTotalCostoPeriodo(Float totalCostoPeriodo) {
+        this.totalCostoPeriodo = totalCostoPeriodo;
     }
 
     public Float getTotalIngresosPeriodo() {

@@ -36,8 +36,8 @@ GROUP BY cuenta.SUBRUBRO_CUENTA]]>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{cuenta_SUBRUBRO_CUENTA}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement uuid="9a944348-5a6f-47c8-865e-fd20e68fcab2" x="497" y="0" width="75" height="20"/>
+			<textField pattern="#,##0.00">
+				<reportElement uuid="9a944348-5a6f-47c8-865e-fd20e68fcab2" x="479" y="0" width="75" height="20"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{TOTAL}]]></textFieldExpression>
 			</textField>

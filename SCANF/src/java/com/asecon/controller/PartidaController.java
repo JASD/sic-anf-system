@@ -368,7 +368,7 @@ public class PartidaController implements Serializable {
             actual.setPerdidasPeriodo(total_gastos - total_ingresos);
             actual.setUtilidadNetaPeriodo(new Float(0));
             actual.setTotalCisPeriodo(total_gastos);
-            actual.setTotalGastosPeriodo(total_gastos);
+            actual.setTotalCostoPeriodo(total_gastos);
             actual.setTotalIngresosPeriodo(total_ingresos);
             actual.setFechaFinPeriodo(hoy);
             perfa.edit(actual);
@@ -389,7 +389,7 @@ public class PartidaController implements Serializable {
             actual.setPerdidasPeriodo(new Float(0));
             actual.setUtilidadNetaPeriodo(total_ingresos - total_gastos);
             actual.setTotalCisPeriodo(total_gastos);
-            actual.setTotalGastosPeriodo(total_gastos);
+            actual.setTotalCostoPeriodo(total_gastos);
             actual.setTotalIngresosPeriodo(total_ingresos);
             actual.setFechaFinPeriodo(hoy);
             perfa.edit(actual);
@@ -509,7 +509,7 @@ public class PartidaController implements Serializable {
 
             //Kitar  Ganancias del Periodo
             Transaccion p = new Transaccion(x.getCorrelativoPartida(), actual.getNumeroPeriodo(), "30700");
-            p.setDebe(actual.getTotalIngresosPeriodo() - actual.getTotalGastosPeriodo());
+            p.setDebe(actual.getTotalIngresosPeriodo() - actual.getTotalCostoPeriodo());
             p.setHaber(new Float(0));
             transaccionfa.create(p);
 
@@ -522,7 +522,7 @@ public class PartidaController implements Serializable {
 
             //Ingresar a Ganancias anteriores
             Transaccion h = new Transaccion(x.getCorrelativoPartida(), actual.getNumeroPeriodo(), "30800");
-            h.setHaber(actual.getTotalIngresosPeriodo() - actual.getTotalGastosPeriodo());
+            h.setHaber(actual.getTotalIngresosPeriodo() - actual.getTotalCostoPeriodo());
             h.setDebe(new Float(0));
             transaccionfa.create(h);
            
@@ -531,13 +531,13 @@ public class PartidaController implements Serializable {
 
             //Actualizar Saldos
             SubCuenta y = subfa.find("30800");
-            y.sumarASaldo(actual.getTotalIngresosPeriodo() - actual.getTotalGastosPeriodo());
-            y.getCodigoCuenta().sumarASaldo(actual.getTotalIngresosPeriodo() - actual.getTotalGastosPeriodo());
+            y.sumarASaldo(actual.getTotalIngresosPeriodo() - actual.getTotalCostoPeriodo());
+            y.getCodigoCuenta().sumarASaldo(actual.getTotalIngresosPeriodo() - actual.getTotalCostoPeriodo());
             subfa.edit(y);
             cuentafa.edit(y.getCodigoCuenta());
             //Actualizar Partida
-            x.setTotalDebe(actual.getTotalIngresosPeriodo() - actual.getTotalGastosPeriodo());
-            x.setTotalHaber(actual.getTotalIngresosPeriodo() - actual.getTotalGastosPeriodo());
+            x.setTotalDebe(actual.getTotalIngresosPeriodo() - actual.getTotalCostoPeriodo());
+            x.setTotalHaber(actual.getTotalIngresosPeriodo() - actual.getTotalCostoPeriodo());
             getFacade().edit(x);
             
         } else {
@@ -545,7 +545,7 @@ public class PartidaController implements Serializable {
             //Kitar Perdidas del Periodo
             Transaccion p = new Transaccion(x.getCorrelativoPartida(), actual.getNumeroPeriodo(), "30600");
             p.setDebe(new Float(0));
-            p.setHaber(actual.getTotalGastosPeriodo() - actual.getTotalIngresosPeriodo());
+            p.setHaber(actual.getTotalCostoPeriodo() - actual.getTotalIngresosPeriodo());
             transaccionfa.create(p);
             SubCuenta sub = subfa.find("30600");
 
@@ -558,19 +558,19 @@ public class PartidaController implements Serializable {
 
             //Ingresar a Perdidas Anteriores
             Transaccion h = new Transaccion(x.getCorrelativoPartida(), actual.getNumeroPeriodo(), "30300");
-            h.setDebe(actual.getTotalGastosPeriodo() - actual.getTotalIngresosPeriodo());
+            h.setDebe(actual.getTotalCostoPeriodo() - actual.getTotalIngresosPeriodo());
             h.setHaber(new Float(0));
 
             //SubCuenta y = new SubCuenta("30300");
             SubCuenta y = subfa.find("30300");
-            y.sumarASaldo(actual.getTotalGastosPeriodo() - actual.getTotalIngresosPeriodo());
-            y.getCodigoCuenta().sumarASaldo(actual.getTotalGastosPeriodo() - actual.getTotalIngresosPeriodo());
+            y.sumarASaldo(actual.getTotalCostoPeriodo() - actual.getTotalIngresosPeriodo());
+            y.getCodigoCuenta().sumarASaldo(actual.getTotalCostoPeriodo() - actual.getTotalIngresosPeriodo());
             subfa.edit(y);
             cuentafa.edit(y.getCodigoCuenta());
 
             //Actualizar Partida
-            x.setTotalDebe(actual.getTotalGastosPeriodo() - actual.getTotalIngresosPeriodo());
-            x.setTotalHaber(actual.getTotalGastosPeriodo() - actual.getTotalIngresosPeriodo());
+            x.setTotalDebe(actual.getTotalCostoPeriodo() - actual.getTotalIngresosPeriodo());
+            x.setTotalHaber(actual.getTotalCostoPeriodo() - actual.getTotalIngresosPeriodo());
             getFacade().edit(x);
         }
 
