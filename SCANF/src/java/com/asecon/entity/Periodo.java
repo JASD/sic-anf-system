@@ -27,7 +27,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Periodo.findByFechaInicioPeriodo", query = "SELECT p FROM Periodo p WHERE p.fechaInicioPeriodo = :fechaInicioPeriodo"),
     @NamedQuery(name = "Periodo.findByFechaFinPeriodo", query = "SELECT p FROM Periodo p WHERE p.fechaFinPeriodo = :fechaFinPeriodo"),
     @NamedQuery(name = "Periodo.findByEstadoPeriodo", query = "SELECT p FROM Periodo p WHERE p.estadoPeriodo = :estadoPeriodo"),
-    @NamedQuery(name = "Periodo.findByUtilidadesPeriodo", query = "SELECT p FROM Periodo p WHERE p.utilidadesPeriodo = :utilidadesPeriodo"),
+    @NamedQuery(name = "Periodo.findByUtilidadNetaPeriodo", query = "SELECT p FROM Periodo p WHERE p.utilidadNetaPeriodo = :utilidadNetaPeriodo"),
     @NamedQuery(name = "Periodo.findByTotalActivoPeriodo", query = "SELECT p FROM Periodo p WHERE p.totalActivoPeriodo = :totalActivoPeriodo"),
     @NamedQuery(name = "Periodo.findByTotalPasivoPeriodo", query = "SELECT p FROM Periodo p WHERE p.totalPasivoPeriodo = :totalPasivoPeriodo"),
     @NamedQuery(name = "Periodo.findByTotalCapitalPeriodo", query = "SELECT p FROM Periodo p WHERE p.totalCapitalPeriodo = :totalCapitalPeriodo"),
@@ -51,8 +51,14 @@ public class Periodo implements Serializable {
     @Column(name = "ESTADO_PERIODO")
     private Boolean estadoPeriodo;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
-    @Column(name = "UTILIDADES_PERIODO")
-    private Float utilidadesPeriodo;
+    @Column(name = "UTILIDAD_NETA_PERIODO")
+    private Float utilidadNetaPeriodo;
+    @Column(name = "UTILIDAD_BRUTA_PERIODO")
+    private Float utilidadBrutaPeriodo;
+    @Column(name = "UTILIDAD_OPERACION_PERIODO")
+    private Float utilidadOperacionPeriodo;
+    @Column(name = "UTILIDAD_AI_PERIODO")
+    private Float utilidadAIPeriodo;
     //@Column(name = "PERDIDAS_PERIODO")
     @Transient
     private Float perdidasPeriodo;
@@ -120,14 +126,38 @@ public class Periodo implements Serializable {
         this.estadoPeriodo = estadoPeriodo;
     }
 
-    public Float getUtilidadesPeriodo() {
-        return utilidadesPeriodo;
+    public Float getUtilidadNetaPeriodo() {
+        return utilidadNetaPeriodo;
     }
 
-    public void setUtilidadesPeriodo(Float utilidadesPeriodo) {
-        this.utilidadesPeriodo = utilidadesPeriodo;
+    public void setUtilidadNetaPeriodo(Float utilidadNetaPeriodo) {
+        this.utilidadNetaPeriodo = utilidadNetaPeriodo;
     }
 
+    public Float getUtilidadAIPeriodo() {
+        return utilidadAIPeriodo;
+    }
+
+    public void setUtilidadAIPeriodo(Float utilidadAIPeriodo) {
+        this.utilidadAIPeriodo = utilidadAIPeriodo;
+    }
+
+    public Float getUtilidadBrutaPeriodo() {
+        return utilidadBrutaPeriodo;
+    }
+
+    public void setUtilidadBrutaPeriodo(Float utilidadBrutaPeriodo) {
+        this.utilidadBrutaPeriodo = utilidadBrutaPeriodo;
+    }
+
+    public Float getUtilidadOperacionPeriodo() {
+        return utilidadOperacionPeriodo;
+    }
+
+    public void setUtilidadOperacionPeriodo(Float utilidadOperacionPeriodo) {
+        this.utilidadOperacionPeriodo = utilidadOperacionPeriodo;
+    }
+    
     public Float getTotalActivoPeriodo() {
         return totalActivoPeriodo;
     }

@@ -366,7 +366,7 @@ public class PartidaController implements Serializable {
             subfa.edit(perdida);
             cuentafa.edit(perdida.getCodigoCuenta());
             actual.setPerdidasPeriodo(total_gastos - total_ingresos);
-            actual.setUtilidadesPeriodo(new Float(0));
+            actual.setUtilidadNetaPeriodo(new Float(0));
             actual.setTotalCisPeriodo(total_gastos);
             actual.setTotalGastosPeriodo(total_gastos);
             actual.setTotalIngresosPeriodo(total_ingresos);
@@ -387,7 +387,7 @@ public class PartidaController implements Serializable {
             subfa.edit(ganancia);
             cuentafa.edit(ganancia.getCodigoCuenta());
             actual.setPerdidasPeriodo(new Float(0));
-            actual.setUtilidadesPeriodo(total_ingresos - total_gastos);
+            actual.setUtilidadNetaPeriodo(total_ingresos - total_gastos);
             actual.setTotalCisPeriodo(total_gastos);
             actual.setTotalGastosPeriodo(total_gastos);
             actual.setTotalIngresosPeriodo(total_ingresos);
