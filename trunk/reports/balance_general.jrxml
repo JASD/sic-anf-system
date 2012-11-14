@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="balance_general" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="4648e872-c193-47ee-b2cc-09e014cbc9ee">
 	<property name="ireport.zoom" value="1.1000000000000005"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="111"/>
+	<property name="ireport.y" value="0"/>
 	<parameter name="ID_PERIODO" class="java.lang.Long"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["C:\\Users\\Antonio\\Projects\\sic-anf-system\\reports\\"]]></defaultValueExpression>
@@ -123,7 +123,7 @@ WHERE PERIODO.NUMERO_PERIODO = $P{ID_PERIODO}]]>
 				</textElement>
 				<text><![CDATA[TOTAL PASIVO]]></text>
 			</staticText>
-			<textField>
+			<textField pattern="">
 				<reportElement uuid="adac1556-0919-4ec4-8052-12c8a9f3ecdf" positionType="Float" x="480" y="135" width="75" height="20"/>
 				<textElement textAlignment="Right"/>
 				<textFieldExpression><![CDATA[$F{periodo_TOTAL_PASIVO_PERIODO}]]></textFieldExpression>
@@ -186,7 +186,4 @@ WHERE PERIODO.NUMERO_PERIODO = $P{ID_PERIODO}]]>
 			</textField>
 		</band>
 	</pageFooter>
-	<summary>
-		<band height="42" splitType="Stretch"/>
-	</summary>
 </jasperReport>
