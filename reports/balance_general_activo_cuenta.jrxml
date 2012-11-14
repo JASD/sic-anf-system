@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="balance_general_activo_cuenta" language="groovy" pageWidth="572" pageHeight="752" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="096f12b3-37b8-48a8-815b-e1ecd3f64c31">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="ID_PERIODO" class="java.lang.Long" isForPrompting="false"/>
+	<parameter name="SUBRUBRO" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["C:\\Users\\Antonio\\Projects\\sic-anf-system\\reports\\"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+     SUM(CASE WHEN CUENTA.TIPO_CUENTA = "DEUDORA" THEN saldo.`SALDO_FINAL_SUBCUENTA` ELSE saldo.`SALDO_FINAL_SUBCUENTA`*(-1) END) AS TOTAL,
+     cuenta.`CODIGO_CUENTA` AS cuenta_CODIGO_CUENTA,
+     cuenta.`NOMBRE_CUENTA` AS cuenta_NOMBRE_CUENTA
+FROM
+     `periodo` periodo INNER JOIN `saldo` saldo ON periodo.`NUMERO_PERIODO` = saldo.`NUMERO_PERIODO`
+     INNER JOIN `sub_cuenta` sub_cuenta ON saldo.`CODIGO_SUBCUENTA` = sub_cuenta.`CODIGO_SUBCUENTA`
+     INNER JOIN `cuenta` cuenta ON sub_cuenta.`CODIGO_CUENTA` = cuenta.`CODIGO_CUENTA`
+WHERE PERIODO.NUMERO_PERIODO = $P{ID_PERIODO} AND CUENTA.RUBRO_CUENTA = "ACTIVO" AND CUENTA.SUBRUBRO_CUENTA = $P{SUBRUBRO}
+GROUP BY cuenta.CODIGO_CUENTA]]>
+	</queryString>
+	<field name="TOTAL" class="java.lang.Double"/>
+	<field name="cuenta_CODIGO_CUENTA" class="java.lang.String"/>
+	<field name="cuenta_NOMBRE_CUENTA" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="46">
+			<textField>
+				<reportElement uuid="16c03597-2fe6-47b8-99e6-7ab149f9c837" x="0" y="0" width="30" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{cuenta_CODIGO_CUENTA}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="5911de48-5268-4b93-b8c8-fe64adbaf667" x="34" y="0" width="380" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{cuenta_NOMBRE_CUENTA}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00;(###0.00)">
+				<reportElement uuid="e4c76b04-cdc8-45cb-8a15-c625dadff28a" x="420" y="0" width="75" height="20"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{TOTAL}]]></textFieldExpression>
+			</textField>
+			<subreport>
+				<reportElement uuid="134225d5-1cc6-4f8d-a437-0f2131fd7147" x="0" y="20" width="572" height="26"/>
+				<subreportParameter name="SUBREPORT_DIR">
+					<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="CUENTA">
+					<subreportParameterExpression><![CDATA[$F{cuenta_CODIGO_CUENTA}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="ID_PERIODO">
+					<subreportParameterExpression><![CDATA[$P{ID_PERIODO}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="SUBRUBRO">
+					<subreportParameterExpression><![CDATA[$P{SUBRUBRO}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "balance_general_activo_cuenta_subcuenta.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</detail>
+</jasperReport>

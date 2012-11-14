@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="balance_general" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="4648e872-c193-47ee-b2cc-09e014cbc9ee">
+	<property name="ireport.zoom" value="1.1000000000000005"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="111"/>
+	<parameter name="ID_PERIODO" class="java.lang.Long"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["C:\\Users\\Antonio\\Projects\\sic-anf-system\\reports\\"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+     periodo.`FECHA_FIN_PERIODO` AS periodo_FECHA_FIN_PERIODO,
+     periodo.`TOTAL_CAPITAL_PERIODO` AS periodo_TOTAL_CAPITAL_PERIODO,
+     periodo.`TOTAL_PASIVO_PERIODO` AS periodo_TOTAL_PASIVO_PERIODO,
+     periodo.`TOTAL_ACTIVO_PERIODO` AS periodo_TOTAL_ACTIVO_PERIODO
+FROM
+     `periodo` periodo
+WHERE PERIODO.NUMERO_PERIODO = $P{ID_PERIODO}]]>
+	</queryString>
+	<field name="periodo_FECHA_FIN_PERIODO" class="java.sql.Date"/>
+	<field name="periodo_TOTAL_CAPITAL_PERIODO" class="java.lang.Float"/>
+	<field name="periodo_TOTAL_PASIVO_PERIODO" class="java.lang.Float"/>
+	<field name="periodo_TOTAL_ACTIVO_PERIODO" class="java.lang.Float"/>
+	<variable name="TOTAL_PC" class="java.lang.Float">
+		<variableExpression><![CDATA[$F{periodo_TOTAL_PASIVO_PERIODO}+$F{periodo_TOTAL_CAPITAL_PERIODO}]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="78" splitType="Stretch">
+			<textField pattern="dd MMMMM yyyy">
+				<reportElement uuid="9dae14a2-e6df-408d-bdcc-42ae487b4eea" x="261" y="39" width="174" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{periodo_FECHA_FIN_PERIODO}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="5f4eb811-a67e-4492-9bfe-2ce375989164" x="95" y="39" width="163" height="20"/>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Balance General al]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="fbfdd4aa-65e8-4a9c-a22b-4366f30a4c09" x="95" y="58" width="347" height="20"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Expresado en Dólares de los Estados Unidos de América]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="547bbea1-2391-4e25-818e-f930665ad407" x="199" y="-1" width="114" height="20"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[TAIMSAL S.A. DE S.V. ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="2586afc5-db7e-41af-87b8-6ef83ecec813" x="59" y="19" width="422" height="20"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[4° Calle Ote. Block N° 1 Col. Las Arboledas, Lourdes Colón, La Libertad]]></text>
+			</staticText>
+		</band>
+	</title>
+	<detail>
+		<band height="252" splitType="Stretch">
+			<subreport>
+				<reportElement uuid="47148c4e-ffcc-4978-b53f-47b02f1850ad" x="0" y="20" width="555" height="37"/>
+				<subreportParameter name="SUBREPORT_DIR">
+					<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="ID_PERIODO">
+					<subreportParameterExpression><![CDATA[$P{ID_PERIODO}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "balance_general_activo.jasper"]]></subreportExpression>
+			</subreport>
+			<staticText>
+				<reportElement uuid="ac2905a5-66d0-4a48-bea6-2d7b2a8a064a" x="0" y="0" width="555" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[ACTIVO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="b92fcd9d-848f-47dc-a9ee-82fa6624932d" positionType="Float" x="389" y="57" width="75" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[TOTAL ACTIVO]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="f794e9ba-2bca-4b26-a688-bc09a1b3bf88" positionType="Float" x="480" y="57" width="75" height="20"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{periodo_TOTAL_ACTIVO_PERIODO}]]></textFieldExpression>
+			</textField>
+			<subreport>
+				<reportElement uuid="9c7fe820-3cef-415f-8431-222394871775" positionType="Float" x="0" y="98" width="555" height="37"/>
+				<subreportParameter name="SUBREPORT_DIR">
+					<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="ID_PERIODO">
+					<subreportParameterExpression><![CDATA[$P{ID_PERIODO}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "balance_general_pasivo.jasper"]]></subreportExpression>
+			</subreport>
+			<staticText>
+				<reportElement uuid="88d484b5-63d6-4094-99e0-6c67af51ab8b" positionType="Float" x="0" y="78" width="555" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[PASIVO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="6899ed08-a45f-414c-ba5f-e1ef3ad87397" positionType="Float" x="389" y="135" width="75" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[TOTAL PASIVO]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="adac1556-0919-4ec4-8052-12c8a9f3ecdf" positionType="Float" x="480" y="135" width="75" height="20"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{periodo_TOTAL_PASIVO_PERIODO}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="88d484b5-63d6-4094-99e0-6c67af51ab8b" positionType="Float" x="0" y="155" width="555" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[PATRIMONIO]]></text>
+			</staticText>
+			<subreport>
+				<reportElement uuid="c5cedad8-1e86-4585-8beb-e9a01d26943b" positionType="Float" x="0" y="175" width="555" height="37"/>
+				<subreportParameter name="SUBREPORT_DIR">
+					<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="ID_PERIODO">
+					<subreportParameterExpression><![CDATA[$P{ID_PERIODO}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "balance_general_capital.jasper"]]></subreportExpression>
+			</subreport>
+			<staticText>
+				<reportElement uuid="6899ed08-a45f-414c-ba5f-e1ef3ad87397" positionType="Float" x="362" y="212" width="102" height="20"/>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[TOTAL PATRIMONIO]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="a9e30d4c-4934-44fe-8421-3d04ab409ef3" positionType="Float" x="480" y="212" width="75" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{periodo_TOTAL_CAPITAL_PERIODO}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="6899ed08-a45f-414c-ba5f-e1ef3ad87397" positionType="Float" x="313" y="232" width="151" height="20"/>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[TOTAL PASIVO + PATRIMONIO]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="a2628e95-fe2c-42b2-ad63-e070ea6a4296" positionType="Float" x="480" y="232" width="75" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$V{TOTAL_PC}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement uuid="7f386478-d341-45dd-8be1-5fd8e695c87e" x="389" y="0" width="126" height="20"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement uuid="ffa8dfa4-4fcb-40f3-9a63-e602b04668cb" x="515" y="0" width="40" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>
