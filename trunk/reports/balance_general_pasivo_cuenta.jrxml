@@ -34,12 +34,12 @@ GROUP BY cuenta.CODIGO_CUENTA]]>
 				<textFieldExpression><![CDATA[$F{cuenta_CODIGO_CUENTA}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="5911de48-5268-4b93-b8c8-fe64adbaf667" x="34" y="0" width="380" height="20"/>
+				<reportElement uuid="5911de48-5268-4b93-b8c8-fe64adbaf667" x="34" y="0" width="350" height="20"/>
 				<textElement/>
 				<textFieldExpression><![CDATA[$F{cuenta_NOMBRE_CUENTA}]]></textFieldExpression>
 			</textField>
-			<textField pattern="###0.00;(###0.00)">
-				<reportElement uuid="e4c76b04-cdc8-45cb-8a15-c625dadff28a" x="420" y="0" width="75" height="20"/>
+			<textField pattern="#,##0.00;(#,##0.00)">
+				<reportElement uuid="e4c76b04-cdc8-45cb-8a15-c625dadff28a" x="401" y="0" width="75" height="20"/>
 				<textElement textAlignment="Right"/>
 				<textFieldExpression><![CDATA[$F{TOTAL}]]></textFieldExpression>
 			</textField>

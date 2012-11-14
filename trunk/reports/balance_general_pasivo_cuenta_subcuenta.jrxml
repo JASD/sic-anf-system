@@ -41,8 +41,8 @@ ORDER BY sub_cuenta.CODIGO_SUBCUENTA ASC]]>
 				<textElement/>
 				<textFieldExpression><![CDATA[$F{subcuenta_NOMBRE_SUBCUENTA}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement uuid="da5c3802-004a-483d-b4fa-3ae39c39ac8d" x="328" y="0" width="75" height="20"/>
+			<textField pattern="#,##0.00">
+				<reportElement uuid="da5c3802-004a-483d-b4fa-3ae39c39ac8d" x="319" y="0" width="75" height="20"/>
 				<textElement textAlignment="Right"/>
 				<textFieldExpression><![CDATA[$F{TOTAL}]]></textFieldExpression>
 			</textField>
