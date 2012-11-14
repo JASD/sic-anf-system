@@ -74,6 +74,8 @@ public class Periodo implements Serializable {
     private Float totalIngresosPeriodo;
     @Column(name = "TOTAL_CIS_PERIODO")
     private Float totalCisPeriodo;
+    @Column(name = "IMPUESTOS_PERIODO")
+    private Float impuestosPeriodo;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "periodo")
     private List<Planilla> planillaList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "periodo")
@@ -204,6 +206,14 @@ public class Periodo implements Serializable {
 
     public void setTotalCisPeriodo(Float totalCisPeriodo) {
         this.totalCisPeriodo = totalCisPeriodo;
+    }
+
+    public Float getImpuestosPeriodo() {
+        return impuestosPeriodo;
+    }
+
+    public void setImpuestosPeriodo(Float impuestosPeriodo) {
+        this.impuestosPeriodo = impuestosPeriodo;
     }
 
     @XmlTransient
