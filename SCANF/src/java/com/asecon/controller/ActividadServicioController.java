@@ -134,7 +134,7 @@ public class ActividadServicioController implements Serializable {
             
             x.setTotalInductorActividad(total_inductor);
             
-            x.calcularCis(actual.getTotalCisPeriodo());
+            //x.calcularCis(actual.getTotalCisPeriodo());
             x.calcularCosto();
             x.setCostoActividadPK(new CostoActividadPK(actual.getNumeroPeriodo(), x.getActividad().getIdActividad()));
             costo.create(x);

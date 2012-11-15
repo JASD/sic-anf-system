@@ -15,6 +15,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -42,10 +43,11 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Cuenta.findBySubrubroCuenta", query = "SELECT c FROM Cuenta c WHERE c.subrubroCuenta = :subrubroCuenta"),
     @NamedQuery(name = "Cuenta.findByTipoCuenta", query = "SELECT c FROM Cuenta c WHERE c.tipoCuenta = :tipoCuenta"),
     @NamedQuery(name = "Cuenta.findByDescripcionCuenta", query = "SELECT c FROM Cuenta c WHERE c.descripcionCuenta = :descripcionCuenta"),
-    @NamedQuery(name = "Cuenta.findBySaldoCuenta", query = "SELECT c FROM Cuenta c WHERE c.saldoCuenta = :saldoCuenta")})
+    @NamedQuery(name = "Cuenta.findBySaldoCuenta", query = "SELECT c FROM Cuenta c WHERE c.saldoCuenta = :saldoCuenta"),
+    @NamedQuery(name = "Cuenta.findBySaldoFinal", query = "SELECT c FROM Cuenta c WHERE c.rubroCuenta = :rubroCuenta AND c.codigoCuenta IN (SELECT DISTINCT sb.codigoCuenta.codigoCuenta FROM SubCuenta sb WHERE sb.codigoSubcuenta IN(SELECT s.saldoPK.codigoSubcuenta FROM Saldo s WHERE s.saldoPK.numeroPeriodo = :numeroPeriodo))"),
+    @NamedQuery(name = "Cuenta.findBySaldoFinalPasivos", query = "SELECT c FROM Cuenta c WHERE c.rubroCuenta IN ('PASIVO', 'PATRIMONIO') AND c.codigoCuenta IN (SELECT DISTINCT sb.codigoCuenta.codigoCuenta FROM SubCuenta sb WHERE sb.codigoSubcuenta IN(SELECT s.saldoPK.codigoSubcuenta FROM Saldo s WHERE s.saldoPK.numeroPeriodo = :numeroPeriodo))")})
 public class Cuenta implements Serializable {
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "cuenta")
-    private List<Saldo> saldoList;
+
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
@@ -73,6 +75,14 @@ public class Cuenta implements Serializable {
     private Float saldoCuenta;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "codigoCuenta")
     private List<SubCuenta> subCuentaList;
+    @Transient
+    private List<Saldo> saldosSubcuenta;
+    @Transient
+    private Float porcentajeParticipacion;
+    @Transient
+    private Double saldoFinalCuenta;
+    
+    
 
     public Cuenta() {
     }
@@ -147,6 +157,30 @@ public class Cuenta implements Serializable {
     
     }
 
+    public Float getPorcentajeParticipacion() {
+        return porcentajeParticipacion;
+    }
+
+    public void setPorcentajeParticipacion(Float porcentajeParticipacion) {
+        this.porcentajeParticipacion = porcentajeParticipacion;
+    }
+
+    public List<Saldo> getSaldosSubcuenta() {
+        return saldosSubcuenta;
+    }
+
+    public void setSaldosSubcuenta(List<Saldo> saldosSucuenta) {
+        this.saldosSubcuenta = saldosSucuenta;
+    }
+
+    public Double getSaldoFinalCuenta() {
+        return saldoFinalCuenta;
+    }
+
+    public void setSaldoFinalCuenta(Double saldoFinalCuenta) {
+        this.saldoFinalCuenta = saldoFinalCuenta;
+    }
+
     @XmlTransient
     public List<SubCuenta> getSubCuentaList() {
         return subCuentaList;
@@ -181,13 +215,4 @@ public class Cuenta implements Serializable {
         return codigoCuenta + " " + nombreCuenta;
     }
 
-    @XmlTransient
-    public List<Saldo> getSaldoList() {
-        return saldoList;
-    }
-
-    public void setSaldoList(List<Saldo> saldoList) {
-        this.saldoList = saldoList;
-    }
-    
 }
