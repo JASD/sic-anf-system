@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="estado_resultado" language="groovy" pageWidth="612" pageHeight="792" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="7cc89554-6586-4be0-83cc-3572742b7a77">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="19"/>
+	<parameter name="ID_PERIODO" class="java.lang.Long"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+     periodo.`FECHA_FIN_PERIODO` AS periodo_FECHA_FIN_PERIODO,
+     periodo.`TOTAL_CAPITAL_PERIODO` AS periodo_TOTAL_CAPITAL_PERIODO,
+     periodo.`TOTAL_PASIVO_PERIODO` AS periodo_TOTAL_PASIVO_PERIODO,
+     periodo.`TOTAL_ACTIVO_PERIODO` AS periodo_TOTAL_ACTIVO_PERIODO,
+     periodo.`FECHA_INICIO_PERIODO` AS periodo_FECHA_INICIO_PERIODO,
+     periodo.`TOTAL_INGRESOS_PERIODO` AS periodo_TOTAL_INGRESOS_PERIODO,
+     periodo.`UTILIDAD_BRUTA_PERIODO` AS periodo_UTILIDAD_BRUTA_PERIODO,
+     periodo.`UTILIDAD_AI_PERIODO` AS periodo_UTILIDAD_AI_PERIODO,
+     periodo.`UTILIDAD_OPERACION_PERIODO` AS periodo_UTILIDAD_OPERACION_PERIODO,
+     periodo.`UTILIDAD_NETA_PERIODO` AS periodo_UTILIDAD_NETA_PERIODO,
+     periodo.`IMPUESTOS_PERIODO` AS periodo_IMPUESTOS_PERIODO
+FROM
+     `periodo` periodo
+WHERE
+     PERIODO.NUMERO_PERIODO = $P{ID_PERIODO}]]>
+	</queryString>
+	<field name="periodo_FECHA_FIN_PERIODO" class="java.sql.Date"/>
+	<field name="periodo_TOTAL_CAPITAL_PERIODO" class="java.lang.Double"/>
+	<field name="periodo_TOTAL_PASIVO_PERIODO" class="java.lang.Double"/>
+	<field name="periodo_TOTAL_ACTIVO_PERIODO" class="java.lang.Double"/>
+	<field name="periodo_FECHA_INICIO_PERIODO" class="java.sql.Date"/>
+	<field name="periodo_TOTAL_INGRESOS_PERIODO" class="java.lang.Double"/>
+	<field name="periodo_UTILIDAD_BRUTA_PERIODO" class="java.lang.Double"/>
+	<field name="periodo_UTILIDAD_AI_PERIODO" class="java.lang.Double"/>
+	<field name="periodo_UTILIDAD_OPERACION_PERIODO" class="java.lang.Double"/>
+	<field name="periodo_UTILIDAD_NETA_PERIODO" class="java.lang.Double"/>
+	<field name="periodo_IMPUESTOS_PERIODO" class="java.lang.Double"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="5f4eb811-a67e-4492-9bfe-2ce375989164" x="93" y="40" width="163" height="20"/>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Estado de Resultado del]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="2586afc5-db7e-41af-87b8-6ef83ecec813" x="82" y="20" width="422" height="20"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[4° Calle Ote. Block N° 1 Col. Las Arboledas, Lourdes Colón, La Libertad]]></text>
+			</staticText>
+			<textField pattern="dd MMMMM yyyy">
+				<reportElement uuid="9dae14a2-e6df-408d-bdcc-42ae487b4eea" x="390" y="40" width="90" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{periodo_FECHA_FIN_PERIODO}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="547bbea1-2391-4e25-818e-f930665ad407" x="222" y="0" width="114" height="20"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[TAIMSAL S.A. DE S.V. ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="fbfdd4aa-65e8-4a9c-a22b-4366f30a4c09" x="118" y="59" width="347" height="20"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Expresado en Dólares de los Estados Unidos de América]]></text>
+			</staticText>
+			<textField pattern="dd MMMMM yyyy">
+				<reportElement uuid="9dae14a2-e6df-408d-bdcc-42ae487b4eea" x="256" y="40" width="90" height="20"/>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{periodo_FECHA_INICIO_PERIODO}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="d7034ec4-3f7a-4984-9bd1-7bdcd07f61d3" x="365" y="40" width="25" height="20"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[al]]></text>
+			</staticText>
+		</band>
+	</title>
+	<detail>
+		<band height="266" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="13130d9e-ca55-492a-87e0-7cc153711c01" x="0" y="0" width="390" height="20"/>
+				<textElement>
+					<font isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[INGRESOS]]></text>
+			</staticText>
+			<textField pattern="#,##0.00">
+				<reportElement uuid="13fe3e9e-2397-4ea2-bded-7714a446f83d" x="497" y="0" width="75" height="20"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{periodo_TOTAL_INGRESOS_PERIODO}]]></textFieldExpression>
+			</textField>
+			<subreport>
+				<reportElement uuid="62930ada-13f3-4fb7-b65c-924e60274767" x="0" y="20" width="572" height="37"/>
+				<subreportParameter name="SUBREPORT_DIR">
+					<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="ID_PERIODO">
+					<subreportParameterExpression><![CDATA[$P{ID_PERIODO}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="SUBRUBRO">
+					<subreportParameterExpression><![CDATA["COSTOS DE SERVICIO DE TALLER"]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "estado_resultado_rubro.jasper"]]></subreportExpression>
+			</subreport>
+			<staticText>
+				<reportElement uuid="1a811ccb-27d7-4bb3-8f03-672b756368c2" positionType="Float" x="390" y="57" width="100" height="20"/>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[UTILIDAD BRUTA]]></text>
+			</staticText>
+			<textField pattern="#,##0.00">
+				<reportElement uuid="75e18c44-ebc1-4b4a-a166-25b9608e607a" positionType="Float" x="497" y="57" width="75" height="20"/>
+				<textElement textAlignment="Right">
+					<font isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{periodo_UTILIDAD_BRUTA_PERIODO}]]></textFieldExpression>
+			</textField>
+			<subreport>
+				<reportElement uuid="675befce-55aa-434c-801b-c1f5b8515cf3" positionType="Float" x="0" y="77" width="572" height="37"/>
+				<subreportParameter name="SUBREPORT_DIR">
+					<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="ID_PERIODO">
+					<subreportParameterExpression><![CDATA[$P{ID_PERIODO}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="SUBRUBRO">
+					<subreportParameterExpression><![CDATA["GASTOS DE OPERACION"]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "estado_resultado_rubro.jasper"]]></subreportExpression>
+			</subreport>
+			<staticText>
+				<reportElement uuid="1a811ccb-27d7-4bb3-8f03-672b756368c2" positionType="Float" x="346" y="114" width="144" height="20"/>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[UTILIDAD DE OPERACIÓN]]></text>
+			</staticText>
+			<textField pattern="#,##0.00">
+				<reportElement uuid="fe67c20a-9f9a-463b-b383-12fe67aa5baf" positionType="Float" x="497" y="114" width="75" height="20"/>
+				<textElement textAlignment="Right">
+					<font isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{periodo_UTILIDAD_OPERACION_PERIODO}]]></textFieldExpression>
+			</textField>
+			<subreport>
+				<reportElement uuid="b1625a91-b227-4ab1-8b47-45ef47c544c6" positionType="Float" x="0" y="134" width="572" height="37"/>
+				<subreportParameter name="SUBREPORT_DIR">
+					<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="ID_PERIODO">
+					<subreportParameterExpression><![CDATA[$P{ID_PERIODO}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="SUBRUBRO">
+					<subreportParameterExpression><![CDATA["GASTOS DE NO OPERACION"]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "estado_resultado_rubro.jasper"]]></subreportExpression>
+			</subreport>
+			<staticText>
+				<reportElement uuid="1a811ccb-27d7-4bb3-8f03-672b756368c2" positionType="Float" x="346" y="171" width="144" height="28"/>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[UTILIDAD ANTES DE
+IMPUESTOS]]></text>
+			</staticText>
+			<textField pattern="#,##0.00">
+				<reportElement uuid="1bff77fa-a6e8-4192-930c-d05c94fdcc19" positionType="Float" x="497" y="179" width="75" height="20"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{periodo_UTILIDAD_AI_PERIODO}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="1a811ccb-27d7-4bb3-8f03-672b756368c2" positionType="Float" x="346" y="213" width="144" height="20"/>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[IMPUESTOS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="1a811ccb-27d7-4bb3-8f03-672b756368c2" positionType="Float" x="346" y="246" width="144" height="20"/>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[UTILIDAD NETA]]></text>
+			</staticText>
+			<textField pattern="#,##0.00">
+				<reportElement uuid="4ef6455b-7c91-4cb1-a9c4-2f2d12a88f21" positionType="Float" x="497" y="213" width="75" height="20"/>
+				<textElement textAlignment="Right">
+					<font isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{periodo_IMPUESTOS_PERIODO}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement uuid="624cf465-dd28-4fb1-b3d8-47f9938df10e" positionType="Float" x="497" y="246" width="75" height="20"/>
+				<textElement textAlignment="Right">
+					<font isBold="true" isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{periodo_UTILIDAD_NETA_PERIODO}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

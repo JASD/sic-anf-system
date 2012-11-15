@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="balance_general_activo_cuenta_subcuenta" language="groovy" pageWidth="572" pageHeight="752" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="5ca0d7a2-b684-4455-86b2-6baced0ee560">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="estado_resultado_rubro_cuenta_subcuenta" language="groovy" pageWidth="572" pageHeight="752" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="909a5cf6-d826-4e04-8395-e2d07a5245fa">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
@@ -8,7 +8,6 @@
 	<parameter name="CUENTA" class="java.lang.String" isForPrompting="false"/>
 	<queryString>
 		<![CDATA[SELECT saldo.`SALDO_FINAL_SUBCUENTA` AS TOTAL,
-       sub_cuenta.`CODIGO_SUBCUENTA` AS subcuenta_CODIGO_SUBCUENTA,
        sub_cuenta.`NOMBRE_SUBCUENTA` AS subcuenta_NOMBRE_SUBCUENTA
   FROM `periodo` periodo
        INNER JOIN `saldo` saldo
@@ -18,13 +17,12 @@
        INNER JOIN `cuenta` cuenta
           ON sub_cuenta.`CODIGO_CUENTA` = cuenta.`CODIGO_CUENTA`
  WHERE     PERIODO.NUMERO_PERIODO = $P{ID_PERIODO}
-       AND CUENTA.RUBRO_CUENTA = "ACTIVO"
+       AND CUENTA.RUBRO_CUENTA = "RESULTADOS"
        AND cuenta.SUBRUBRO_CUENTA = $P{SUBRUBRO}
        AND cuenta.CODIGO_CUENTA = $P{CUENTA}
 ORDER BY sub_cuenta.CODIGO_SUBCUENTA ASC]]>
 	</queryString>
 	<field name="TOTAL" class="java.lang.Double"/>
-	<field name="subcuenta_CODIGO_SUBCUENTA" class="java.lang.String"/>
 	<field name="subcuenta_NOMBRE_SUBCUENTA" class="java.lang.String"/>
 	<background>
 		<band splitType="Stretch"/>
@@ -32,17 +30,12 @@ ORDER BY sub_cuenta.CODIGO_SUBCUENTA ASC]]>
 	<detail>
 		<band height="20" splitType="Stretch">
 			<textField>
-				<reportElement uuid="df9aec9f-c1b8-4408-b9c1-7a640fbbb4d7" x="0" y="0" width="30" height="20"/>
-				<textElement/>
-				<textFieldExpression><![CDATA[$F{subcuenta_CODIGO_SUBCUENTA}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement uuid="2cdb0d03-cd7c-47dd-906d-095f9d2911da" x="66" y="0" width="220" height="20"/>
+				<reportElement uuid="ca72fd62-0fa4-46ba-a074-325ef95c29ed" x="38" y="0" width="282" height="20"/>
 				<textElement/>
 				<textFieldExpression><![CDATA[$F{subcuenta_NOMBRE_SUBCUENTA}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00">
-				<reportElement uuid="da5c3802-004a-483d-b4fa-3ae39c39ac8d" x="318" y="0" width="75" height="20"/>
+				<reportElement uuid="c63308c1-5fd0-4ace-9e3e-ff1a568b5dce" x="328" y="0" width="75" height="20"/>
 				<textElement textAlignment="Right"/>
 				<textFieldExpression><![CDATA[$F{TOTAL}]]></textFieldExpression>
 			</textField>
