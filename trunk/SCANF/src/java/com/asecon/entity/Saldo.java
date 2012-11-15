@@ -18,24 +18,25 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "Saldo.findAll", query = "SELECT s FROM Saldo s"),
     @NamedQuery(name = "Saldo.findByNumeroPeriodo", query = "SELECT s FROM Saldo s WHERE s.saldoPK.numeroPeriodo = :numeroPeriodo"),
-    @NamedQuery(name = "Saldo.findByCodigoCuenta", query = "SELECT s FROM Saldo s WHERE s.saldoPK.codigoCuenta = :codigoCuenta"),
-    @NamedQuery(name = "Saldo.findBySaldoFinalSubCuenta", query = "SELECT s FROM Saldo s WHERE s.saldoFinalSubcuenta = :saldoFinalSubcuenta")})
+    @NamedQuery(name = "Saldo.findByCodigoSubcuenta", query = "SELECT s FROM Saldo s WHERE s.saldoPK.codigoSubcuenta = :codigoSubcuenta"),
+    @NamedQuery(name = "Saldo.findBySaldoFinalSubcuenta", query = "SELECT s FROM Saldo s WHERE s.saldoFinalSubcuenta = :saldoFinalSubcuenta"),
+    @NamedQuery(name = "Saldo.findBySaldoFinalSubcuenta", query = "SELECT s FROM Saldo s WHERE s.saldoFinalSubcuenta = :saldoFinalSubcuenta"),
+    @NamedQuery(name = "Saldo.findByCuenta", query = "SELECT s FROM Saldo s WHERE s.saldoPK.numeroPeriodo = :numeroPeriodo AND s.saldoPK.codigoSubcuenta IN (SELECT sb.codigoSubcuenta FROM SubCuenta sb WHERE sb.codigoCuenta = :codigoCuenta)")})
 public class Saldo implements Serializable {
-    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
-    @Column(name = "SALDO_FINAL_SUBCUENTA")
-    private Float saldoFinalSubcuenta;
-    @JoinColumn(name = "CODIGO_SUBCUENTA", referencedColumnName = "CODIGO_SUBCUENTA", insertable = false, updatable = false)
-    @ManyToOne(optional = false)
-    private SubCuenta subCuenta;
     private static final long serialVersionUID = 1L;
     @EmbeddedId
     protected SaldoPK saldoPK;
+    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
+    @Column(name = "SALDO_FINAL_SUBCUENTA")
+    private Double saldoFinalSubcuenta;
+    @JoinColumn(name = "CODIGO_SUBCUENTA", referencedColumnName = "CODIGO_SUBCUENTA", insertable = false, updatable = false)
+    @ManyToOne(optional = false)
+    private SubCuenta subCuenta;
     @JoinColumn(name = "NUMERO_PERIODO", referencedColumnName = "NUMERO_PERIODO", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private Periodo periodo;
-    @JoinColumn(name = "CODIGO_CUENTA", referencedColumnName = "CODIGO_CUENTA", insertable = false, updatable = false)
-    @ManyToOne(optional = false)
-    private Cuenta cuenta;
+    @Transient
+    private Float porcentajeParticipacion;
 
     public Saldo() {
     }
@@ -44,8 +45,8 @@ public class Saldo implements Serializable {
         this.saldoPK = saldoPK;
     }
 
-    public Saldo(long numeroPeriodo, String codigoCuenta) {
-        this.saldoPK = new SaldoPK(numeroPeriodo, codigoCuenta);
+    public Saldo(long numeroPeriodo, String codigoSubcuenta) {
+        this.saldoPK = new SaldoPK(numeroPeriodo, codigoSubcuenta);
     }
 
     public SaldoPK getSaldoPK() {
@@ -56,6 +57,22 @@ public class Saldo implements Serializable {
         this.saldoPK = saldoPK;
     }
 
+    public Double getSaldoFinalSubcuenta() {
+        return saldoFinalSubcuenta;
+    }
+
+    public void setSaldoFinalSubcuenta(Double saldoFinalSubcuenta) {
+        this.saldoFinalSubcuenta = saldoFinalSubcuenta;
+    }
+
+    public SubCuenta getSubCuenta() {
+        return subCuenta;
+    }
+
+    public void setSubCuenta(SubCuenta subCuenta) {
+        this.subCuenta = subCuenta;
+    }
+
     public Periodo getPeriodo() {
         return periodo;
     }
@@ -64,12 +81,12 @@ public class Saldo implements Serializable {
         this.periodo = periodo;
     }
 
-    public Cuenta getCuenta() {
-        return cuenta;
+    public Float getPorcentajeParticipacion() {
+        return porcentajeParticipacion;
     }
 
-    public void setCuenta(Cuenta cuenta) {
-        this.cuenta = cuenta;
+    public void setPorcentajeParticipacion(Float porcentajeParticipacion) {
+        this.porcentajeParticipacion = porcentajeParticipacion;
     }
 
     @Override
@@ -95,22 +112,6 @@ public class Saldo implements Serializable {
     @Override
     public String toString() {
         return "com.asecon.entity.Saldo[ saldoPK=" + saldoPK + " ]";
-    }
-
-    public Float getSaldoFinalSubcuenta() {
-        return saldoFinalSubcuenta;
-    }
-
-    public void setSaldoFinalSubcuenta(Float saldoFinalSubcuenta) {
-        this.saldoFinalSubcuenta = saldoFinalSubcuenta;
-    }
-
-    public SubCuenta getSubCuenta() {
-        return subCuenta;
-    }
-
-    public void setSubCuenta(SubCuenta subCuenta) {
-        this.subCuenta = subCuenta;
     }
     
 }

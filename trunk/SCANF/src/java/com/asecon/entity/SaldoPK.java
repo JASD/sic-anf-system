@@ -23,16 +23,16 @@ public class SaldoPK implements Serializable {
     private long numeroPeriodo;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 5)
-    @Column(name = "CODIGO_CUENTA")
-    private String codigoCuenta;
+    @Size(min = 1, max = 7)
+    @Column(name = "CODIGO_SUBCUENTA")
+    private String codigoSubcuenta;
 
     public SaldoPK() {
     }
 
-    public SaldoPK(long numeroPeriodo, String codigoCuenta) {
+    public SaldoPK(long numeroPeriodo, String codigoSubcuenta) {
         this.numeroPeriodo = numeroPeriodo;
-        this.codigoCuenta = codigoCuenta;
+        this.codigoSubcuenta = codigoSubcuenta;
     }
 
     public long getNumeroPeriodo() {
@@ -43,19 +43,19 @@ public class SaldoPK implements Serializable {
         this.numeroPeriodo = numeroPeriodo;
     }
 
-    public String getCodigoCuenta() {
-        return codigoCuenta;
+    public String getCodigoSubcuenta() {
+        return codigoSubcuenta;
     }
 
-    public void setCodigoCuenta(String codigoCuenta) {
-        this.codigoCuenta = codigoCuenta;
+    public void setCodigoSubcuenta(String codigoSubcuenta) {
+        this.codigoSubcuenta = codigoSubcuenta;
     }
 
     @Override
     public int hashCode() {
         int hash = 0;
         hash += (int) numeroPeriodo;
-        hash += (codigoCuenta != null ? codigoCuenta.hashCode() : 0);
+        hash += (codigoSubcuenta != null ? codigoSubcuenta.hashCode() : 0);
         return hash;
     }
 
@@ -69,7 +69,7 @@ public class SaldoPK implements Serializable {
         if (this.numeroPeriodo != other.numeroPeriodo) {
             return false;
         }
-        if ((this.codigoCuenta == null && other.codigoCuenta != null) || (this.codigoCuenta != null && !this.codigoCuenta.equals(other.codigoCuenta))) {
+        if ((this.codigoSubcuenta == null && other.codigoSubcuenta != null) || (this.codigoSubcuenta != null && !this.codigoSubcuenta.equals(other.codigoSubcuenta))) {
             return false;
         }
         return true;
@@ -77,7 +77,7 @@ public class SaldoPK implements Serializable {
 
     @Override
     public String toString() {
-        return "com.asecon.entity.SaldoPK[ numeroPeriodo=" + numeroPeriodo + ", codigoCuenta=" + codigoCuenta + " ]";
+        return "com.asecon.entity.SaldoPK[ numeroPeriodo=" + numeroPeriodo + ", codigoSubcuenta=" + codigoSubcuenta + " ]";
     }
     
 }

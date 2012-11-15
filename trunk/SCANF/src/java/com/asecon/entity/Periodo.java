@@ -35,47 +35,48 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Periodo.findByTotalIngresosPeriodo", query = "SELECT p FROM Periodo p WHERE p.totalIngresosPeriodo = :totalIngresosPeriodo"),
     @NamedQuery(name = "Periodo.findByTotalCisPeriodo", query = "SELECT p FROM Periodo p WHERE p.totalCisPeriodo = :totalCisPeriodo")})
 public class Periodo implements Serializable {
-    @Column(name =     "FECHA_INICIO_PERIODO")
+
+    @Column(name = "FECHA_INICIO_PERIODO")
     @Temporal(TemporalType.DATE)
     private Date fechaInicioPeriodo;
-    @Column(name =     "FECHA_FIN_PERIODO")
+    @Column(name = "FECHA_FIN_PERIODO")
     @Temporal(TemporalType.DATE)
     private Date fechaFinPeriodo;
+    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
+    @Column(name = "TOTAL_ACTIVO_PERIODO")
+    private Double totalActivoPeriodo;
+    @Column(name = "TOTAL_PASIVO_PERIODO")
+    private Double totalPasivoPeriodo;
+    @Column(name = "TOTAL_CAPITAL_PERIODO")
+    private Double totalCapitalPeriodo;
+    @Column(name = "TOTAL_INGRESOS_PERIODO")
+    private Double totalIngresosPeriodo;
+    @Column(name = "TOTAL_CIS_PERIODO")
+    private Double totalCisPeriodo;
+    @Column(name = "UTILIDAD_BRUTA_PERIODO")
+    private Double utilidadBrutaPeriodo;
+    @Column(name = "UTILIDAD_OPERACION_PERIODO")
+    private Double utilidadOperacionPeriodo;
+    @Column(name = "UTILIDAD_AI_PERIODO")
+    private Double utilidadAiPeriodo;
+    @Column(name = "UTILIDAD_NETA_PERIODO")
+    private Double utilidadNetaPeriodo;
+    @Column(name = "TOTAL_COSTO_PERIODO")
+    private Double totalCostoPeriodo;
+    @Column(name = "IMPUESTOS_PERIODO")
+    private Double impuestosPeriodo;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "periodo")
     private List<Saldo> saldoList;
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "NUMERO_PERIODO", insertable=false, nullable=false, updatable=true)
+    @Column(name = "NUMERO_PERIODO", insertable = false, nullable = false, updatable = true)
     private Long numeroPeriodo;
     @Column(name = "ESTADO_PERIODO")
     private Boolean estadoPeriodo;
-    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
-    @Column(name = "UTILIDAD_NETA_PERIODO")
-    private Float utilidadNetaPeriodo;
-    @Column(name = "UTILIDAD_BRUTA_PERIODO")
-    private Float utilidadBrutaPeriodo;
-    @Column(name = "UTILIDAD_OPERACION_PERIODO")
-    private Float utilidadOperacionPeriodo;
-    @Column(name = "UTILIDAD_AI_PERIODO")
-    private Float utilidadAIPeriodo;
     //@Column(name = "PERDIDAS_PERIODO")
     @Transient
     private Float perdidasPeriodo;
-    @Column(name = "TOTAL_ACTIVO_PERIODO")
-    private Float totalActivoPeriodo;
-    @Column(name = "TOTAL_PASIVO_PERIODO")
-    private Float totalPasivoPeriodo;
-    @Column(name = "TOTAL_CAPITAL_PERIODO")
-    private Float totalCapitalPeriodo;
-    @Column(name = "TOTAL_COSTO_PERIODO")
-    private Float totalCostoPeriodo;
-    @Column(name = "TOTAL_INGRESOS_PERIODO")
-    private Float totalIngresosPeriodo;
-    @Column(name = "TOTAL_CIS_PERIODO")
-    private Float totalCisPeriodo;
-    @Column(name = "IMPUESTOS_PERIODO")
-    private Float impuestosPeriodo;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "periodo")
     private List<Planilla> planillaList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "periodo")
@@ -128,91 +129,91 @@ public class Periodo implements Serializable {
         this.estadoPeriodo = estadoPeriodo;
     }
 
-    public Float getUtilidadNetaPeriodo() {
+    public Double getUtilidadNetaPeriodo() {
         return utilidadNetaPeriodo;
     }
 
-    public void setUtilidadNetaPeriodo(Float utilidadNetaPeriodo) {
+    public void setUtilidadNetaPeriodo(Double utilidadNetaPeriodo) {
         this.utilidadNetaPeriodo = utilidadNetaPeriodo;
     }
 
-    public Float getUtilidadAIPeriodo() {
-        return utilidadAIPeriodo;
+    public Double getUtilidadAIPeriodo() {
+        return utilidadAiPeriodo;
     }
 
-    public void setUtilidadAIPeriodo(Float utilidadAIPeriodo) {
-        this.utilidadAIPeriodo = utilidadAIPeriodo;
+    public void setUtilidadAIPeriodo(Double utilidadAIPeriodo) {
+        this.utilidadAiPeriodo = utilidadAIPeriodo;
     }
 
-    public Float getUtilidadBrutaPeriodo() {
+    public Double getUtilidadBrutaPeriodo() {
         return utilidadBrutaPeriodo;
     }
 
-    public void setUtilidadBrutaPeriodo(Float utilidadBrutaPeriodo) {
+    public void setUtilidadBrutaPeriodo(Double utilidadBrutaPeriodo) {
         this.utilidadBrutaPeriodo = utilidadBrutaPeriodo;
     }
 
-    public Float getUtilidadOperacionPeriodo() {
+    public Double getUtilidadOperacionPeriodo() {
         return utilidadOperacionPeriodo;
     }
 
-    public void setUtilidadOperacionPeriodo(Float utilidadOperacionPeriodo) {
+    public void setUtilidadOperacionPeriodo(Double utilidadOperacionPeriodo) {
         this.utilidadOperacionPeriodo = utilidadOperacionPeriodo;
     }
-    
-    public Float getTotalActivoPeriodo() {
+
+    public Double getTotalActivoPeriodo() {
         return totalActivoPeriodo;
     }
 
-    public void setTotalActivoPeriodo(Float totalActivoPeriodo) {
+    public void setTotalActivoPeriodo(Double totalActivoPeriodo) {
         this.totalActivoPeriodo = totalActivoPeriodo;
     }
 
-    public Float getTotalPasivoPeriodo() {
+    public Double getTotalPasivoPeriodo() {
         return totalPasivoPeriodo;
     }
 
-    public void setTotalPasivoPeriodo(Float totalPasivoPeriodo) {
+    public void setTotalPasivoPeriodo(Double totalPasivoPeriodo) {
         this.totalPasivoPeriodo = totalPasivoPeriodo;
     }
 
-    public Float getTotalCapitalPeriodo() {
+    public Double getTotalCapitalPeriodo() {
         return totalCapitalPeriodo;
     }
 
-    public void setTotalCapitalPeriodo(Float totalCapitalPeriodo) {
+    public void setTotalCapitalPeriodo(Double totalCapitalPeriodo) {
         this.totalCapitalPeriodo = totalCapitalPeriodo;
     }
 
-    public Float getTotalCostoPeriodo() {
+    public Double getTotalCostoPeriodo() {
         return totalCostoPeriodo;
     }
 
-    public void setTotalCostoPeriodo(Float totalCostoPeriodo) {
+    public void setTotalCostoPeriodo(Double totalCostoPeriodo) {
         this.totalCostoPeriodo = totalCostoPeriodo;
     }
 
-    public Float getTotalIngresosPeriodo() {
+    public Double getTotalIngresosPeriodo() {
         return totalIngresosPeriodo;
     }
 
-    public void setTotalIngresosPeriodo(Float totalIngresosPeriodo) {
+    public void setTotalIngresosPeriodo(Double totalIngresosPeriodo) {
         this.totalIngresosPeriodo = totalIngresosPeriodo;
     }
 
-    public Float getTotalCisPeriodo() {
+    public Double getTotalCisPeriodo() {
         return totalCisPeriodo;
     }
 
-    public void setTotalCisPeriodo(Float totalCisPeriodo) {
+    public void setTotalCisPeriodo(Double totalCisPeriodo) {
         this.totalCisPeriodo = totalCisPeriodo;
     }
 
-    public Float getImpuestosPeriodo() {
+    public Double getImpuestosPeriodo() {
         return impuestosPeriodo;
     }
 
-    public void setImpuestosPeriodo(Float impuestosPeriodo) {
+    public void setImpuestosPeriodo(Double impuestosPeriodo) {
         this.impuestosPeriodo = impuestosPeriodo;
     }
 
@@ -241,7 +242,6 @@ public class Periodo implements Serializable {
     public void setPerdidasPeriodo(Float perdidasPeriodo) {
         this.perdidasPeriodo = perdidasPeriodo;
     }
-    
 
     @XmlTransient
     public List<Transaccion> getTransaccionList() {
@@ -312,5 +312,13 @@ public class Periodo implements Serializable {
 
     public void setSaldoList(List<Saldo> saldoList) {
         this.saldoList = saldoList;
+    }
+
+    public Double getUtilidadAiPeriodo() {
+        return utilidadAiPeriodo;
+    }
+
+    public void setUtilidadAiPeriodo(Double utilidadAiPeriodo) {
+        this.utilidadAiPeriodo = utilidadAiPeriodo;
     }
 }
