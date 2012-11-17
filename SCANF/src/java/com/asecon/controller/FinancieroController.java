@@ -317,6 +317,44 @@ public class FinancieroController implements Serializable {
         legendPosition = "nw";
 
     }
+    
+    public void graficarValoresCirculantes() {
+
+        List<Periodo> periodos = periodoFacade.findNoParameters("Periodo.findNoCurrent");
+        chartModel.clear();
+
+        ChartSeries actCirculante = new ChartSeries();
+        actCirculante.setLabel("Activo Circulante");
+        ChartSeries pasCirculante = new ChartSeries();
+        pasCirculante.setLabel("PasivoCirculante");
+        SimpleDateFormat yearFormat = new SimpleDateFormat("yyyy");
+        for (Periodo p : periodos) {
+            String year = yearFormat.format(p.getFechaFinPeriodo());
+            actCirculante.set(year, p.getActivoCirculantePeriodo());
+            pasCirculante.set(year, p.getPasivoCirculantePeriodo());
+        }
+        chartModel.addSeries(pasCirculante);
+        chartModel.addSeries(actCirculante);
+        legendPosition = "e";
+
+    }
+
+    public void graficarRazonCirculante() {
+
+        List<Periodo> periodos = periodoFacade.findNoParameters("Periodo.findNoCurrent");
+        chartModel.clear();
+
+        LineChartSeries razon = new LineChartSeries();
+        razon.setLabel("Razón Circulante");
+        SimpleDateFormat yearFormat = new SimpleDateFormat("yyyy");
+        for (Periodo p : periodos) {
+            String year = yearFormat.format(p.getFechaFinPeriodo());
+            razon.set(year, p.getActivoCirculantePeriodo() / p.getPasivoCirculantePeriodo());
+        }
+        chartModel.addSeries(razon);
+        legendPosition = "se";
+
+    }
 
     public List<Cuenta> getCuentas() {
         return cuentas;
