@@ -197,6 +197,10 @@ public class PeriodoController implements Serializable {
     public SelectItem[] getItemsSelect() {
         return JsfUtil.getSelectItems(ejbFacade.findNoParameters("Periodo.findNoCurrent"));
     }
+    
+    public SelectItem[] getItemsSelectNoFirst() {
+        return JsfUtil.getSelectItems(ejbFacade.findNoParameters("Periodo.findNoCurrentAndFirst"));
+    }
 
     public Periodo getActual() {
         return actual;

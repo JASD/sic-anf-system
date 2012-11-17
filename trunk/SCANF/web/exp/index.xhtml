@@ -22,21 +22,15 @@
 
             <!-- Any section element inside of this container is displayed as a slide -->
             <div class="slides">
-                <!--
-                <section>
-                    <object width="550" height="400">
-                        <param name="movie" value="http://www.timetoast.com/flash/TimelineViewer.swf?passedTimelines=461993" />
-                        <param name="passedTimelines" value="461993" />
-                        <param name="allowScriptAccess" value="always" />
-                        <embed src="http://www.timetoast.com/flash/TimelineViewer.swf?passedTimelines=461993" type="application/x-shockwave-flash" passedTimelines="461993" width="550" height="400" allowScriptAccess="always" /></object>
-                </section>-->
+
                 <!-- ANALISIS VERTICALES -->
                 <section>
-                    <!-- ANALISIS VERTICAL ACTIVOS -->
+
                     <section>
+                        <!-- ANALISIS VERTICAL ACTIVOS -->
                         <h:form id="vertical-activo">
                             <p:dataTable id="v-activo" var="cuenta" value="#{financieroController.cuentas}"
-                                         emptyMessage="Seleccione un Período" style="font-size: 25px">
+                                         emptyMessage="Seleccione un Período" style="font-size: 23px">
 
                                 <f:facet name="header">  
                                     Ánalisis Vertical Activos 
@@ -48,7 +42,10 @@
                                     <f:facet name="header">  
                                         Cuenta
                                     </f:facet>  
-                                    <h:outputText value="#{cuenta.nombreCuenta}" />  
+                                    <h:outputText value="#{cuenta.nombreCuenta}" />
+                                    <f:facet name="footer">  
+                                        <h:outputText value="TOTAL" />
+                                    </f:facet> 
                                 </p:column>
                                 <p:column style="width:25px; text-align: right">  
                                     <f:facet name="header">  
@@ -104,23 +101,23 @@
                                     </p:dataTable>
                                 </p:rowExpansion>
                             </p:dataTable>
-
                             <p:selectOneListbox  value="#{financieroController.periodoSelected}" 
-                                                 style="width: 300px; height: 100px; font-size: 14px; 
-                                                 margin-left: 35%">
+                                                 style="width: 120px; height: 100px; font-size: 14px; 
+                                                 display: inline-block">
                                 <f:selectItems value="#{periodoController.itemsSelect}"/> 
                             </p:selectOneListbox>
                             <p:commandButton value="Cambiar Perído" 
                                              actionListener="#{financieroController.analizarVerticalActivos}"
                                              update="v-activo"
-                                             style="font-size: 14px" />
+                                             style="font-size: 14px; display: inline-block; vertical-align: top" />
                         </h:form>
                     </section>
-                    <!-- ANALISIS VERTICAL PASIVOS -->
+
                     <section>
+                        <!-- ANALISIS VERTICAL PASIVOS -->
                         <h:form id="vertical-pasivo">
                             <p:dataTable id="v-pasivo" var="cuenta" value="#{financieroController.cuentas}"
-                                         emptyMessage="Seleccione un Período" style="font-size: 25px">
+                                         emptyMessage="Seleccione un Período" style="font-size: 23px">
 
                                 <f:facet name="header">  
                                     Ánalisis Vertical Pasivos 
@@ -132,7 +129,10 @@
                                     <f:facet name="header">  
                                         Cuenta
                                     </f:facet>  
-                                    <h:outputText value="#{cuenta.nombreCuenta}" />  
+                                    <h:outputText value="#{cuenta.nombreCuenta}" />
+                                    <f:facet name="footer">  
+                                        <h:outputText value="TOTAL" />
+                                    </f:facet> 
                                 </p:column>
                                 <p:column style="width:25px; text-align: right">  
                                     <f:facet name="header">  
@@ -188,24 +188,24 @@
                                     </p:dataTable>
                                 </p:rowExpansion>
                             </p:dataTable>
-
                             <p:selectOneListbox  value="#{financieroController.periodoSelected}" 
-                                                 style="width: 300px; height: 100px; font-size: 14px; 
-                                                 margin-left: 35%">
+                                                 style="width: 120px; height: 100px; font-size: 14px; 
+                                                 display: inline-block">
                                 <f:selectItems value="#{periodoController.itemsSelect}"/> 
                             </p:selectOneListbox>
                             <p:commandButton value="Cambiar Perído" 
                                              actionListener="#{financieroController.analizarVerticalPasivos}"
                                              update="v-pasivo"
-                                             style="font-size: 14px" />
+                                             style="font-size: 14px; display: inline-block; vertical-align: top" />
                         </h:form>
                     </section>
 
-                    <!-- ANALISIS VERTICAL CAPITAL  -->
+
                     <section>
+                        <!-- ANALISIS VERTICAL CAPITAL  -->
                         <h:form id="vertical-capital">
                             <p:dataTable id="v-capital" var="cuenta" value="#{financieroController.cuentas}"
-                                         emptyMessage="Seleccione un Período" style="font-size: 25px">
+                                         emptyMessage="Seleccione un Período" style="font-size: 23px">
 
                                 <f:facet name="header">  
                                     Ánalisis Vertical Patrimonio 
@@ -217,7 +217,10 @@
                                     <f:facet name="header">  
                                         Cuenta
                                     </f:facet>  
-                                    <h:outputText value="#{cuenta.nombreCuenta}" />  
+                                    <h:outputText value="#{cuenta.nombreCuenta}" />
+                                    <f:facet name="footer">  
+                                        <h:outputText value="TOTAL" />
+                                    </f:facet> 
                                 </p:column>
                                 <p:column style="width:25px; text-align: right">  
                                     <f:facet name="header">  
@@ -273,23 +276,23 @@
                                     </p:dataTable>
                                 </p:rowExpansion>
                             </p:dataTable>
-
                             <p:selectOneListbox  value="#{financieroController.periodoSelected}" 
-                                                 style="width: 300px; height: 100px; font-size: 14px; 
-                                                 margin-left: 35%">
+                                                 style="width: 120px; height: 100px; font-size: 14px; 
+                                                 display: inline-block">
                                 <f:selectItems value="#{periodoController.itemsSelect}"/> 
                             </p:selectOneListbox>
                             <p:commandButton value="Cambiar Perído" 
                                              actionListener="#{financieroController.analizarVerticalCapital}"
                                              update="v-capital"
-                                             style="font-size: 14px" />
+                                             style="font-size: 14px; display: inline-block; vertical-align: top" />
                         </h:form>
                     </section>
-                    <!-- ANALISIS VERTICAL RESULTADOS  -->
+
                     <section>
+                        <!-- ANALISIS VERTICAL RESULTADOS  -->
                         <h:form id="vertical-resultados">
                             <p:dataTable id="v-resultados" var="cuenta" value="#{financieroController.cuentas}"
-                                         emptyMessage="Seleccione un Período" style="font-size: 25px"
+                                         emptyMessage="Seleccione un Período" style="font-size: 23px"
                                          paginator="true" rows="4" 
                                          paginatorTemplate="{PageLinks}"
                                          paginatorAlwaysVisible="false">
@@ -304,7 +307,10 @@
                                     <f:facet name="header">  
                                         Cuenta
                                     </f:facet>  
-                                    <h:outputText value="#{cuenta.nombreCuenta}" />  
+                                    <h:outputText value="#{cuenta.nombreCuenta}" />
+                                    <f:facet name="footer">  
+                                        <h:outputText value="UTILIDAD NETA" />
+                                    </f:facet> 
                                 </p:column>
                                 <p:column style="width:25px; text-align: right">  
                                     <f:facet name="header">  
@@ -363,22 +369,528 @@
                                     </p:dataTable>
                                 </p:rowExpansion>
                             </p:dataTable>
-
                             <p:selectOneListbox  value="#{financieroController.periodoSelected}" 
-                                                 style="width: 300px; height: 100px; font-size: 14px; 
-                                                 margin-left: 35%">
+                                                 style="width: 120px; height: 100px; font-size: 14px; 
+                                                 display: inline-block">
                                 <f:selectItems value="#{periodoController.itemsSelect}"/> 
                             </p:selectOneListbox>
                             <p:commandButton value="Cambiar Perído" 
                                              actionListener="#{financieroController.analizarVerticalResultados}"
                                              update="v-resultados"
-                                             style="font-size: 14px" />
+                                             style="font-size: 14px; display: inline-block; vertical-align: top" />
                         </h:form>
                     </section>
                 </section>
-                <!-- ANALISIS DUPONT -->
+
+                <!-- ANALISIS HORIZONTALES -->
                 <section>
 
+                    <section>
+                        <!-- ANALISIS HORIZONTAL ACTIVOS -->
+                        <h:form id="horizontal-activo">
+                            <p:dataTable id="h-activo" var="cuenta" value="#{financieroController.cuentas}"
+                                         emptyMessage="Seleccione un Período" style="font-size: 23px">
+
+                                <f:facet name="header">  
+                                    Ánalisis Horizontal Activos 
+                                </f:facet>
+
+                                <p:column style="width:200px">  
+                                    <f:facet name="header">  
+                                        Cuenta
+                                    </f:facet>  
+                                    <h:outputText value="#{cuenta.nombreCuenta}" />
+                                    <f:facet name="footer">  
+                                        <h:outputText value="TOTAL" />
+                                    </f:facet> 
+                                </p:column>
+                                <p:column style="width:25px; text-align: right">  
+                                    <f:facet name="header">  
+                                        #{financieroController.periodoSelected}
+                                    </f:facet>  
+                                    <h:outputText value="#{cuenta.saldoFinalCuenta}">
+                                        <f:convertNumber pattern="#,##0.00;(#,##0.00)"
+                                                         locale="#{usuarioController.locale}"/>
+                                    </h:outputText>
+                                    <f:facet name="footer">  
+                                        <h:outputText value="#{financieroController.periodoSelected.totalActivoPeriodo}">
+                                            <f:convertNumber pattern="#,##0.00;(#,##0.00)"
+                                                             locale="#{usuarioController.locale}"/>
+                                        </h:outputText>
+                                    </f:facet>  
+                                </p:column>
+                                <p:column style="width:25px; text-align: right">  
+                                    <f:facet name="header">  
+                                        #{financieroController.periodoAnterior}
+                                    </f:facet>  
+                                    <h:outputText value="#{cuenta.saldoAnteriorCuenta}">
+                                        <f:convertNumber pattern="#,##0.00;(#,##0.00)"
+                                                         locale="#{usuarioController.locale}"/>
+                                    </h:outputText>
+                                    <f:facet name="footer">  
+                                        <h:outputText value="#{financieroController.periodoAnterior.totalActivoPeriodo}">
+                                            <f:convertNumber pattern="#,##0.00;(#,##0.00)"
+                                                             locale="#{usuarioController.locale}"/>
+                                        </h:outputText>
+                                    </f:facet>  
+                                </p:column>
+                                <p:column style="width:25px; text-align: right">  
+                                    <f:facet name="header">  
+                                        Diferencia
+                                    </f:facet>  
+                                    <h:outputText value="#{cuenta.diferenciaSaldos}">
+                                        <f:convertNumber pattern="#,##0.00;(#,##0.00)"
+                                                         locale="#{usuarioController.locale}"/>
+                                    </h:outputText>
+                                    <f:facet name="footer">  
+                                        <h:outputText value="#{financieroController.periodoSelected.diferenciaRubro}">
+                                            <f:convertNumber pattern="#,##0.00;(#,##0.00)"
+                                                             locale="#{usuarioController.locale}"/>
+                                        </h:outputText>
+                                    </f:facet>  
+                                </p:column>
+                                <p:column style="width:15px; text-align: right">  
+                                    <f:facet name="header">  
+                                        %
+                                    </f:facet>  
+                                    <h:outputText value="#{cuenta.porcentajeIncremento}">
+                                        <f:convertNumber pattern="#,##0.00;(#,##0.00)" 
+                                                         locale="#{usuarioController.locale}"/>
+                                    </h:outputText>
+                                    <f:facet name="footer">  
+                                        <h:outputText value="#{financieroController.periodoSelected.porcentajeAumentoRubro}">
+                                            <f:convertNumber pattern="#,##0.00;(#,##0.00)"
+                                                             locale="#{usuarioController.locale}"/>
+                                        </h:outputText>
+                                    </f:facet>  
+                                </p:column>
+                            </p:dataTable>
+                            <p:selectOneListbox  value="#{financieroController.periodoSelected}" 
+                                                 style="width: 120px; height: 100px; font-size: 14px; 
+                                                 display: inline-block">
+                                <f:selectItems value="#{periodoController.itemsSelectNoFirst}"/> 
+                            </p:selectOneListbox>
+                            <p:commandButton value="Cambiar Perído" 
+                                             actionListener="#{financieroController.analizarHorizontalActivos}"
+                                             update="h-activo"
+                                             style="font-size: 14px; display: inline-block; vertical-align: top" />
+                        </h:form>
+                    </section>
+                    <section>
+                        <!-- ANALISIS HORIZONTAL PASIVOS -->
+                        <h:form id="horizontal-pasivo">
+                            <p:dataTable id="h-pasivo" var="cuenta" value="#{financieroController.cuentas}"
+                                         emptyMessage="Seleccione un Período" style="font-size: 23px"
+                                         paginator="true" rows="3" 
+                                         paginatorTemplate="{PageLinks}"
+                                         paginatorAlwaysVisible="false">
+
+                                <f:facet name="header">  
+                                    Ánalisis Horizontal Pasivos 
+                                </f:facet>
+
+                                <p:column style="width:200px">  
+                                    <f:facet name="header">  
+                                        Cuenta
+                                    </f:facet>  
+                                    <h:outputText value="#{cuenta.nombreCuenta}" /> 
+                                    <f:facet name="footer">  
+                                        <h:outputText value="TOTAL" />
+                                    </f:facet> 
+                                </p:column>
+                                <p:column style="width:25px; text-align: right">  
+                                    <f:facet name="header">  
+                                        #{financieroController.periodoSelected}
+                                    </f:facet>  
+                                    <h:outputText value="#{cuenta.saldoFinalCuenta}">
+                                        <f:convertNumber pattern="#,##0.00;(#,##0.00)"
+                                                         locale="#{usuarioController.locale}"/>
+                                    </h:outputText>
+                                    <f:facet name="footer">  
+                                        <h:outputText value="#{financieroController.periodoSelected.totalPasivoPeriodo}">
+                                            <f:convertNumber pattern="#,##0.00;(#,##0.00)"
+                                                             locale="#{usuarioController.locale}"/>
+                                        </h:outputText>
+                                    </f:facet>  
+                                </p:column>
+                                <p:column style="width:25px; text-align: right">  
+                                    <f:facet name="header">  
+                                        #{financieroController.periodoAnterior}
+                                    </f:facet>  
+                                    <h:outputText value="#{cuenta.saldoAnteriorCuenta}">
+                                        <f:convertNumber pattern="#,##0.00;(#,##0.00)"
+                                                         locale="#{usuarioController.locale}"/>
+                                    </h:outputText>
+                                    <f:facet name="footer">  
+                                        <h:outputText value="#{financieroController.periodoAnterior.totalPasivoPeriodo}">
+                                            <f:convertNumber pattern="#,##0.00;(#,##0.00)"
+                                                             locale="#{usuarioController.locale}"/>
+                                        </h:outputText>
+                                    </f:facet>  
+                                </p:column>
+                                <p:column style="width:25px; text-align: right">  
+                                    <f:facet name="header">  
+                                        Diferencia
+                                    </f:facet>  
+                                    <h:outputText value="#{cuenta.diferenciaSaldos}">
+                                        <f:convertNumber pattern="#,##0.00;(#,##0.00)"
+                                                         locale="#{usuarioController.locale}"/>
+                                    </h:outputText>
+                                    <f:facet name="footer">  
+                                        <h:outputText value="#{financieroController.periodoSelected.diferenciaRubro}">
+                                            <f:convertNumber pattern="#,##0.00;(#,##0.00)"
+                                                             locale="#{usuarioController.locale}"/>
+                                        </h:outputText>
+                                    </f:facet>  
+                                </p:column>
+                                <p:column style="width:15px; text-align: right">  
+                                    <f:facet name="header">  
+                                        %
+                                    </f:facet>  
+                                    <h:outputText value="#{cuenta.porcentajeIncremento}">
+                                        <f:convertNumber pattern="#,##0.00;(#,##0.00)" 
+                                                         locale="#{usuarioController.locale}"/>
+                                    </h:outputText>
+                                    <f:facet name="footer">  
+                                        <h:outputText value="#{financieroController.periodoSelected.porcentajeAumentoRubro}">
+                                            <f:convertNumber pattern="#,##0.00;(#,##0.00)"
+                                                             locale="#{usuarioController.locale}"/>
+                                        </h:outputText>
+                                    </f:facet>  
+                                </p:column>
+                            </p:dataTable>
+                            <p:selectOneListbox  value="#{financieroController.periodoSelected}" 
+                                                 style="width: 120px; height: 100px; font-size: 14px; 
+                                                 display: inline-block">
+                                <f:selectItems value="#{periodoController.itemsSelectNoFirst}"/> 
+                            </p:selectOneListbox>
+                            <p:commandButton value="Cambiar Perído" 
+                                             actionListener="#{financieroController.analizarHorizontalPasivos}"
+                                             update="h-pasivo"
+                                             style="font-size: 14px; display: inline-block; vertical-align: top" />
+                        </h:form>
+                    </section>
+                    <section>
+                        <!-- ANALISIS HORIZONTAL CAPITAL -->
+                        <h:form id="horizontal-capital">
+                            <p:dataTable id="h-capital" var="cuenta" value="#{financieroController.cuentas}"
+                                         emptyMessage="Seleccione un Período" style="font-size: 23px">
+                                <f:facet name="header">  
+                                    Ánalisis Horizontal Patrimonio 
+                                </f:facet>
+
+                                <p:column style="width:200px">  
+                                    <f:facet name="header">  
+                                        Cuenta
+                                    </f:facet>  
+                                    <h:outputText value="#{cuenta.nombreCuenta}" />
+                                    <f:facet name="footer">  
+                                        <h:outputText value="TOTAL" />
+                                    </f:facet> 
+                                </p:column>
+                                <p:column style="width:25px; text-align: right">  
+                                    <f:facet name="header">  
+                                        #{financieroController.periodoSelected}
+                                    </f:facet>  
+                                    <h:outputText value="#{cuenta.saldoFinalCuenta}">
+                                        <f:convertNumber pattern="#,##0.00;(#,##0.00)"
+                                                         locale="#{usuarioController.locale}"/>
+                                    </h:outputText>
+                                    <f:facet name="footer">  
+                                        <h:outputText value="#{financieroController.periodoSelected.totalCapitalPeriodo}">
+                                            <f:convertNumber pattern="#,##0.00;(#,##0.00)"
+                                                             locale="#{usuarioController.locale}"/>
+                                        </h:outputText>
+                                    </f:facet>  
+                                </p:column>
+                                <p:column style="width:25px; text-align: right">  
+                                    <f:facet name="header">  
+                                        #{financieroController.periodoAnterior}
+                                    </f:facet>  
+                                    <h:outputText value="#{cuenta.saldoAnteriorCuenta}">
+                                        <f:convertNumber pattern="#,##0.00;(#,##0.00)"
+                                                         locale="#{usuarioController.locale}"/>
+                                    </h:outputText>
+                                    <f:facet name="footer">  
+                                        <h:outputText value="#{financieroController.periodoAnterior.totalCapitalPeriodo}">
+                                            <f:convertNumber pattern="#,##0.00;(#,##0.00)"
+                                                             locale="#{usuarioController.locale}"/>
+                                        </h:outputText>
+                                    </f:facet>  
+                                </p:column>
+                                <p:column style="width:25px; text-align: right">  
+                                    <f:facet name="header">  
+                                        Diferencia
+                                    </f:facet>  
+                                    <h:outputText value="#{cuenta.diferenciaSaldos}">
+                                        <f:convertNumber pattern="#,##0.00;(#,##0.00)"
+                                                         locale="#{usuarioController.locale}"/>
+                                    </h:outputText>
+                                    <f:facet name="footer">  
+                                        <h:outputText value="#{financieroController.periodoSelected.diferenciaRubro}">
+                                            <f:convertNumber pattern="#,##0.00;(#,##0.00)"
+                                                             locale="#{usuarioController.locale}"/>
+                                        </h:outputText>
+                                    </f:facet>  
+                                </p:column>
+                                <p:column style="width:15px; text-align: right">  
+                                    <f:facet name="header">  
+                                        %
+                                    </f:facet>  
+                                    <h:outputText value="#{cuenta.porcentajeIncremento}">
+                                        <f:convertNumber pattern="#,##0.00;(#,##0.00)" 
+                                                         locale="#{usuarioController.locale}"/>
+                                    </h:outputText>
+                                    <f:facet name="footer">  
+                                        <h:outputText value="#{financieroController.periodoSelected.porcentajeAumentoRubro}">
+                                            <f:convertNumber pattern="#,##0.00;(#,##0.00)"
+                                                             locale="#{usuarioController.locale}"/>
+                                        </h:outputText>
+                                    </f:facet>  
+                                </p:column>
+                            </p:dataTable>
+                            <p:selectOneListbox  value="#{financieroController.periodoSelected}" 
+                                                 style="width: 120px; height: 100px; font-size: 14px; 
+                                                 display: inline-block">
+                                <f:selectItems value="#{periodoController.itemsSelectNoFirst}"/> 
+                            </p:selectOneListbox>
+                            <p:commandButton value="Cambiar Perído" 
+                                             actionListener="#{financieroController.analizarHorizontalCapital}"
+                                             update="h-capital"
+                                             style="font-size: 14px; display: inline-block; vertical-align: top" />
+                        </h:form>
+                    </section>
+                    <section>
+                        <!-- ANALISIS HORIZONTAL RESULTADOS -->
+                        <h:form id="horizontal-resultados">
+                            <p:dataTable id="h-resultado" var="cuenta" value="#{financieroController.cuentas}"
+                                         emptyMessage="Seleccione un Período" style="font-size: 23px"
+                                         paginator="true" rows="3" 
+                                         paginatorTemplate="{PageLinks}"
+                                         paginatorAlwaysVisible="false">
+
+                                <f:facet name="header">  
+                                    Ánalisis Horizontal Resultados 
+                                </f:facet>
+                                <p:column style="width:200px">  
+                                    <f:facet name="header">  
+                                        Cuenta
+                                    </f:facet>  
+                                    <h:outputText value="#{cuenta.nombreCuenta}" />
+                                    <f:facet name="footer">  
+                                        <h:outputText value="UTILIDAD NETA" />
+                                    </f:facet>  
+                                </p:column>
+                                <p:column style="width:25px; text-align: right">  
+                                    <f:facet name="header">  
+                                        #{financieroController.periodoSelected}
+                                    </f:facet>  
+                                    <h:outputText value="#{cuenta.saldoFinalCuenta}">
+                                        <f:convertNumber pattern="#,##0.00;(#,##0.00)"
+                                                         locale="#{usuarioController.locale}"/>
+                                    </h:outputText>
+                                    <f:facet name="footer">  
+                                        <h:outputText value="#{financieroController.periodoSelected.utilidadNetaPeriodo}">
+                                            <f:convertNumber pattern="#,##0.00;(#,##0.00)"
+                                                             locale="#{usuarioController.locale}"/>
+                                        </h:outputText>
+                                    </f:facet>  
+                                </p:column>
+                                <p:column style="width:25px; text-align: right">  
+                                    <f:facet name="header">  
+                                        #{financieroController.periodoAnterior}
+                                    </f:facet>  
+                                    <h:outputText value="#{cuenta.saldoAnteriorCuenta}">
+                                        <f:convertNumber pattern="#,##0.00;(#,##0.00)"
+                                                         locale="#{usuarioController.locale}"/>
+                                    </h:outputText>
+                                    <f:facet name="footer">  
+                                        <h:outputText value="#{financieroController.periodoAnterior.utilidadNetaPeriodo}">
+                                            <f:convertNumber pattern="#,##0.00;(#,##0.00)"
+                                                             locale="#{usuarioController.locale}"/>
+                                        </h:outputText>
+                                    </f:facet>  
+                                </p:column>
+                                <p:column style="width:25px; text-align: right">  
+                                    <f:facet name="header">  
+                                        Diferencia
+                                    </f:facet>  
+                                    <h:outputText value="#{cuenta.diferenciaSaldos}">
+                                        <f:convertNumber pattern="#,##0.00;(#,##0.00)"
+                                                         locale="#{usuarioController.locale}"/>
+                                    </h:outputText>
+                                    <f:facet name="footer">  
+                                        <h:outputText value="#{financieroController.periodoSelected.diferenciaRubro}">
+                                            <f:convertNumber pattern="#,##0.00;(#,##0.00)"
+                                                             locale="#{usuarioController.locale}"/>
+                                        </h:outputText>
+                                    </f:facet>  
+                                </p:column>
+                                <p:column style="width:15px; text-align: right">  
+                                    <f:facet name="header">  
+                                        %
+                                    </f:facet>  
+                                    <h:outputText value="#{cuenta.porcentajeIncremento}">
+                                        <f:convertNumber pattern="#,##0.00;(#,##0.00)" 
+                                                         locale="#{usuarioController.locale}"/>
+                                    </h:outputText>
+                                    <f:facet name="footer">  
+                                        <h:outputText value="#{financieroController.periodoSelected.porcentajeAumentoRubro}">
+                                            <f:convertNumber pattern="#,##0.00;(#,##0.00)"
+                                                             locale="#{usuarioController.locale}"/>
+                                        </h:outputText>
+                                    </f:facet>  
+                                </p:column>
+                            </p:dataTable>
+                            <p:selectOneListbox  value="#{financieroController.periodoSelected}" 
+                                                 style="width: 120px; height: 100px; font-size: 14px; 
+                                                 display: inline-block">
+                                <f:selectItems value="#{periodoController.itemsSelectNoFirst}"/> 
+                            </p:selectOneListbox>
+                            <p:commandButton value="Cambiar Perído" 
+                                             actionListener="#{financieroController.analizarHorizontalResultados}"
+                                             update="h-resultado"
+                                             style="font-size: 14px; display: inline-block; vertical-align: top" />
+                        </h:form>
+                    </section>
+                </section>
+
+                <!-- ESTADO DE FUENTES Y USOS -->
+                <section>
+                    <h:form id="fuente-uso">
+                        <p:dataTable id="f-u" var="cuenta" value="#{financieroController.cuentas}"
+                                     emptyMessage="Seleccione un Período" style="font-size: 23px"
+                                     paginator="true" rows="4" 
+                                     paginatorTemplate="{PageLinks}"
+                                     paginatorAlwaysVisible="false">
+                            <f:facet name="header">  
+                                Estado de Fuentes y Usos #{financieroController.periodoSelected}
+                            </f:facet>
+                            <p:column style="width:5px; text-align: center">
+                                <h:outputText value="(+)" rendered="#{cuenta.aumento}" style="width:3px"/>
+                                <h:outputText value="(-)" rendered="#{!cuenta.aumento}" style="width:3px"/>
+                            </p:column>
+                            <p:column style="width:200px">  
+                                <f:facet name="header">  
+                                    Cuenta
+                                </f:facet>  
+                                <h:outputText value="#{cuenta.nombreCuenta}" />
+                                <f:facet name="footer">  
+                                    <h:outputText value="TOTAL" />
+                                </f:facet>  
+                            </p:column>
+                            <p:column style="width:15px; text-align: right">  
+                                <f:facet name="header">  
+                                    FUENTE
+                                </f:facet>  
+                                <h:outputText value="#{cuenta.fuente}">
+                                    <f:convertNumber pattern="#,##0.00;(#,##0.00)"
+                                                     locale="#{usuarioController.locale}"/>
+                                </h:outputText>
+                                <f:facet name="footer">  
+                                    <h:outputText value="#{financieroController.periodoSelected.totalFuente}">
+                                        <f:convertNumber pattern="#,##0.00;(#,##0.00)"
+                                                         locale="#{usuarioController.locale}"/>
+                                    </h:outputText>
+                                </f:facet>  
+                            </p:column>
+                            <p:column style="width:15px; text-align: right">  
+                                <f:facet name="header">  
+                                    USO
+                                </f:facet>  
+                                <h:outputText value="#{cuenta.uso}">
+                                    <f:convertNumber pattern="#,##0.00;(#,##0.00)"
+                                                     locale="#{usuarioController.locale}"/>
+                                </h:outputText>
+                                <f:facet name="footer">  
+                                    <h:outputText value="#{financieroController.periodoSelected.totalUso}">
+                                        <f:convertNumber pattern="#,##0.00;(#,##0.00)"
+                                                         locale="#{usuarioController.locale}"/>
+                                    </h:outputText>
+                                </f:facet>  
+                            </p:column>
+                        </p:dataTable>           
+                        <p:selectOneListbox  value="#{financieroController.periodoSelected}" 
+                                             style="width: 120px; height: 100px; font-size: 14px;
+                                             display: inline-block">
+                            <f:selectItems value="#{periodoController.itemsSelectNoFirst}"/> 
+                        </p:selectOneListbox>
+                        <p:commandButton value="Cambiar Perído" 
+                                         actionListener="#{financieroController.generarFuentesYUsos}"
+                                         update="f-u"
+                                         style="font-size: 14px; display: inline-block; vertical-align: top" />
+                        <a href="../UI/Print/fuenteyusos.xhtml" target="_blank">
+                            <p:graphicImage value="../resources/img/printer.png" 
+                                            style="border-color: #333333; display: inline-block;
+                                            vertical-align: top; margin-left: 60%" />
+                        </a>
+                    </h:form>
+                </section>
+
+                <!-- RAZONES FINANCIERAS -->
+                <section>
+                    <!-- RAZON CIRCULANTE -->
+                    <h:panelGrid id="razon-circu" columns="1" width="900" bgcolor="#ffffff">
+                        <br />
+                        <p:barChart value="#{financieroController.chartModel}" legendPosition="#{financieroController.legendPosition}"
+                                    zoom="true" animate="true"  orientation="horizontal"
+                                    title="Razón Circulante" style="width: 800px; height: 400px; margin-left: 5%" />  
+
+                        <br />
+                        <p:commandButton value="Act Circulante / Pas Circulante" 
+                                         actionListener="#{financieroController.graficarValoresCirculantes}"
+                                         update="razon-circu"
+                                         style="font-size: 14px" />
+                        <p:commandButton value="Valor Razón Circulante" 
+                                         actionListener="#{financieroController.graficarRazonCirculante}"
+                                         update="razon-circu"
+                                         style="font-size: 14px" />
+                        <br />
+                    </h:panelGrid>
+                </section>
+                <section>
+                    <!-- INDICE DE ENDEUDAMIENTO -->
+                    <h:panelGrid id="endeuda" columns="1" width="900" bgcolor="#ffffff">
+                        <br />
+                        <p:lineChart value="#{financieroController.chartModel}" legendPosition="#{financieroController.legendPosition}"
+                                     zoom="true" animate="true"  
+                                     title="Índice de Endeudamiento" style="width: 800px; height: 400px; margin-left: 5%" />  
+
+                        <br />
+                        <p:commandButton value="Pasivos / Activos" 
+                                         actionListener="#{financieroController.graficarActivoVrsPasivo}"
+                                         update="endeuda"
+                                         style="font-size: 14px" />
+                        <p:commandButton value="Valor Índice" 
+                                         actionListener="#{financieroController.graficarIndiceEndeuda}"
+                                         update="endeuda"
+                                         style="font-size: 14px" />
+                        <br />
+                    </h:panelGrid>
+                </section>
+                <section>
+                    <!-- MARGEN DE UTILIDAD -->
+                    <h:panelGrid id="margen-util" columns="1" width="900" bgcolor="#ffffff">
+                        <br />
+                        <p:barChart value="#{financieroController.chartModel}" legendPosition="#{financieroController.legendPosition}"
+                                    zoom="true" animate="true"  
+                                    title="Margen de Utilidad" style="width: 800px; height: 400px; margin-left: 5%" />  
+
+                        <br />
+                        <p:commandButton value="Utilidad / Ventas" 
+                                         actionListener="#{financieroController.graficarUtilidadVrsVentas}"
+                                         update="margen-util"
+                                         style="font-size: 14px" />
+                        <p:commandButton value="Valor Margen" 
+                                         actionListener="#{financieroController.graficarMargenUtilidad}"
+                                         update="margen-util"
+                                         style="font-size: 14px" />
+                        <br />
+                    </h:panelGrid>
+                </section>
+
+                <section>
+                    <!-- ANALISIS DUPONT -->
                     <h:form id="dupont">  
                         <h:outputText value="Análisis DUPONT" style="   font-weight: bolder"/>
                         <br />
@@ -396,76 +908,16 @@
                         </p:tree>
                         <br />
                         <p:selectOneListbox  value="#{financieroController.periodoSelected}" 
-                                             style="width: 300px; height: 100px; font-size: 14px; 
-                                             margin-left: 35%">
+                                             style="width: 120px; height: 100px; font-size: 14px; 
+                                             display: inline-block">
                             <f:selectItems value="#{periodoController.itemsSelect}"/> 
                         </p:selectOneListbox>
                         <p:commandButton value="Cambiar Perído" 
                                          actionListener="#{financieroController.analizarDupont}"
                                          update="dupont-tree"
-                                         style="font-size: 14px" />
-
+                                         style="font-size: 14px; display: inline-block; vertical-align: top" />
                     </h:form>  
                 </section>
-                <!-- RAZONES FINANCIERAS -->
-                 <section>
-                    <!-- RAZON CIRCULANTE -->
-                    <h:panelGrid id="razon-circu" columns="1" width="900" bgcolor="#ffffff">
-                        <p:barChart value="#{financieroController.chartModel}" legendPosition="#{financieroController.legendPosition}"
-                                    zoom="true" animate="true"  orientation="horizontal"
-                                     title="Razón Circulante" style="width: 800px; height: 400px; margin-left: 5%" />  
-                                         
-                        <br />
-                        <p:commandButton value="Act Circulante / Pas Circulante" 
-                                         actionListener="#{financieroController.graficarValoresCirculantes}"
-                                         update="razon-circu"
-                                         style="font-size: 14px" />
-                        <p:commandButton value="Valor Razón Circulante" 
-                                         actionListener="#{financieroController.graficarRazonCirculante}"
-                                         update="razon-circu"
-                                         style="font-size: 14px" />
-
-                    </h:panelGrid>
-                </section>
-                <section>
-                    <!-- INDICE DE ENDEUDAMIENTO -->
-                    <h:panelGrid id="endeuda" columns="1" width="900" bgcolor="#ffffff">
-                        <p:lineChart value="#{financieroController.chartModel}" legendPosition="#{financieroController.legendPosition}"
-                                     zoom="true" animate="true"  
-                                     title="Índice de Endeudamiento" style="width: 800px; height: 400px; margin-left: 5%" />  
-                                         
-                        <br />
-                        <p:commandButton value="Pasivos / Activos" 
-                                         actionListener="#{financieroController.graficarActivoVrsPasivo}"
-                                         update="endeuda"
-                                         style="font-size: 14px" />
-                        <p:commandButton value="Valor Índice" 
-                                         actionListener="#{financieroController.graficarIndiceEndeuda}"
-                                         update="endeuda"
-                                         style="font-size: 14px" />
-
-                    </h:panelGrid>
-                </section>
-                 <section>
-                    <!-- MARGEN DE UTILIDAD -->
-                    <h:panelGrid id="margen-util" columns="1" width="900" bgcolor="#ffffff">
-                        <p:barChart value="#{financieroController.chartModel}" legendPosition="#{financieroController.legendPosition}"
-                                     zoom="true" animate="true"  
-                                     title="Margen de Utilidad" style="width: 800px; height: 400px; margin-left: 5%" />  
-                                         
-                        <br />
-                        <p:commandButton value="Utilidad / Ventas" 
-                                         actionListener="#{financieroController.graficarUtilidadVrsVentas}"
-                                         update="margen-util"
-                                         style="font-size: 14px" />
-                        <p:commandButton value="Valor Margen" 
-                                         actionListener="#{financieroController.graficarMargenUtilidad}"
-                                         update="margen-util"
-                                         style="font-size: 14px" />
-
-                    </h:panelGrid>
-                </section>
-
             </div>
 
             <!-- The navigational controls UI -->

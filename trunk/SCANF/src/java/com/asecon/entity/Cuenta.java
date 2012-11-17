@@ -45,7 +45,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Cuenta.findByDescripcionCuenta", query = "SELECT c FROM Cuenta c WHERE c.descripcionCuenta = :descripcionCuenta"),
     @NamedQuery(name = "Cuenta.findBySaldoCuenta", query = "SELECT c FROM Cuenta c WHERE c.saldoCuenta = :saldoCuenta"),
     @NamedQuery(name = "Cuenta.findBySaldoFinal", query = "SELECT c FROM Cuenta c WHERE c.rubroCuenta = :rubroCuenta AND c.codigoCuenta IN (SELECT DISTINCT sb.codigoCuenta.codigoCuenta FROM SubCuenta sb WHERE sb.codigoSubcuenta IN(SELECT s.saldoPK.codigoSubcuenta FROM Saldo s WHERE s.saldoPK.numeroPeriodo = :numeroPeriodo))"),
-    @NamedQuery(name = "Cuenta.findBySaldoFinalResultados", query = "SELECT c FROM Cuenta c WHERE c.rubroCuenta = 'RESULTADOS' AND c.codigoCuenta IN (SELECT DISTINCT sb.codigoCuenta.codigoCuenta FROM SubCuenta sb WHERE sb.codigoSubcuenta IN(SELECT s.saldoPK.codigoSubcuenta FROM Saldo s WHERE s.saldoPK.numeroPeriodo = :numeroPeriodo)) ORDER BY c.tipoCuenta, c.codigoCuenta")})
+    @NamedQuery(name = "Cuenta.findBySaldoFinalResultados", query = "SELECT c FROM Cuenta c WHERE c.rubroCuenta = 'RESULTADOS' AND c.codigoCuenta IN (SELECT DISTINCT sb.codigoCuenta.codigoCuenta FROM SubCuenta sb WHERE sb.codigoSubcuenta IN(SELECT s.saldoPK.codigoSubcuenta FROM Saldo s WHERE s.saldoPK.numeroPeriodo = :numeroPeriodo)) ORDER BY c.tipoCuenta, c.codigoCuenta"),
+    @NamedQuery(name = "Cuenta.findBySaldoFinalBG", query = "SELECT c FROM Cuenta c WHERE c.rubroCuenta IN ('ACTIVO', 'PASIVO', 'PATRIMONIO') AND c.codigoCuenta IN (SELECT DISTINCT sb.codigoCuenta.codigoCuenta FROM SubCuenta sb WHERE sb.codigoSubcuenta IN(SELECT s.saldoPK.codigoSubcuenta FROM Saldo s WHERE s.saldoPK.numeroPeriodo = :numeroPeriodo))")})
 public class Cuenta implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -81,7 +82,19 @@ public class Cuenta implements Serializable {
     private Float porcentajeParticipacion;
     @Transient
     private Double saldoFinalCuenta;
-    
+    @Transient
+    private Double saldoAnteriorCuenta;
+    @Transient
+    private Double porcentajeIncremento;
+    @Transient
+    private Double diferenciaSaldos;
+    @Transient
+    private Double fuente;
+    @Transient
+    private Double uso;
+    @Transient
+    private boolean aumento;
+
     
 
     public Cuenta() {
@@ -179,6 +192,54 @@ public class Cuenta implements Serializable {
 
     public void setSaldoFinalCuenta(Double saldoFinalCuenta) {
         this.saldoFinalCuenta = saldoFinalCuenta;
+    }
+
+    public Double getPorcentajeIncremento() {
+        return porcentajeIncremento;
+    }
+
+    public void setPorcentajeIncremento(Double porcentajeIncremento) {
+        this.porcentajeIncremento = porcentajeIncremento;
+    }
+
+    public Double getSaldoAnteriorCuenta() {
+        return saldoAnteriorCuenta;
+    }
+
+    public void setSaldoAnteriorCuenta(Double saldoAnteriorCuenta) {
+        this.saldoAnteriorCuenta = saldoAnteriorCuenta;
+    }
+
+    public Double getDiferenciaSaldos() {
+        return diferenciaSaldos;
+    }
+
+    public void setDiferenciaSaldos(Double diferenciaSaldos) {
+        this.diferenciaSaldos = diferenciaSaldos;
+    }
+
+    public Double getFuente() {
+        return fuente;
+    }
+
+    public void setFuente(Double fuente) {
+        this.fuente = fuente;
+    }
+
+    public Double getUso() {
+        return uso;
+    }
+
+    public void setUso(Double uso) {
+        this.uso = uso;
+    }
+
+    public boolean isAumento() {
+        return aumento;
+    }
+
+    public void setAumento(boolean aumento) {
+        this.aumento = aumento;
     }
 
     @XmlTransient
