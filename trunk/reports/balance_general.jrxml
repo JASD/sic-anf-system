@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="balance_general" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="4648e872-c193-47ee-b2cc-09e014cbc9ee">
 	<property name="ireport.zoom" value="1.1000000000000005"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="65"/>
+	<property name="ireport.y" value="11"/>
 	<parameter name="ID_PERIODO" class="java.lang.Long"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["C:\\Users\\Antonio\\Projects\\sic-anf-system\\reports\\"]]></defaultValueExpression>
@@ -55,7 +55,7 @@ WHERE PERIODO.NUMERO_PERIODO = $P{ID_PERIODO}]]>
 				<textElement textAlignment="Center">
 					<font isBold="true"/>
 				</textElement>
-				<text><![CDATA[TAIMSAL S.A. DE S.V. ]]></text>
+				<text><![CDATA[TAIMSAL S.A. DE C.V. ]]></text>
 			</staticText>
 			<staticText>
 				<reportElement uuid="2586afc5-db7e-41af-87b8-6ef83ecec813" x="59" y="19" width="422" height="20"/>

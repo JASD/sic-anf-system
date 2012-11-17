@@ -67,7 +67,7 @@ WHERE
 				<textElement textAlignment="Center">
 					<font isBold="true"/>
 				</textElement>
-				<text><![CDATA[TAIMSAL S.A. DE S.V. ]]></text>
+				<text><![CDATA[TAIMSAL S.A. DE C.V. ]]></text>
 			</staticText>
 			<staticText>
 				<reportElement uuid="fbfdd4aa-65e8-4a9c-a22b-4366f30a4c09" x="118" y="59" width="347" height="20"/>
