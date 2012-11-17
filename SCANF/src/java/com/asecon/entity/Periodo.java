@@ -4,6 +4,7 @@
  */
 package com.asecon.entity;
 
+import com.lowagie.text.xml.xmp.DublinCoreSchema;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -33,7 +34,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Periodo.findByTotalCapitalPeriodo", query = "SELECT p FROM Periodo p WHERE p.totalCapitalPeriodo = :totalCapitalPeriodo"),
     @NamedQuery(name = "Periodo.findByTotalCostoPeriodo", query = "SELECT p FROM Periodo p WHERE p.totalCostoPeriodo = :totalCostoPeriodo"),
     @NamedQuery(name = "Periodo.findByTotalIngresosPeriodo", query = "SELECT p FROM Periodo p WHERE p.totalIngresosPeriodo = :totalIngresosPeriodo"),
-    @NamedQuery(name = "Periodo.findByTotalCisPeriodo", query = "SELECT p FROM Periodo p WHERE p.totalCisPeriodo = :totalCisPeriodo")})
+    @NamedQuery(name = "Periodo.findByTotalCisPeriodo", query = "SELECT p FROM Periodo p WHERE p.totalCisPeriodo = :totalCisPeriodo"),
+    @NamedQuery(name = "Periodo.findNoCurrentAndFirst", query = "SELECT p FROM Periodo p WHERE p.estadoPeriodo = false AND p.numeroPeriodo > 1")})
 public class Periodo implements Serializable {
 
     @Column(name = "FECHA_INICIO_PERIODO")
@@ -93,6 +95,14 @@ public class Periodo implements Serializable {
     private List<CostoActividad> costoActividadList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "periodo")
     private List<ServicioCliente> servicioClienteList;
+    @Transient
+    private Double porcentajeAumentoRubro;
+    @Transient
+    private Double diferenciaRubro;
+    @Transient
+    private Double totalFuente;
+    @Transient
+    private Double totalUso;
 
     public Periodo() {
     }
@@ -305,8 +315,8 @@ public class Periodo implements Serializable {
 
     @Override
     public String toString() {
-        SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
-        return "Del: " + formato.format(fechaInicioPeriodo) + " al: " + formato.format(fechaFinPeriodo);
+        SimpleDateFormat formato = new SimpleDateFormat("yyyy");
+        return formato.format(fechaFinPeriodo);
     }
 
     @XmlTransient
@@ -341,4 +351,37 @@ public class Periodo implements Serializable {
     public void setPasivoCirculantePeriodo(Double pasivoCirculantePeriodo) {
         this.pasivoCirculantePeriodo = pasivoCirculantePeriodo;
     }
+
+    public Double getPorcentajeAumentoRubro() {
+        return porcentajeAumentoRubro;
+    }
+
+    public void setPorcentajeAumentoRubro(Double porcentajeAumentoRubro) {
+        this.porcentajeAumentoRubro = porcentajeAumentoRubro;
+    }
+
+    public Double getDiferenciaRubro() {
+        return diferenciaRubro;
+    }
+
+    public void setDiferenciaRubro(Double diferenciaRubro) {
+        this.diferenciaRubro = diferenciaRubro;
+    }
+
+    public Double getTotalFuente() {
+        return totalFuente;
+    }
+
+    public void setTotalFuente(Double totalFuente) {
+        this.totalFuente = totalFuente;
+    }
+
+    public Double getTotalUso() {
+        return totalUso;
+    }
+
+    public void setTotalUso(Double totalUso) {
+        this.totalUso = totalUso;
+    } 
+    
 }

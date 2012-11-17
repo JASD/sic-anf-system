@@ -36,6 +36,7 @@ public class FinancieroController implements Serializable {
     private com.asecon.facade.PeriodoFacade periodoFacade;
     private List<Cuenta> cuentas;
     private Periodo periodoSelected;
+    private Periodo periodoAnterior;
     private Double totalPorcentaje;
     private TreeNode dupont;
     private CartesianChartModel chartModel;
@@ -317,7 +318,7 @@ public class FinancieroController implements Serializable {
         legendPosition = "nw";
 
     }
-    
+
     public void graficarValoresCirculantes() {
 
         List<Periodo> periodos = periodoFacade.findNoParameters("Periodo.findNoCurrent");
@@ -354,6 +355,261 @@ public class FinancieroController implements Serializable {
         chartModel.addSeries(razon);
         legendPosition = "se";
 
+    }
+
+    public void analizarHorizontalActivos() {
+        Long anterior = periodoSelected.getNumeroPeriodo() - Long.valueOf(1);
+        periodoAnterior = periodoFacade.find(anterior);
+        Object[] parameters = {"rubroCuenta", "ACTIVO", "numeroPeriodo",
+            periodoSelected.getNumeroPeriodo()};
+        cuentas = cuentaFacade.getResultList("Cuenta.findBySaldoFinal", parameters);
+        parameters = new Object[]{"rubroCuenta", "ACTIVO", "numeroPeriodo",
+            periodoAnterior.getNumeroPeriodo()};
+        List<Cuenta> cuentasPasadas = cuentaFacade.getResultList("Cuenta.findBySaldoFinal", parameters);
+
+        for (Cuenta c : cuentas) {
+            parameters = new Object[]{"numeroPeriodo", periodoSelected.getNumeroPeriodo(), "codigoCuenta", c};
+            List<Saldo> saldos = saldoFacade.getResultList("Saldo.findByCuenta", parameters);
+            Double totalCuenta = new Double(0);
+            for (Saldo s : saldos) {
+                totalCuenta = totalCuenta + s.getSaldoFinalSubcuenta();
+            }
+
+            c.setSaldoFinalCuenta(totalCuenta);
+        }
+        //Asignaciones y calculo de total activos cuentas pasadas
+        for (Cuenta c : cuentasPasadas) {
+            parameters = new Object[]{"numeroPeriodo", periodoAnterior.getNumeroPeriodo(), "codigoCuenta", c};
+            List<Saldo> saldos = saldoFacade.getResultList("Saldo.findByCuenta", parameters);
+            Double totalCuenta = new Double(0);
+            for (Saldo s : saldos) {
+                totalCuenta = totalCuenta + s.getSaldoFinalSubcuenta();
+            }
+
+            c.setSaldoFinalCuenta(totalCuenta);
+        }
+
+        //Calculo Diferencia y porcentaje
+        for (int i = 0; i < cuentas.size(); i++) {
+            Cuenta c = cuentas.get(i);
+            Double saldoAnt = cuentasPasadas.get(i).getSaldoFinalCuenta();
+            Double dif = c.getSaldoFinalCuenta() - saldoAnt;
+            Double porc = dif / saldoAnt * Double.valueOf(100);
+            c.setSaldoAnteriorCuenta(saldoAnt);
+            c.setDiferenciaSaldos(dif);
+            c.setPorcentajeIncremento(porc);
+        }
+        Double saldoAnt = periodoAnterior.getTotalActivoPeriodo();
+        Double dif = periodoSelected.getTotalActivoPeriodo() - saldoAnt;
+        periodoSelected.setDiferenciaRubro(dif);
+        periodoSelected.setPorcentajeAumentoRubro(dif / saldoAnt * Double.valueOf(100));
+    }
+
+    public void analizarHorizontalPasivos() {
+        Long anterior = periodoSelected.getNumeroPeriodo() - Long.valueOf(1);
+        periodoAnterior = periodoFacade.find(anterior);
+        Object[] parameters = {"rubroCuenta", "PASIVO", "numeroPeriodo",
+            periodoSelected.getNumeroPeriodo()};
+        cuentas = cuentaFacade.getResultList("Cuenta.findBySaldoFinal", parameters);
+        parameters = new Object[]{"rubroCuenta", "PASIVO", "numeroPeriodo",
+            periodoAnterior.getNumeroPeriodo()};
+        List<Cuenta> cuentasPasadas = cuentaFacade.getResultList("Cuenta.findBySaldoFinal", parameters);
+
+        for (Cuenta c : cuentas) {
+            parameters = new Object[]{"numeroPeriodo", periodoSelected.getNumeroPeriodo(), "codigoCuenta", c};
+            List<Saldo> saldos = saldoFacade.getResultList("Saldo.findByCuenta", parameters);
+            Double totalCuenta = new Double(0);
+            for (Saldo s : saldos) {
+                totalCuenta = totalCuenta + s.getSaldoFinalSubcuenta();
+            }
+
+            c.setSaldoFinalCuenta(totalCuenta);
+        }
+        //Asignaciones y calculo de total activos cuentas pasadas
+        for (Cuenta c : cuentasPasadas) {
+            parameters = new Object[]{"numeroPeriodo", periodoAnterior.getNumeroPeriodo(), "codigoCuenta", c};
+            List<Saldo> saldos = saldoFacade.getResultList("Saldo.findByCuenta", parameters);
+            Double totalCuenta = new Double(0);
+            for (Saldo s : saldos) {
+                totalCuenta = totalCuenta + s.getSaldoFinalSubcuenta();
+            }
+
+            c.setSaldoFinalCuenta(totalCuenta);
+        }
+
+        //Calculo Diferencia y porcentaje
+        for (int i = 0; i < cuentas.size(); i++) {
+            Cuenta c = cuentas.get(i);
+            Double saldoAnt = cuentasPasadas.get(i).getSaldoFinalCuenta();
+            Double dif = c.getSaldoFinalCuenta() - saldoAnt;
+            Double porc = dif / saldoAnt * Double.valueOf(100);
+            c.setSaldoAnteriorCuenta(saldoAnt);
+            c.setDiferenciaSaldos(dif);
+            c.setPorcentajeIncremento(porc);
+        }
+        Double saldoAnt = periodoAnterior.getTotalPasivoPeriodo();
+        Double dif = periodoSelected.getTotalPasivoPeriodo() - saldoAnt;
+        periodoSelected.setDiferenciaRubro(dif);
+        periodoSelected.setPorcentajeAumentoRubro(dif / saldoAnt * Double.valueOf(100));
+    }
+
+    public void analizarHorizontalCapital() {
+        Long anterior = periodoSelected.getNumeroPeriodo() - Long.valueOf(1);
+        periodoAnterior = periodoFacade.find(anterior);
+        Object[] parameters = {"rubroCuenta", "PATRIMONIO", "numeroPeriodo",
+            periodoSelected.getNumeroPeriodo()};
+        cuentas = cuentaFacade.getResultList("Cuenta.findBySaldoFinal", parameters);
+        parameters = new Object[]{"rubroCuenta", "PATRIMONIO", "numeroPeriodo",
+            periodoAnterior.getNumeroPeriodo()};
+        List<Cuenta> cuentasPasadas = cuentaFacade.getResultList("Cuenta.findBySaldoFinal", parameters);
+
+        for (Cuenta c : cuentas) {
+            parameters = new Object[]{"numeroPeriodo", periodoSelected.getNumeroPeriodo(), "codigoCuenta", c};
+            List<Saldo> saldos = saldoFacade.getResultList("Saldo.findByCuenta", parameters);
+            Double totalCuenta = new Double(0);
+            for (Saldo s : saldos) {
+                totalCuenta = totalCuenta + s.getSaldoFinalSubcuenta();
+            }
+
+            c.setSaldoFinalCuenta(totalCuenta);
+        }
+        //Asignaciones y calculo de total activos cuentas pasadas
+        for (Cuenta c : cuentasPasadas) {
+            parameters = new Object[]{"numeroPeriodo", periodoAnterior.getNumeroPeriodo(), "codigoCuenta", c};
+            List<Saldo> saldos = saldoFacade.getResultList("Saldo.findByCuenta", parameters);
+            Double totalCuenta = new Double(0);
+            for (Saldo s : saldos) {
+                totalCuenta = totalCuenta + s.getSaldoFinalSubcuenta();
+            }
+
+            c.setSaldoFinalCuenta(totalCuenta);
+        }
+
+        //Calculo Diferencia y porcentaje
+        for (int i = 0; i < cuentas.size(); i++) {
+            Cuenta c = cuentas.get(i);
+            Double saldoAnt = cuentasPasadas.get(i).getSaldoFinalCuenta();
+            Double dif = c.getSaldoFinalCuenta() - saldoAnt;
+            Double porc = dif / saldoAnt * Double.valueOf(100);
+            c.setSaldoAnteriorCuenta(saldoAnt);
+            c.setDiferenciaSaldos(dif);
+            c.setPorcentajeIncremento(porc);
+        }
+        Double saldoAnt = periodoAnterior.getTotalCapitalPeriodo();
+        Double dif = periodoSelected.getTotalCapitalPeriodo() - saldoAnt;
+        periodoSelected.setDiferenciaRubro(dif);
+        periodoSelected.setPorcentajeAumentoRubro(dif / saldoAnt * Double.valueOf(100));
+    }
+
+    public void analizarHorizontalResultados() {
+        Long anterior = periodoSelected.getNumeroPeriodo() - Long.valueOf(1);
+
+        periodoAnterior = periodoFacade.find(anterior);
+        Object[] parameters = {"numeroPeriodo", periodoSelected.getNumeroPeriodo()};
+        cuentas = cuentaFacade.getResultList("Cuenta.findBySaldoFinalResultados", parameters);
+        parameters = new Object[]{"numeroPeriodo", periodoAnterior.getNumeroPeriodo()};
+        List<Cuenta> cuentasPasadas = cuentaFacade.getResultList("Cuenta.findBySaldoFinalResultados", parameters);
+
+        for (Cuenta c : cuentas) {
+            parameters = new Object[]{"numeroPeriodo", periodoSelected.getNumeroPeriodo(), "codigoCuenta", c};
+            List<Saldo> saldos = saldoFacade.getResultList("Saldo.findByCuenta", parameters);
+            Double totalCuenta = new Double(0);
+            for (Saldo s : saldos) {
+                totalCuenta = totalCuenta + s.getSaldoFinalSubcuenta();
+            }
+
+            c.setSaldoFinalCuenta(totalCuenta);
+        }
+        //Asignaciones y calculo de total activos cuentas pasadas
+        for (Cuenta c : cuentasPasadas) {
+            parameters = new Object[]{"numeroPeriodo", periodoAnterior.getNumeroPeriodo(), "codigoCuenta", c};
+            List<Saldo> saldos = saldoFacade.getResultList("Saldo.findByCuenta", parameters);
+            Double totalCuenta = new Double(0);
+            for (Saldo s : saldos) {
+                totalCuenta = totalCuenta + s.getSaldoFinalSubcuenta();
+            }
+
+            c.setSaldoFinalCuenta(totalCuenta);
+        }
+
+        //Calculo Diferencia y porcentaje
+        for (int i = 0; i < cuentas.size(); i++) {
+            Cuenta c = cuentas.get(i);
+            Double saldoAnt = cuentasPasadas.get(i).getSaldoFinalCuenta();
+            Double dif = c.getSaldoFinalCuenta() - saldoAnt;
+            Double porc = dif / saldoAnt * Double.valueOf(100);
+            c.setSaldoAnteriorCuenta(saldoAnt);
+            c.setDiferenciaSaldos(dif);
+            c.setPorcentajeIncremento(porc);
+        }
+        Double saldoAnt = periodoAnterior.getUtilidadNetaPeriodo();
+        Double dif = periodoSelected.getUtilidadNetaPeriodo() - saldoAnt;
+        periodoSelected.setDiferenciaRubro(dif);
+        periodoSelected.setPorcentajeAumentoRubro(dif / saldoAnt * Double.valueOf(100));
+    }
+
+    public void generarFuentesYUsos() {
+        Long anterior = periodoSelected.getNumeroPeriodo() - Long.valueOf(1);
+        periodoAnterior = periodoFacade.find(anterior);
+        Object[] parameters = {"numeroPeriodo", periodoSelected.getNumeroPeriodo()};
+        cuentas = cuentaFacade.getResultList("Cuenta.findBySaldoFinalBG", parameters);
+        parameters = new Object[]{"numeroPeriodo", periodoAnterior.getNumeroPeriodo()};
+        List<Cuenta> cuentasPasadas = cuentaFacade.getResultList("Cuenta.findBySaldoFinalBG", parameters);
+        for (Cuenta c : cuentas) {
+            parameters = new Object[]{"numeroPeriodo", periodoSelected.getNumeroPeriodo(), "codigoCuenta", c};
+            List<Saldo> saldos = saldoFacade.getResultList("Saldo.findByCuenta", parameters);
+            Double totalCuenta = new Double(0);
+            for (Saldo s : saldos) {
+                totalCuenta = totalCuenta + s.getSaldoFinalSubcuenta();
+            }
+            c.setSaldoFinalCuenta(totalCuenta);
+        }
+        //Asignaciones y calculo de total cuentas pasadas
+        for (Cuenta c : cuentasPasadas) {
+            parameters = new Object[]{"numeroPeriodo", periodoAnterior.getNumeroPeriodo(), "codigoCuenta", c};
+            List<Saldo> saldos = saldoFacade.getResultList("Saldo.findByCuenta", parameters);
+            Double totalCuenta = new Double(0);
+            for (Saldo s : saldos) {
+                totalCuenta = totalCuenta + s.getSaldoFinalSubcuenta();
+            }
+            
+            c.setSaldoFinalCuenta(totalCuenta);
+        }
+        Double totalFuente = Double.valueOf(0);
+        Double totalUso = Double.valueOf(0);
+        //Calculo Diferencia y si es fuente o uso
+        for (int i = 0; i < cuentas.size(); i++) {
+            Cuenta c = cuentas.get(i);
+            Double saldoAnt = cuentasPasadas.get(i).getSaldoFinalCuenta();
+            Double dif = c.getSaldoFinalCuenta() - saldoAnt;
+            boolean aumento = (dif >= 0) ? true : false;
+            c.setAumento(aumento);
+            if (c.getTipoCuenta().equals("DEUDORA")) {
+                if (aumento) {
+                    c.setUso(dif);
+                    c.setFuente(Double.valueOf(0));
+                    totalUso = totalUso + dif;
+                } else {
+                    dif = -dif;
+                    c.setUso(Double.valueOf(0));
+                    c.setFuente(dif);
+                    totalFuente = totalFuente + dif;
+                }
+            } else {
+                if (aumento) {
+                    c.setUso(Double.valueOf(0));
+                    c.setFuente(dif);
+                    totalFuente = totalFuente + dif;
+                } else {
+                    dif = -dif;
+                    c.setUso(dif);
+                    c.setFuente(Double.valueOf(0));
+                    totalUso = totalUso + dif;
+                }
+            }
+        }
+        periodoSelected.setTotalUso(totalUso);
+        periodoSelected.setTotalFuente(totalFuente);
     }
 
     public List<Cuenta> getCuentas() {
@@ -402,5 +658,13 @@ public class FinancieroController implements Serializable {
 
     public void setLegendPosition(String legendPosition) {
         this.legendPosition = legendPosition;
+    }
+
+    public Periodo getPeriodoAnterior() {
+        return periodoAnterior;
+    }
+
+    public void setPeriodoAnterior(Periodo periodoAnterior) {
+        this.periodoAnterior = periodoAnterior;
     }
 }
