@@ -65,6 +65,10 @@ public class Periodo implements Serializable {
     private Double totalCostoPeriodo;
     @Column(name = "IMPUESTOS_PERIODO")
     private Double impuestosPeriodo;
+    @Column(name = "ACTIVO_CIRCULANTE_PERIODO")
+    private Double activoCirculantePeriodo;
+    @Column(name = "PASIVO_CIRCULANTE_PERIODO")
+    private Double pasivoCirculantePeriodo;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "periodo")
     private List<Saldo> saldoList;
     private static final long serialVersionUID = 1L;
@@ -320,5 +324,21 @@ public class Periodo implements Serializable {
 
     public void setUtilidadAiPeriodo(Double utilidadAiPeriodo) {
         this.utilidadAiPeriodo = utilidadAiPeriodo;
+    }
+
+    public Double getActivoCirculantePeriodo() {
+        return activoCirculantePeriodo;
+    }
+
+    public void setActivoCirculantePeriodo(Double activoCirculantePeriodo) {
+        this.activoCirculantePeriodo = activoCirculantePeriodo;
+    }
+
+    public Double getPasivoCirculantePeriodo() {
+        return pasivoCirculantePeriodo;
+    }
+
+    public void setPasivoCirculantePeriodo(Double pasivoCirculantePeriodo) {
+        this.pasivoCirculantePeriodo = pasivoCirculantePeriodo;
     }
 }
