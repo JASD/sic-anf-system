@@ -408,6 +408,25 @@
                     </h:form>  
                 </section>
                 <!-- RAZONES FINANCIERAS -->
+                 <section>
+                    <!-- RAZON CIRCULANTE -->
+                    <h:panelGrid id="razon-circu" columns="1" width="900" bgcolor="#ffffff">
+                        <p:barChart value="#{financieroController.chartModel}" legendPosition="#{financieroController.legendPosition}"
+                                    zoom="true" animate="true"  orientation="horizontal"
+                                     title="Razón Circulante" style="width: 800px; height: 400px; margin-left: 5%" />  
+                                         
+                        <br />
+                        <p:commandButton value="Act Circulante / Pas Circulante" 
+                                         actionListener="#{financieroController.graficarValoresCirculantes}"
+                                         update="razon-circu"
+                                         style="font-size: 14px" />
+                        <p:commandButton value="Valor Razón Circulante" 
+                                         actionListener="#{financieroController.graficarRazonCirculante}"
+                                         update="razon-circu"
+                                         style="font-size: 14px" />
+
+                    </h:panelGrid>
+                </section>
                 <section>
                     <!-- INDICE DE ENDEUDAMIENTO -->
                     <h:panelGrid id="endeuda" columns="1" width="900" bgcolor="#ffffff">
