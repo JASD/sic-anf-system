@@ -106,7 +106,7 @@
                                                  display: inline-block">
                                 <f:selectItems value="#{periodoController.itemsSelect}"/> 
                             </p:selectOneListbox>
-                            <p:commandButton value="Cambiar Perído" 
+                            <p:commandButton value="Cambiar Período" 
                                              actionListener="#{financieroController.analizarVerticalActivos}"
                                              update="v-activo"
                                              style="font-size: 14px; display: inline-block; vertical-align: top" />
@@ -193,7 +193,7 @@
                                                  display: inline-block">
                                 <f:selectItems value="#{periodoController.itemsSelect}"/> 
                             </p:selectOneListbox>
-                            <p:commandButton value="Cambiar Perído" 
+                            <p:commandButton value="Cambiar Período" 
                                              actionListener="#{financieroController.analizarVerticalPasivos}"
                                              update="v-pasivo"
                                              style="font-size: 14px; display: inline-block; vertical-align: top" />
@@ -281,7 +281,7 @@
                                                  display: inline-block">
                                 <f:selectItems value="#{periodoController.itemsSelect}"/> 
                             </p:selectOneListbox>
-                            <p:commandButton value="Cambiar Perído" 
+                            <p:commandButton value="Cambiar Período" 
                                              actionListener="#{financieroController.analizarVerticalCapital}"
                                              update="v-capital"
                                              style="font-size: 14px; display: inline-block; vertical-align: top" />
@@ -374,7 +374,7 @@
                                                  display: inline-block">
                                 <f:selectItems value="#{periodoController.itemsSelect}"/> 
                             </p:selectOneListbox>
-                            <p:commandButton value="Cambiar Perído" 
+                            <p:commandButton value="Cambiar Período" 
                                              actionListener="#{financieroController.analizarVerticalResultados}"
                                              update="v-resultados"
                                              style="font-size: 14px; display: inline-block; vertical-align: top" />
@@ -470,7 +470,7 @@
                                                  display: inline-block">
                                 <f:selectItems value="#{periodoController.itemsSelectNoFirst}"/> 
                             </p:selectOneListbox>
-                            <p:commandButton value="Cambiar Perído" 
+                            <p:commandButton value="Cambiar Período" 
                                              actionListener="#{financieroController.analizarHorizontalActivos}"
                                              update="h-activo"
                                              style="font-size: 14px; display: inline-block; vertical-align: top" />
@@ -564,7 +564,7 @@
                                                  display: inline-block">
                                 <f:selectItems value="#{periodoController.itemsSelectNoFirst}"/> 
                             </p:selectOneListbox>
-                            <p:commandButton value="Cambiar Perído" 
+                            <p:commandButton value="Cambiar Período" 
                                              actionListener="#{financieroController.analizarHorizontalPasivos}"
                                              update="h-pasivo"
                                              style="font-size: 14px; display: inline-block; vertical-align: top" />
@@ -654,7 +654,7 @@
                                                  display: inline-block">
                                 <f:selectItems value="#{periodoController.itemsSelectNoFirst}"/> 
                             </p:selectOneListbox>
-                            <p:commandButton value="Cambiar Perído" 
+                            <p:commandButton value="Cambiar Período" 
                                              actionListener="#{financieroController.analizarHorizontalCapital}"
                                              update="h-capital"
                                              style="font-size: 14px; display: inline-block; vertical-align: top" />
@@ -747,7 +747,7 @@
                                                  display: inline-block">
                                 <f:selectItems value="#{periodoController.itemsSelectNoFirst}"/> 
                             </p:selectOneListbox>
-                            <p:commandButton value="Cambiar Perído" 
+                            <p:commandButton value="Cambiar Período" 
                                              actionListener="#{financieroController.analizarHorizontalResultados}"
                                              update="h-resultado"
                                              style="font-size: 14px; display: inline-block; vertical-align: top" />
@@ -757,76 +757,132 @@
 
                 <!-- ESTADO DE FUENTES Y USOS -->
                 <section>
-                    <h:form id="fuente-uso">
-                        <p:dataTable id="f-u" var="cuenta" value="#{financieroController.cuentas}"
-                                     emptyMessage="Seleccione un Período" style="font-size: 23px"
-                                     paginator="true" rows="4" 
-                                     paginatorTemplate="{PageLinks}"
-                                     paginatorAlwaysVisible="false">
-                            <f:facet name="header">  
-                                Estado de Fuentes y Usos #{financieroController.periodoSelected}
-                            </f:facet>
-                            <p:column style="width:5px; text-align: center">
-                                <h:outputText value="(+)" rendered="#{cuenta.aumento}" style="width:3px"/>
-                                <h:outputText value="(-)" rendered="#{!cuenta.aumento}" style="width:3px"/>
-                            </p:column>
-                            <p:column style="width:200px">  
+                    <section>
+                        <h:form id="fuente-uso">
+                            <p:dataTable id="f-u" var="cuenta" value="#{financieroController.cuentas}"
+                                         emptyMessage="Seleccione un Período" style="font-size: 23px"
+                                         paginator="true" rows="4" 
+                                         paginatorTemplate="{PageLinks}"
+                                         paginatorAlwaysVisible="false">
                                 <f:facet name="header">  
-                                    Cuenta
-                                </f:facet>  
-                                <h:outputText value="#{cuenta.nombreCuenta}" />
-                                <f:facet name="footer">  
-                                    <h:outputText value="TOTAL" />
-                                </f:facet>  
-                            </p:column>
-                            <p:column style="width:15px; text-align: right">  
-                                <f:facet name="header">  
-                                    FUENTE
-                                </f:facet>  
-                                <h:outputText value="#{cuenta.fuente}">
-                                    <f:convertNumber pattern="#,##0.00;(#,##0.00)"
-                                                     locale="#{usuarioController.locale}"/>
-                                </h:outputText>
-                                <f:facet name="footer">  
-                                    <h:outputText value="#{financieroController.periodoSelected.totalFuente}">
+                                    Estado de Fuentes y Usos #{financieroController.periodoSelected}
+                                </f:facet>
+                                <p:column style="width:5px; text-align: center">
+                                    <h:outputText value="(+)" rendered="#{cuenta.aumento}" style="width:3px"/>
+                                    <h:outputText value="(-)" rendered="#{!cuenta.aumento}" style="width:3px"/>
+                                </p:column>
+                                <p:column style="width:200px">  
+                                    <f:facet name="header">  
+                                        Cuenta
+                                    </f:facet>  
+                                    <h:outputText value="#{cuenta.nombreCuenta}" />
+                                    <f:facet name="footer">  
+                                        <h:outputText value="TOTAL" />
+                                    </f:facet>  
+                                </p:column>
+                                <p:column style="width:15px; text-align: right">  
+                                    <f:facet name="header">  
+                                        FUENTE
+                                    </f:facet>  
+                                    <h:outputText value="#{cuenta.fuente}">
                                         <f:convertNumber pattern="#,##0.00;(#,##0.00)"
                                                          locale="#{usuarioController.locale}"/>
                                     </h:outputText>
-                                </f:facet>  
-                            </p:column>
-                            <p:column style="width:15px; text-align: right">  
-                                <f:facet name="header">  
-                                    USO
-                                </f:facet>  
-                                <h:outputText value="#{cuenta.uso}">
-                                    <f:convertNumber pattern="#,##0.00;(#,##0.00)"
-                                                     locale="#{usuarioController.locale}"/>
-                                </h:outputText>
-                                <f:facet name="footer">  
-                                    <h:outputText value="#{financieroController.periodoSelected.totalUso}">
+                                    <f:facet name="footer">  
+                                        <h:outputText value="#{financieroController.periodoSelected.totalFuente}">
+                                            <f:convertNumber pattern="#,##0.00;(#,##0.00)"
+                                                             locale="#{usuarioController.locale}"/>
+                                        </h:outputText>
+                                    </f:facet>  
+                                </p:column>
+                                <p:column style="width:15px; text-align: right">  
+                                    <f:facet name="header">  
+                                        USO
+                                    </f:facet>  
+                                    <h:outputText value="#{cuenta.uso}">
                                         <f:convertNumber pattern="#,##0.00;(#,##0.00)"
                                                          locale="#{usuarioController.locale}"/>
                                     </h:outputText>
-                                </f:facet>  
-                            </p:column>
-                        </p:dataTable>           
-                        <p:selectOneListbox  value="#{financieroController.periodoSelected}" 
-                                             style="width: 120px; height: 100px; font-size: 14px;
-                                             display: inline-block">
-                            <f:selectItems value="#{periodoController.itemsSelectNoFirst}"/> 
-                        </p:selectOneListbox>
-                        <p:commandButton value="Cambiar Perído" 
-                                         actionListener="#{financieroController.generarFuentesYUsos}"
-                                         update="f-u"
-                                         style="font-size: 14px; display: inline-block; vertical-align: top" />
-                        <a href="../UI/Print/fuenteyusos.xhtml" target="_blank">
-                            <p:graphicImage value="../resources/img/printer.png" 
-                                            style="border-color: #333333; display: inline-block;
-                                            vertical-align: top; margin-left: 60%" />
-                        </a>
-                    </h:form>
+                                    <f:facet name="footer">  
+                                        <h:outputText value="#{financieroController.periodoSelected.totalUso}">
+                                            <f:convertNumber pattern="#,##0.00;(#,##0.00)"
+                                                             locale="#{usuarioController.locale}"/>
+                                        </h:outputText>
+                                    </f:facet>  
+                                </p:column>
+                            </p:dataTable>           
+                            <p:selectOneListbox  value="#{financieroController.periodoSelected}" 
+                                                 style="width: 120px; height: 100px; font-size: 14px;
+                                                 display: inline-block">
+                                <f:selectItems value="#{periodoController.itemsSelectNoFirst}"/> 
+                            </p:selectOneListbox>
+                            <p:commandButton value="Cambiar Período" 
+                                             actionListener="#{financieroController.generarFuentesYUsos}"
+                                             update="f-u"
+                                             style="font-size: 14px; display: inline-block; vertical-align: top" />
+                            <a href="../UI/Print/fuenteyusos.xhtml" target="_blank">
+                                <p:graphicImage value="../resources/img/printer.png" 
+                                                style="border-color: #333333; display: inline-block;
+                                                vertical-align: top; margin-left: 60%" />
+                            </a>
+                        </h:form>
+                    </section>
+                    <section>
+                        <h:form id="fe">
+                            <p:dataTable id="f-e" var="cuenta" value="#{financieroController.cuentas}"
+                                         emptyMessage="Seleccione un Período" style="font-size: 23px"
+                                         paginator="true" rows="4" 
+                                         paginatorTemplate="{PageLinks}"
+                                         paginatorAlwaysVisible="false">
+                                <f:facet name="header">  
+                                    Flujo de Efectivo #{financieroController.periodoSelected}
+                                </f:facet>
+                                <p:column style="width:200px">
+                                    <h:outputText value="#{cuenta.nombreCuenta}" rendered="#{cuenta.esTema}"
+                                                  style="text-decoration: underline; font-style: italic; font-weight: bolder"/>
+                                    <h:outputText value="#{cuenta.nombreCuenta}" rendered="#{!cuenta.esTema}"/>
+                                </p:column>
+                                <p:column style="width:15px; text-align: right">  
+                                    <h:outputText value="#{cuenta.diferenciaSaldos}">
+                                        <f:convertNumber pattern="#,##0.00;(#,##0.00)"
+                                                         locale="#{usuarioController.locale}"/>
+                                    </h:outputText>
+                                </p:column>
+                                <p:columnGroup type="footer">  
+                                    <p:row>  
+                                        <p:column footerText="Aumento en Efectivo" style="text-align: right"/>  
+                                        <p:column footerText="#{financieroController.periodoSelected.difEfectivo.floatValue()}"
+                                                  style="text-align: right"/> 
+                                    </p:row> 
+                                    <p:row>  
+                                        <p:column footerText="Al Principio del Período" style="text-align: right"/>  
+                                        <p:column footerText="#{financieroController.periodoSelected.efectivoInicio}"
+                                                  style="text-align: right"/>  
+                                    </p:row>
+                                    <p:row>  
+                                        <p:column footerText="Al Final del Período" style="text-align: right"/>  
+                                        <p:column footerText="#{financieroController.periodoSelected.efectivoFinal}"
+                                                  style="text-align: right"/>  
+                                    </p:row>  
+                                </p:columnGroup> 
+                            </p:dataTable>           
+                            <p:selectOneListbox  value="#{financieroController.periodoSelected}" 
+                                                 style="width: 120px; height: 100px; font-size: 14px;
+                                                 display: inline-block">
+                                <f:selectItems value="#{periodoController.itemsSelectNoFirst}"/> 
+                            </p:selectOneListbox>
+                            <p:commandButton value="Cambiar Período" 
+                                             actionListener="#{financieroController.generarFlujoEfectivo}"
+                                             update="f-e"
+                                             style="font-size: 14px; display: inline-block; vertical-align: top" />
+                            <a href="../UI/Print/flujoefectivo.xhtml" target="_blank">
+                                <p:graphicImage value="../resources/img/printer.png" 
+                                                style="border-color: #333333; display: inline-block;
+                                                vertical-align: top; margin-left: 60%" />
+                            </a>
+                        </h:form>
+                    </section>
                 </section>
-
                 <!-- RAZONES FINANCIERAS -->
                 <section>
                     <!-- RAZON CIRCULANTE -->
@@ -835,7 +891,7 @@
                         <p:barChart value="#{financieroController.chartModel}" legendPosition="#{financieroController.legendPosition}"
                                     zoom="true" animate="true"  orientation="horizontal"
                                     title="Razón Circulante" style="width: 800px; height: 400px; margin-left: 5%" />  
-
+                                        
                         <br />
                         <p:commandButton value="Act Circulante / Pas Circulante" 
                                          actionListener="#{financieroController.graficarValoresCirculantes}"
@@ -912,7 +968,7 @@
                                              display: inline-block">
                             <f:selectItems value="#{periodoController.itemsSelect}"/> 
                         </p:selectOneListbox>
-                        <p:commandButton value="Cambiar Perído" 
+                        <p:commandButton value="Cambiar Período" 
                                          actionListener="#{financieroController.analizarDupont}"
                                          update="dupont-tree"
                                          style="font-size: 14px; display: inline-block; vertical-align: top" />
