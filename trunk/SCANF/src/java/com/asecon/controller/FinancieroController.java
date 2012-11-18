@@ -6,10 +6,12 @@ package com.asecon.controller;
 
 import com.asecon.entity.Cuenta;
 import com.asecon.entity.Periodo;
+import com.asecon.entity.Rubro;
 import com.asecon.entity.Saldo;
 import com.scanf.pojo.Dupont;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
@@ -37,6 +39,7 @@ public class FinancieroController implements Serializable {
     private List<Cuenta> cuentas;
     private Periodo periodoSelected;
     private Periodo periodoAnterior;
+    private List<Rubro> flujoEfectivo;
     private Double totalPorcentaje;
     private TreeNode dupont;
     private CartesianChartModel chartModel;
@@ -611,11 +614,96 @@ public class FinancieroController implements Serializable {
         periodoSelected.setTotalUso(totalUso);
         periodoSelected.setTotalFuente(totalFuente);
     }
+    
+    public void generarFlujoEfectivo(){
+        
+        Long anterior = periodoSelected.getNumeroPeriodo() - Long.valueOf(1);
+        periodoAnterior = periodoFacade.find(anterior);
+        Object[] parameters = {"numeroPeriodo", periodoSelected.getNumeroPeriodo()};
+        List<Cuenta> cuentasActuales = cuentaFacade.getResultList("Cuenta.findBySaldoFinalFE", parameters);
+        parameters = new Object[]{"numeroPeriodo", periodoAnterior.getNumeroPeriodo()};
+        List<Cuenta> cuentasPasadas = cuentaFacade.getResultList("Cuenta.findBySaldoFinalFE", parameters);
+        for (Cuenta c : cuentasActuales) {
+            parameters = new Object[]{"numeroPeriodo", periodoSelected.getNumeroPeriodo(), "codigoCuenta", c};
+            List<Saldo> saldos = saldoFacade.getResultList("Saldo.findByCuenta", parameters);
+            Double totalCuenta = new Double(0);
+            for (Saldo s : saldos) {
+                totalCuenta = totalCuenta + s.getSaldoFinalSubcuenta();
+            }
+            c.setSaldoFinalCuenta(totalCuenta);
+        }
+        //Asignaciones y calculo de total cuentas pasadas
+        for (Cuenta c : cuentasPasadas) {
+            parameters = new Object[]{"numeroPeriodo", periodoAnterior.getNumeroPeriodo(), "codigoCuenta", c};
+            List<Saldo> saldos = saldoFacade.getResultList("Saldo.findByCuenta", parameters);
+            Double totalCuenta = new Double(0);
+            for (Saldo s : saldos) {
+                totalCuenta = totalCuenta + s.getSaldoFinalSubcuenta();
+            }
+            
+            c.setSaldoFinalCuenta(totalCuenta);
+        }
 
+        cuentas = new ArrayList<Cuenta>();
+        Cuenta tema1 = new Cuenta();
+        tema1.setNombreCuenta("FLUJOS DE EFECTIVO DE OPERACION");
+        tema1.setEsTema(true);
+        cuentas.add(tema1);
+        Cuenta ingreso = new Cuenta();
+        ingreso.setNombreCuenta("UTILIDAD NETA DEL EJERCICIO");
+        Double flujo = periodoSelected.getUtilidadNetaPeriodo();
+        ingreso.setDiferenciaSaldos(flujo);
+        cuentas.add(ingreso);
+        //Calculo Diferencia
+        for (int i = 0; i < cuentasActuales.size(); i++) {
+            Cuenta c = cuentasActuales.get(i);
+            Double saldoAnt = cuentasPasadas.get(i).getSaldoFinalCuenta();
+            Double dif = c.getSaldoFinalCuenta() - saldoAnt;
+            if (c.getSubrubroCuenta().equals("CIRCULANTE")) {
+                if (c.getCodigoCuenta().equals("101")) {
+                    periodoSelected.setEfectivoInicio(saldoAnt);
+                    periodoSelected.setEfectivoFinal(c.getSaldoFinalCuenta());
+                } else {
+                    dif = -dif;
+                    c.setDiferenciaSaldos(dif);
+                    flujo = flujo + dif;
+                    cuentas.add(c);
+                }
+            } else {
+                if (c.getSubrubroCuenta().equals("CORTO PLAZO")) {
+                    c.setDiferenciaSaldos(dif);
+                    flujo = flujo + dif;
+                    cuentas.add(c);
+                }
+            }
+        }
+        Cuenta tema2 = new Cuenta();
+        tema2.setNombreCuenta("FLUJOS DE EFECTIVO DE INVERSION");
+        tema2.setEsTema(true);
+        cuentas.add(tema2);
+        
+
+        for (int i = 0; i < cuentasActuales.size(); i++) {
+            Cuenta c = cuentasActuales.get(i);
+            Double saldoAnt = cuentasPasadas.get(i).getSaldoFinalCuenta();
+            Double dif = c.getSaldoFinalCuenta() - saldoAnt;
+
+            if (c.getSubrubroCuenta().equals("NO CIRCULANTE") && c.getTipoCuenta().equals("DEUDORA")) {
+                dif = -dif;
+                c.setDiferenciaSaldos(dif);
+                flujo = flujo + dif;
+                cuentas.add(c);
+            }
+        }
+
+
+        periodoSelected.setDifEfectivo(flujo);
+    }
+    
     public List<Cuenta> getCuentas() {
         return cuentas;
     }
-
+    
     public void setCuentas(List<Cuenta> cuentas) {
         this.cuentas = cuentas;
     }
@@ -666,5 +754,13 @@ public class FinancieroController implements Serializable {
 
     public void setPeriodoAnterior(Periodo periodoAnterior) {
         this.periodoAnterior = periodoAnterior;
+    }
+
+    public List<Rubro> getFlujoEfectivo() {
+        return flujoEfectivo;
+    }
+
+    public void setFlujoEfectivo(List<Rubro> flujoEfectivo) {
+        this.flujoEfectivo = flujoEfectivo;
     }
 }

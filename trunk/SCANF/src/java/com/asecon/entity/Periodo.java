@@ -4,7 +4,6 @@
  */
 package com.asecon.entity;
 
-import com.lowagie.text.xml.xmp.DublinCoreSchema;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -103,7 +102,12 @@ public class Periodo implements Serializable {
     private Double totalFuente;
     @Transient
     private Double totalUso;
-
+    @Transient
+    private Double efectivoInicio;
+    @Transient
+    private Double efectivoFinal;
+    @Transient
+    private Double difEfectivo;
     public Periodo() {
     }
 
@@ -382,6 +386,29 @@ public class Periodo implements Serializable {
 
     public void setTotalUso(Double totalUso) {
         this.totalUso = totalUso;
-    } 
-    
+    }
+
+    public Double getDifEfectivo() {
+        return difEfectivo;
+    }
+
+    public void setDifEfectivo(Double difEfectivo) {
+        this.difEfectivo = difEfectivo;
+    }
+
+    public Double getEfectivoFinal() {
+        return efectivoFinal;
+    }
+
+    public void setEfectivoFinal(Double efectivoFinal) {
+        this.efectivoFinal = efectivoFinal;
+    }
+
+    public Double getEfectivoInicio() {
+        return efectivoInicio;
+    }
+
+    public void setEfectivoInicio(Double efectivoInicio) {
+        this.efectivoInicio = efectivoInicio;
+    }
 }

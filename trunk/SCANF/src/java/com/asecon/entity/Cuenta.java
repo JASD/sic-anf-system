@@ -6,16 +6,7 @@ package com.asecon.entity;
 
 import java.io.Serializable;
 import java.util.List;
-import javax.persistence.Basic;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import javax.persistence.Transient;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -46,7 +37,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Cuenta.findBySaldoCuenta", query = "SELECT c FROM Cuenta c WHERE c.saldoCuenta = :saldoCuenta"),
     @NamedQuery(name = "Cuenta.findBySaldoFinal", query = "SELECT c FROM Cuenta c WHERE c.rubroCuenta = :rubroCuenta AND c.codigoCuenta IN (SELECT DISTINCT sb.codigoCuenta.codigoCuenta FROM SubCuenta sb WHERE sb.codigoSubcuenta IN(SELECT s.saldoPK.codigoSubcuenta FROM Saldo s WHERE s.saldoPK.numeroPeriodo = :numeroPeriodo))"),
     @NamedQuery(name = "Cuenta.findBySaldoFinalResultados", query = "SELECT c FROM Cuenta c WHERE c.rubroCuenta = 'RESULTADOS' AND c.codigoCuenta IN (SELECT DISTINCT sb.codigoCuenta.codigoCuenta FROM SubCuenta sb WHERE sb.codigoSubcuenta IN(SELECT s.saldoPK.codigoSubcuenta FROM Saldo s WHERE s.saldoPK.numeroPeriodo = :numeroPeriodo)) ORDER BY c.tipoCuenta, c.codigoCuenta"),
-    @NamedQuery(name = "Cuenta.findBySaldoFinalBG", query = "SELECT c FROM Cuenta c WHERE c.rubroCuenta IN ('ACTIVO', 'PASIVO', 'PATRIMONIO') AND c.codigoCuenta IN (SELECT DISTINCT sb.codigoCuenta.codigoCuenta FROM SubCuenta sb WHERE sb.codigoSubcuenta IN(SELECT s.saldoPK.codigoSubcuenta FROM Saldo s WHERE s.saldoPK.numeroPeriodo = :numeroPeriodo))")})
+    @NamedQuery(name = "Cuenta.findBySaldoFinalBG", query = "SELECT c FROM Cuenta c WHERE c.rubroCuenta IN ('ACTIVO', 'PASIVO', 'PATRIMONIO') AND c.codigoCuenta IN (SELECT DISTINCT sb.codigoCuenta.codigoCuenta FROM SubCuenta sb WHERE sb.codigoSubcuenta IN(SELECT s.saldoPK.codigoSubcuenta FROM Saldo s WHERE s.saldoPK.numeroPeriodo = :numeroPeriodo))"),
+    @NamedQuery(name = "Cuenta.findBySaldoFinalFE", query = "SELECT c FROM Cuenta c WHERE c.subrubroCuenta IN ('CIRCULANTE', 'NO CIRCULANTE', 'CORTO PLAZO') AND c.codigoCuenta IN (SELECT DISTINCT sb.codigoCuenta.codigoCuenta FROM SubCuenta sb WHERE sb.codigoSubcuenta IN(SELECT s.saldoPK.codigoSubcuenta FROM Saldo s WHERE s.saldoPK.numeroPeriodo = :numeroPeriodo)) ORDER BY c.subrubroCuenta")})
 public class Cuenta implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -94,8 +86,8 @@ public class Cuenta implements Serializable {
     private Double uso;
     @Transient
     private boolean aumento;
-
-    
+    @Transient
+    private boolean esTema;
 
     public Cuenta() {
     }
@@ -242,6 +234,14 @@ public class Cuenta implements Serializable {
         this.aumento = aumento;
     }
 
+    public boolean isEsTema() {
+        return esTema;
+    }
+
+    public void setEsTema(boolean esTema) {
+        this.esTema = esTema;
+    }
+    
     @XmlTransient
     public List<SubCuenta> getSubCuentaList() {
         return subCuentaList;
