@@ -4,6 +4,7 @@
  */
 package com.asecon.controller;
 
+import com.asecon.controller.util.JsfUtil;
 import com.asecon.entity.Cuenta;
 import com.asecon.entity.Periodo;
 import com.asecon.entity.Rubro;
@@ -37,16 +38,19 @@ public class FinancieroController implements Serializable {
     @EJB
     private com.asecon.facade.PeriodoFacade periodoFacade;
     private List<Cuenta> cuentas;
+    private List<Periodo> periodosGAF;
     private Periodo periodoSelected;
     private Periodo periodoAnterior;
     private List<Rubro> flujoEfectivo;
     private Double totalPorcentaje;
     private TreeNode dupont;
     private CartesianChartModel chartModel;
+    private CartesianChartModel chartModelPro;
     private String legendPosition;
 
     public FinancieroController() {
         chartModel = new CartesianChartModel();
+        chartModelPro = new CartesianChartModel();
         ChartSeries x = new ChartSeries();
         x.setLabel("X");
         ChartSeries y = new ChartSeries();
@@ -56,6 +60,8 @@ public class FinancieroController implements Serializable {
 
         chartModel.addSeries(x);
         chartModel.addSeries(y);
+        chartModelPro.addSeries(x);
+        chartModelPro.addSeries(y);
         legendPosition = "nw";
 
     }
@@ -700,6 +706,119 @@ public class FinancieroController implements Serializable {
         periodoSelected.setDifEfectivo(flujo);
     }
     
+    public void generarGAF() {
+        
+        List<Periodo> periodos = periodoFacade.findNoParameters("Periodo.findNoCurrent");
+        this.periodosGAF = new ArrayList<Periodo>();
+        for (int i = 0; i < periodos.size() - 1; i++) {
+            Double upaActual = periodos.get(i+1).getUtilidadNetaPeriodo() / Double.valueOf(1000);
+            Double upaAnterior = periodos.get(i).getUtilidadNetaPeriodo() / Double.valueOf(1000);
+            Double cambioUpa = (upaActual - upaAnterior) / upaAnterior;
+            periodos.get(i+1).setCambioPorcUPAPeriodo(cambioUpa);
+            Double ebitActual = periodos.get(i+1).getUtilidadOperacionPeriodo();
+            Double ebitAnterior = periodos.get(i).getUtilidadOperacionPeriodo();
+            Double cambioEbit = (ebitActual - ebitAnterior) / ebitAnterior;
+            periodos.get(i+1).setCambioPorcEBITPeriodo(cambioEbit);
+            periodos.get(i+1).setGafPeriodo(cambioUpa / cambioEbit);
+            this.periodosGAF.add(periodos.get(i+1));
+        }
+    }
+    
+    public void proyectarVentas(){
+        List<Periodo> periodos = periodoFacade.findNoParameters("Periodo.findNoCurrent");
+        chartModelPro.clear();
+        LineChartSeries ventas = new LineChartSeries();
+        ventas.setLabel("Ventas");
+        LineChartSeries ventasPro = new LineChartSeries();
+        ventasPro.setLabel("Proyección");
+        SimpleDateFormat yearFormat = new SimpleDateFormat("yyyy");
+        String year = "";
+        Periodo f = null;
+        for (Periodo p : periodos) {
+            year = yearFormat.format(p.getFechaFinPeriodo());
+            ventas.set(year, p.getTotalIngresosPeriodo());
+            Double datoPro = JsfUtil.COEFICIENTE_A_VENTAS * Math.pow(Double.valueOf(year), 2);
+            datoPro = datoPro + JsfUtil.COEFICIENTE_B_VENTAS * Double.valueOf(year);
+            datoPro = datoPro + JsfUtil.COEFICIENTE_C_VENTAS;
+            ventasPro.set(year, datoPro);
+            f = p;
+        }
+        //Calcular Proyección Año siguiente
+        year = String.valueOf(Double.valueOf(year).intValue() + 1);
+        Double datoPro = JsfUtil.COEFICIENTE_A_VENTAS * Math.pow(Double.valueOf(year), 2);
+        datoPro = datoPro + JsfUtil.COEFICIENTE_B_VENTAS * Double.valueOf(year);
+        datoPro = datoPro + JsfUtil.COEFICIENTE_C_VENTAS;
+        ventasPro.set(year, datoPro);
+        ventas.set(year, f.getTotalIngresosPeriodo());
+        chartModelPro.addSeries(ventas);
+        chartModelPro.addSeries(ventasPro);
+        legendPosition = "nw";
+    }
+    
+    public void proyectarCostos() {
+        List<Periodo> periodos = periodoFacade.findNoParameters("Periodo.findNoCurrent");
+        chartModelPro.clear();
+        LineChartSeries costos = new LineChartSeries();
+        costos.setLabel("Costos");
+        LineChartSeries costosPro = new LineChartSeries();
+        costosPro.setLabel("Proyección");
+        SimpleDateFormat yearFormat = new SimpleDateFormat("yyyy");
+        String year = "";
+        Periodo f = null;
+        for (Periodo p : periodos) {
+            year = yearFormat.format(p.getFechaFinPeriodo());
+            costos.set(year, p.getTotalCostoPeriodo());
+            Double datoPro = JsfUtil.COEFICIENTE_A_COSTOS * Math.pow(Double.valueOf(year), 2);
+            datoPro = datoPro + JsfUtil.COEFICIENTE_B_COSTOS * Double.valueOf(year);
+            datoPro = datoPro + JsfUtil.COEFICIENTE_C_COSTOS;
+            costosPro.set(year, datoPro);
+            f = p;
+        }
+        //Calcular Proyección Año siguiente
+        year = String.valueOf(Double.valueOf(year).intValue() + 1);
+        Double datoPro = JsfUtil.COEFICIENTE_A_COSTOS * Math.pow(Double.valueOf(year), 2);
+        datoPro = datoPro + JsfUtil.COEFICIENTE_B_COSTOS * Double.valueOf(year);
+        datoPro = datoPro + JsfUtil.COEFICIENTE_C_COSTOS;
+        costosPro.set(year, datoPro);
+        costos.set(year, f.getTotalCostoPeriodo());
+        chartModelPro.addSeries(costos);
+        chartModelPro.addSeries(costosPro);
+        legendPosition = "nw";
+
+    }
+    
+     public void proyectarGastosOp() {
+        List<Periodo> periodos = periodoFacade.findNoParameters("Periodo.findNoCurrent");
+        chartModelPro.clear();
+        LineChartSeries gastosOp = new LineChartSeries();
+        gastosOp.setLabel("Gastos Operativos");
+        LineChartSeries gastosOpPro = new LineChartSeries();
+        gastosOpPro.setLabel("Proyección");
+        SimpleDateFormat yearFormat = new SimpleDateFormat("yyyy");
+        String year = "";
+        Periodo f = null;
+        for (Periodo p : periodos) {
+            year = yearFormat.format(p.getFechaFinPeriodo());
+            gastosOp.set(year, p.getTotalCisPeriodo());
+            Double datoPro = JsfUtil.COEFICIENTE_A_GASTOS * Math.pow(Double.valueOf(year), 2);
+            datoPro = datoPro + JsfUtil.COEFICIENTE_B_GASTOS * Double.valueOf(year);
+            datoPro = datoPro + JsfUtil.COEFICIENTE_C_GASTOS;
+            gastosOpPro.set(year, datoPro);
+            f = p;
+        }
+        //Calcular Proyección Año siguiente
+        year = String.valueOf(Double.valueOf(year).intValue() + 1);
+        Double datoPro = JsfUtil.COEFICIENTE_A_GASTOS * Math.pow(Double.valueOf(year), 2);
+        datoPro = datoPro + JsfUtil.COEFICIENTE_B_GASTOS * Double.valueOf(year);
+        datoPro = datoPro + JsfUtil.COEFICIENTE_C_GASTOS;
+        gastosOpPro.set(year, datoPro);
+        gastosOp.set(year, f.getTotalCisPeriodo());
+        chartModelPro.addSeries(gastosOp);
+        chartModelPro.addSeries(gastosOpPro);
+        legendPosition = "nw";
+
+    }
+    
     public List<Cuenta> getCuentas() {
         return cuentas;
     }
@@ -762,5 +881,21 @@ public class FinancieroController implements Serializable {
 
     public void setFlujoEfectivo(List<Rubro> flujoEfectivo) {
         this.flujoEfectivo = flujoEfectivo;
+    }
+
+    public List<Periodo> getPeriodos() {
+        return periodosGAF;
+    }
+
+    public void setPeriodos(List<Periodo> periodos) {
+        this.periodosGAF = periodos;
+    }
+
+    public CartesianChartModel getChartModelPro() {
+        return chartModelPro;
+    }
+
+    public void setChartModelPro(CartesianChartModel chartModelPro) {
+        this.chartModelPro = chartModelPro;
     }
 }

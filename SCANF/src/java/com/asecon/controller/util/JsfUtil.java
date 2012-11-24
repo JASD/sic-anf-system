@@ -9,6 +9,16 @@ import javax.faces.convert.Converter;
 import javax.faces.model.SelectItem;
 
 public class JsfUtil {
+    
+    public static final double COEFICIENTE_A_VENTAS = 4039.2966071429;
+    public static final double COEFICIENTE_B_VENTAS = -16198399.5923216;
+    public static final double COEFICIENTE_C_VENTAS = 16239845208.7302;
+    public static final double COEFICIENTE_A_COSTOS = 2499.87267857141;
+    public static final double COEFICIENTE_B_COSTOS = -10025382.0609642;
+    public static final double COEFICIENTE_C_COSTOS = 10051451160.4182;
+    public static final double COEFICIENTE_A_GASTOS = 3288.67946428571;
+    public static final double COEFICIENTE_B_GASTOS = -13203524.7331785;
+    public static final double COEFICIENTE_C_GASTOS = 13252519737.8008;
 
     public static SelectItem[] getSelectItems(List<?> entities, boolean selectOne) {
         int size = selectOne ? entities.size() + 1 : entities.size();

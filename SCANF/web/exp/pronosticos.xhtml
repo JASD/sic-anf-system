@@ -1,0 +1,115 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://java.sun.com/jsf/html">
+
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title>TAIMSAL S.A. de C.V.</title>
+        <meta name="description" content="Análisis Financiero para TAIMSAL S.A. de C.V" />
+        <meta name="author" content="Flacas Team" />
+        <link href='http://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic' rel='stylesheet' type='text/css' />
+        <link rel="stylesheet" href="css/main.css" />
+        <link rel="stylesheet" href="css/theme/default.css" id="theme" />
+        <link rel="stylesheet" href="lib/css/zenburn.css" />
+    </h:head>
+
+    <h:body>
+
+        <div class="reveal">
+
+            <!-- Any section element inside of this container is displayed as a slide -->
+            <div class="slides">
+                <section>
+                    <h1>Pronósticos</h1>
+                </section>
+                <section> 
+                    <!-- PRONOSTICO DE VENTAS -->
+                    <h:panelGrid id="p-ventas" columns="1" width="900" bgcolor="#ffffff">
+                        <br />
+                        <p:lineChart value="#{financieroController.chartModelPro}" legendPosition="#{financieroController.legendPosition}"
+                                     zoom="true" animate="true" title="Proyección de Ventas" 
+                                     style="width: 800px; height: 400px; margin-left: 5%" /> 
+                        <br />
+                        <h:form>
+                            <p:commandButton value="Proyectar" 
+                                             actionListener="#{financieroController.proyectarVentas}"
+                                             update=":p-ventas"
+                                             style="font-size: 14px" />
+                            <h:outputText value="R² = 0.9971" style="float: right; color: #666666; margin-right: 50px"/>
+                        </h:form>
+                        <br />
+                    </h:panelGrid>
+                </section>
+                <section> 
+                    <!-- PRONOSTICO DE COSTOS -->
+                    <h:panelGrid id="p-costos" columns="1" width="900" bgcolor="#ffffff">
+                        <br />
+                        <p:lineChart value="#{financieroController.chartModelPro}" legendPosition="#{financieroController.legendPosition}"
+                                     zoom="true" animate="true" title="Proyección de Costos" 
+                                     style="width: 800px; height: 400px; margin-left: 5%" /> 
+                        <br />
+                        <h:form>
+                            <p:commandButton value="Proyectar" 
+                                             actionListener="#{financieroController.proyectarCostos}"
+                                             update=":p-costos"
+                                             style="font-size: 14px" />
+                            <h:outputText value="R² = 0.9998" style="float: right; color: #666666; margin-right: 50px"/>
+                        </h:form>
+                        <br />
+                    </h:panelGrid>
+                </section>
+                <section> 
+                    <!-- PRONOSTICO DE GASTOS -->
+                    <h:panelGrid id="p-gastos" columns="1" width="900" bgcolor="#ffffff">
+                        <br />
+                        <p:lineChart value="#{financieroController.chartModelPro}" legendPosition="#{financieroController.legendPosition}"
+                                     zoom="true" animate="true" title="Proyección de Gastos Operativos" 
+                                     style="width: 800px; height: 400px; margin-left: 5%" /> 
+                        <br />
+                        <h:form>
+                            <p:commandButton value="Proyectar" 
+                                             actionListener="#{financieroController.proyectarGastosOp}"
+                                             update=":p-gastos"
+                                             style="font-size: 14px" />
+                            <h:outputText value="R² = 0.9281" style="float: right; color: #666666; margin-right: 50px"/>
+                        </h:form>
+                        <br />
+                    </h:panelGrid>
+                </section>
+            </div>
+
+            <!-- The navigational controls UI -->
+            <aside class="controls">
+                <a class="left" href="#">&#x25C4;</a>
+                <a class="right" href="#">&#x25BA;</a>
+                <a class="up" href="#">&#x25B2;</a>
+                <a class="down" href="#">&#x25BC;</a>
+            </aside>
+
+            <!-- Presentation progress bar -->
+            <div class="progress"><span></span></div>
+
+        </div>
+
+        <script src="lib/js/head.min.js"></script>
+        <script src="js/reveal.min.js"></script>
+
+        <script>
+            
+            // Full list of configuration options available here:
+            // https://github.com/hakimel/reveal.js#configuration
+            Reveal.initialize({
+                controls: true,
+                progress: true,
+                history: true,
+				
+                theme: Reveal.getQueryHash().theme || 'default', // available themes are in /css/theme
+                transition: Reveal.getQueryHash().transition || 'concave'
+            });
+			
+        </script>
+
+    </h:body>
+</html>
