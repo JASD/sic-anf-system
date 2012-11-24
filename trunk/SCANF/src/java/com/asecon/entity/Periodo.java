@@ -108,6 +108,13 @@ public class Periodo implements Serializable {
     private Double efectivoFinal;
     @Transient
     private Double difEfectivo;
+    @Transient
+    private Double cambioPorcUPAPeriodo;
+    @Transient
+    private Double cambioPorcEBITPeriodo;
+    @Transient
+    private Double gafPeriodo;
+    
     public Periodo() {
     }
 
@@ -410,5 +417,29 @@ public class Periodo implements Serializable {
 
     public void setEfectivoInicio(Double efectivoInicio) {
         this.efectivoInicio = efectivoInicio;
+    }
+
+    public Double getCambioPorcEBITPeriodo() {
+        return cambioPorcEBITPeriodo;
+    }
+
+    public void setCambioPorcEBITPeriodo(Double cambioPorcEBITPeriodo) {
+        this.cambioPorcEBITPeriodo = cambioPorcEBITPeriodo;
+    }
+
+    public Double getCambioPorcUPAPeriodo() {
+        return cambioPorcUPAPeriodo;
+    }
+
+    public void setCambioPorcUPAPeriodo(Double cambioPorcUPAPeriodo) {
+        this.cambioPorcUPAPeriodo = cambioPorcUPAPeriodo;
+    }
+
+    public Double getGafPeriodo() {
+        return gafPeriodo;
+    }
+
+    public void setGafPeriodo(Double gafPeriodo) {
+        this.gafPeriodo = gafPeriodo;
     }
 }
