@@ -10,13 +10,22 @@ import com.asecon.entity.Periodo;
 import com.asecon.entity.Rubro;
 import com.asecon.entity.Saldo;
 import com.scanf.pojo.Dupont;
+import java.io.IOException;
 import java.io.Serializable;
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.annotation.Resource;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import net.sf.jasperreports.engine.JRException;
 import org.primefaces.model.DefaultTreeNode;
 import org.primefaces.model.TreeNode;
 import org.primefaces.model.chart.CartesianChartModel;
@@ -37,6 +46,8 @@ public class FinancieroController implements Serializable {
     private com.asecon.facade.SaldoFacade saldoFacade;
     @EJB
     private com.asecon.facade.PeriodoFacade periodoFacade;
+    @Resource(name = "SCANF")
+    private javax.sql.DataSource dataSource;
     private List<Cuenta> cuentas;
     private List<Periodo> periodosGAF;
     private Periodo periodoSelected;
@@ -47,6 +58,7 @@ public class FinancieroController implements Serializable {
     private CartesianChartModel chartModel;
     private CartesianChartModel chartModelPro;
     private String legendPosition;
+    private String formato;
 
     public FinancieroController() {
         chartModel = new CartesianChartModel();
@@ -818,6 +830,44 @@ public class FinancieroController implements Serializable {
         legendPosition = "nw";
 
     }
+     
+     public void generarBG(){
+     
+        String path = "/reports/scanf/balance_general.jasper";
+        Long parameter = periodoSelected.getNumeroPeriodo();
+        Map parameterMap = new HashMap();
+        try {
+            parameterMap.put("ID_PERIODO", parameter);
+            Connection con = dataSource.getConnection();
+            JsfUtil.generateReport(path, "BG-" + periodoSelected.toString(), con, parameterMap, Integer.valueOf(formato));
+            con.close();
+        } catch (JRException ex) {
+            Logger.getLogger(ServicioController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(ServicioController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(ServicioController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+     }
+     
+     public void generarER(){
+     
+        String path = "/reports/scanf/estado_resultado.jasper";
+        Long parameter = periodoSelected.getNumeroPeriodo();
+        Map parameterMap = new HashMap();
+        try {
+            parameterMap.put("ID_PERIODO", parameter);
+            Connection con = dataSource.getConnection();
+            JsfUtil.generateReport(path, "ER-" + periodoSelected.toString(), con, parameterMap, Integer.valueOf(formato));
+            con.close();
+        } catch (JRException ex) {
+            Logger.getLogger(ServicioController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(ServicioController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(ServicioController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+     }
     
     public List<Cuenta> getCuentas() {
         return cuentas;
@@ -897,5 +947,13 @@ public class FinancieroController implements Serializable {
 
     public void setChartModelPro(CartesianChartModel chartModelPro) {
         this.chartModelPro = chartModelPro;
+    }
+
+    public String getFormato() {
+        return formato;
+    }
+
+    public void setFormato(String formato) {
+        this.formato = formato;
     }
 }
