@@ -1,0 +1,1 @@
+Sistema de Contabilidad y Análisis Financiero para empresas del sector de servicio con método de costeo basado en actividades
